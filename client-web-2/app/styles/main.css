@@ -81,3 +81,13 @@ body {
     border-bottom: 0;
   }
 }
+
+
+/******************************/
+#home-id {
+  padding-top: 60px;
+}
+
+.margin-base-vertical {
+  margin: 40px 0;
+}
