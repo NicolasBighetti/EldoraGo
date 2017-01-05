@@ -20,26 +20,17 @@ angular
     'ngTouch',
     'ui.router'
   ])
-  // .config(function ($routeProvider) {
-  //   $routeProvider
-  //     .when('/', {
-  //       templateUrl: 'views/main.html',
-  //       controller: 'MainCtrl',
-  //       controllerAs: 'main'
-  //     })
-  //     .otherwise({
-  //       redirectTo: '/'
-  //     });
-  // });
-  .config(['$stateProvider', '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/');
-      $stateProvider
-      .state('home', {
-        url: '/'
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/home.html',
+        // controller: 'MainCtrl',
+        // controllerAs: 'main'
+      })
+      .otherwise({
+        redirectTo: '/'
       });
-    }
-  ]);
+  });
   // .config(function($stateProvider, $urlRouterProvider) {
   //
   //   // Ionic uses AngularUI Router which uses the concept of states
