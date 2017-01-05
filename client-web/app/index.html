@@ -1,58 +1,41 @@
-<!doctype html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
+﻿<!doctype html>
+<html>
 
-<head>
-  <meta charset="utf-8">
-  <title></title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <!-- build:css styles/vendor.css -->
+    <head>
+        <meta charset="utf-8">
+        <title>EldoraGo</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="lib/flat-ui.css" />
+    </head>
+
+    <body ng-app="eldoragoApp">
 
 
-  <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
-  <!-- endbuild -->
-</head>
+        <h1>EldoraGO</h1>
+        <!--Controller example-->
+        <div ng-controller="studentController">
+            <p>{{student.fullName()}}</p>
+        </div>
 
-<body ng-app="chatApp">
+    </body>
 
-<div class="container"><h1>Coucou</h1></div>
-<div style="height: calc(100% - 53px);" ng-view></div>
+    <!--Scripts includes-->
 
-<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <!-- Angular -->
+    <script src="lib/angularjs/angular.min.js"></script>
+    <script src="lib/angular-ui/angular-ui-router.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-<!-- Angular -->
-<!-- <script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-<script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
-<script src="bower_components/angular-socket-io/socket.js"></script> -->
+    <script src="lib/jquery-3.1.1.min.js"></script>
+    <script src="lib/flat-ui.js"></script>
 
-<!-- endbuild -->
+    <!--Custom js files-->
+    <!--File containing the angular app variable-->
+    <script src="scripts/app.js"></script>
+    <!--Other controllers-->
+    <script src="scripts/controller.js"></script>
 
-<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
-
-<!-- Des fonctions sont manquantes chez Bower -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-
-<!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="scripts/app.js"></script>
-
-<!-- endbuild -->
-
-</body>
 
 </html>
