@@ -1,12 +1,12 @@
-##ELDORAGO 
+## ELDORAGO 
 ### The best treasure hunt app in the known universe ♥
 
 #### Members
-Nicolas Bighetti
-Flavian Jacquot
-Alicia Marin
-Anthony Loroscio
-Remy Kaloustian
+#### Nicolas Bighetti
+#### Flavian Jacquot
+#### Alicia Marin
+#### Anthony Loroscio
+#### Remy Kaloustian
 
 
 
