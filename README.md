@@ -1,3 +1,4 @@
 ##ELDORAGO 
 
-Rémy Kaloustian
+Rï¿½my Kaloustian
+Anthony Loroscio
