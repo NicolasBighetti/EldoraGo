@@ -80,7 +80,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'AccountCtrl'
       }
     }
-  });
+  })
+
+  .state('tab.historique', {
+    url:'/historique',
+    views: {
+      'tab-historique':{
+        templateUrl: 'view/timeline/historique-view.html',
+        controller: 'HistoriqueCtrl'
+      }
+    }
+  })
+  ;
 
   $stateProvider.state('home', {
     url: '/home',

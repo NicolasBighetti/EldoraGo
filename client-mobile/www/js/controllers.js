@@ -27,6 +27,9 @@ angular.module('starter.controllers', [])
   $scope.showTabBar = false;
 })
 
+.controller('HistoriqueCtrl', function($scope){
+  console.log('timeline pls');
+})
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
