@@ -5,113 +5,113 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Riddle = mongoose.model('Riddle'),
+  Step = mongoose.model('Step'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
 /**
- * Create a Riddle
+ * Create a Step
  */
 exports.create = function (req, res) {
-  var riddle = new Riddle(req.body);
-  riddle.user = req.user;
+  var step = new Step(req.body);
+  step.user = req.user;
 
-  riddle.save(function (err) {
+  step.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(riddle);
+      res.jsonp(step);
     }
   });
 };
 
 /**
- * Show the current Riddle
+ * Show the current Step
  */
 exports.read = function (req, res) {
   // convert mongoose document to JSON
-  var riddle = req.riddle ? req.riddle.toJSON() : {};
+  var step = req.step ? req.step.toJSON() : {};
 
   // Add a custom field to the Article, for determining if the current User is the "owner".
   // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
-  riddle.isCurrentUserOwner = req.user && riddle.user && riddle.user._id.toString() === req.user._id.toString();
+  step.isCurrentUserOwner = req.user && step.user && step.user._id.toString() === req.user._id.toString();
 
-  res.jsonp(riddle);
+  res.jsonp(step);
 };
 
 /**
- * Update a Riddle
+ * Update a Step
  */
 exports.update = function (req, res) {
-  var riddle = req.riddle;
+  var step = req.step;
 
-  riddle = _.extend(riddle, req.body);
+  step = _.extend(step, req.body);
 
-  riddle.save(function (err) {
+  step.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(riddle);
+      res.jsonp(step);
     }
   });
 };
 
 /**
- * Delete an Riddle
+ * Delete an Step
  */
 exports.delete = function (req, res) {
-  var riddle = req.riddle;
+  var step = req.step;
 
-  riddle.remove(function (err) {
+  step.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(riddle);
+      res.jsonp(step);
     }
   });
 };
 
 /**
- * List of Riddles
+ * List of Steps
  */
 exports.list = function (req, res) {
-  Riddle.find().sort('-created').populate('user', 'displayName').exec(function (err, riddles) {
+  Step.find().sort('-created').populate('user', 'displayName').exec(function (err, steps) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.jsonp(riddles);
+      res.jsonp(steps);
     }
   });
 };
 
 /**
- * Riddles middleware
+ * Step middleware
  */
-exports.riddleByID = function (req, res, next, id) {
+exports.stepByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Riddle is invalid'
+      message: 'Step is invalid'
     });
   }
 
-  Riddle.findById(id).populate('user', 'displayName').exec(function (err, riddle) {
+  Step.findById(id).populate('user', 'displayName').exec(function (err, step) {
     if (err) {
       return next(err);
-    } else if (!riddle) {
+    } else if (!step) {
       return res.status(404).send({
-        message: 'No Riddle with that identifier has been found'
+        message: 'No Step with that identifier has been found'
       });
     }
-    req.riddle = riddle;
+    req.step = step;
     next();
   });
 };

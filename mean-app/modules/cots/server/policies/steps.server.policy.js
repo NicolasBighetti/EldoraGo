@@ -15,29 +15,29 @@ exports.invokeRolesPolicies = function () {
   acl.allow([{
     roles: ['admin'],
     allows: [{
-      resources: '/api/riddles',
+      resources: '/api/steps',
       permissions: '*'
     }, {
-      resources: '/api/riddles/:riddleId',
+      resources: '/api/steps/:stepId',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
-      resources: '/api/riddles',
+      resources: '/api/steps',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/riddles/:riddleId',
+      resources: '/api/steps/:stepId',
       permissions: ['get']
     }]
   }, {
     roles: ['guest'],
     allows: [{
-      resources: '/api/riddles',
-      permissions: ['get']
+      resources: '/api/steps',
+      permissions: ['*']
     }, {
-      resources: '/api/riddles/:riddleId',
-      permissions: ['get']
+      resources: '/api/steps/:stepId',
+      permissions: ['*']
     }]
   }]);
 };
@@ -49,7 +49,7 @@ exports.isAllowed = function (req, res, next) {
   var roles = (req.user) ? req.user.roles : ['guest'];
 
   // If an Cot is being processed and the current user created it then allow any manipulation
-  if (req.riddle && req.user && req.riddle.user && req.riddle.user.id === req.user.id) {
+  if (req.step && req.user && req.step.user && req.step.user.id === req.user.id) {
     return next();
   }
 

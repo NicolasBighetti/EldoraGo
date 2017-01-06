@@ -40,7 +40,7 @@ angular
       })
       .when('/cot-step', {
         templateUrl: 'views/cot-step.html',
-        // controller: 'CotStepCtrl',
+         controller: 'CotStepCtrl',
       })
       .when('/cot-step-wip', {
         templateUrl: 'views/cot-step-wip.html',
