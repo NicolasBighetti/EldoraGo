@@ -1,42 +1,120 @@
-<div class="row" id="cot-step-row">
+<div class="container-fluid">
+  <div class="row" id="cot-step-row">
     <div class="col-xs-2" id="cot-step-steplist-div">
-        LES STEPS
+      LES STEPS
+
     </div>
 
     <div class="col-xs-6" id="cot-step-map-div">
-        LA MAP
-        <ui-gmap-google-map center="map.center" zoom="map.zoom">
-            <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeclick="map.window.closeClick()">
+      <!-- LA MAP -->
+      <ui-gmap-google-map center="map.center" zoom="map.zoom">
+        <ui-gmap-window show="map.window.show" coords="map.window.model" options="map.window.options" closeclick="map.window.closeClick()">
 
-                <div ng-non-bindable="">test</div>
+          <div ng-non-bindable="">test</div>
 
-            </ui-gmap-window>
+        </ui-gmap-window>
 
-            <ui-gmap-markers idkey="'bid'" models="map.markers" coords="'self'" docluster="false" fit="'true'" icon="'icon'" events="map.markersEvents" options="'options'">
-            </ui-gmap-markers>
-        </ui-gmap-google-map>
+        <ui-gmap-markers idkey="'bid'" models="map.markers" coords="'self'" docluster="false" fit="'true'" icon="'icon'" events="map.markersEvents" options="'options'">
+        </ui-gmap-markers>
+      </ui-gmap-google-map>
     </div>
 
     <div class="col-xs-4" id="cot-step-quest-div">
-        LES QUESTS & détails POI
+      <!-- LES QUESTS & détails POI -->
 
-        <!-- Partie sur les quêtes -->
-        <div id="cot-step-questlist"> <!-- Liste des quêtes -->
-            <div class="cot-step-quest"> <!-- Un exemple d'une quête -->
-                <p> Name</p>
-                <p>details</p>
-                <div>le switch de ses morh</div>
+      <div class="panel panel-default">
+        <div class="panel-heading primary-flat">Quête 1</div>
+        <div class="panel-body">
+
+          <div class="row">
+            <div class="col-xs-10">
+              <div class="input-group">
+                <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+                <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
+              </div>
             </div>
+            <div class="col-xs-2">
+              <div class="btn btn-default"><i class="fa fa-question"></i></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <input type="checkbox" ng-model="optquest1" />
+              Optionnelle
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Partie sur les détails du poi -->
-        <div id="cot-step-details">
-            <p>Name</p>
-            <p>Description</p>
-            <img />  <!--Photo-->
+      <div class="panel panel-default primary-flat">
+        <div class="panel-heading  primary-flat">Quête 2</div>
+        <div class="panel-body">
+
+          <div class="row">
+            <div class="col-xs-10">
+              <div class="input-group">
+                <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+                <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="btn btn-default"><i class="fa fa-question"></i></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <input type="checkbox" ng-model="optquest2" />
+              Optionnelle
+            </div>
+          </div>
         </div>
+      </div>
 
-        <button>Details/quests toggle</button>
+      <div class="panel panel-default">
+        <div class="panel-heading primary-flat">Quête 3</div>
+        <div class="panel-body">
+
+          <div class="row">
+            <div class="col-xs-10">
+              <div class="input-group">
+                <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+                <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="btn btn-default"><i class="fa fa-question"></i></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <input type="checkbox" ng-model="optquest3" />
+              Optionnelle
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Partie sur les quêtes -->
+      <div id="cot-step-questlist">
+        <!-- Liste des quêtes -->
+        <div class="cot-step-quest">
+          <!-- Un exemple d'une quête -->
+          <p> Name</p>
+          <p>details</p>
+          <div>le switch de ses morh</div>
+        </div>
+      </div>
+
+      <!-- Partie sur les détails du poi -->
+      <div id="cot-step-details">
+        <p>Name</p>
+        <p>Description</p>
+        <img />
+        <!--Photo-->
+      </div>
+
+      <button>Details/quests toggle</button>
     </div>
 
 
@@ -148,6 +226,7 @@
       </div>
     </div>
 
+  </div>
 </div>
 
 <nav class="navbar navbar-default">
@@ -164,8 +243,10 @@
       <ul class="nav navbar-nav navbar-right">
         <li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editStep">Valider</button></li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
 </nav>
 
 <br/>
