@@ -40,7 +40,7 @@ angular
       })
       .when('/cot-step', {
         templateUrl: 'views/cot-step.html',
-        // controller: 'CotStepCtrl',
+         controller: 'CotStepCtrl',
       })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
