@@ -1,5 +1,12 @@
 ﻿angular.module('eldoragoApp')
   .controller('CotStepCtrl', function ($scope) {
+    $scope.isQuest = true;
+    $scope.textSwitch = "Voir la fiche descriptive"
+    $scope.switchQuest = function() {
+      $scope.isQuest = !$scope.isQuest;
+      $scope.textSwitch = $scope.isQuest ? "Voir la fiche descriptive" : "Voir la liste des Quêtes";
+    };
+
 
       $scope.map = {
           center: {
@@ -23,4 +30,5 @@
               options: {} // define when map is ready
           }
       };
+
   });
