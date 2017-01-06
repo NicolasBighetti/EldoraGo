@@ -17,6 +17,6 @@ module.exports = function (app) {
     .put(riddles.update)
     .delete(riddles.delete);
 
-  // Finish by binding the Cot middleware
+  // Finish by binding the riddle middleware
   app.param('riddleId', riddles.riddleByID);
 };
