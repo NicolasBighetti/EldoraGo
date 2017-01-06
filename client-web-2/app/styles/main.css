@@ -129,3 +129,13 @@ html:before {
 		}
 
 .angular-google-map-container { height: 400px; }
+
+
+.popover.clockpicker-popover{
+    z-index: 1050;
+}
+
+.bootstrap-datetimepicker-widget .dropdown-menu {
+  z-index:9999 !important;
+
+}
