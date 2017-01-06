@@ -7,13 +7,15 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Poi Schema
+ * Step Schema
  */
-var PoiSchema = new Schema({
+var StepSchema = new Schema({
+  // Step model fields
+  // ...
   name: {
     type: String,
     default: '',
-    required: 'Please fill Poi name',
+    required: 'Please fill step name',
     trim: true
   },
   created: {
@@ -24,13 +26,16 @@ var PoiSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  desc : {
+  desc: {
     type: String,
-    default: 'desc',
-    trim: true,
-    required: 'Please fill Poi desc'
+    default: '',
+    required: 'Please fill step desc',
+    trim: true
+  },
+  quest: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Quest'
   }
-  
 });
 
-mongoose.model('Poi', PoiSchema);
+mongoose.model('Step', StepSchema);

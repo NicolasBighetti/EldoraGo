@@ -7,13 +7,15 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Poi Schema
+ * Quest Schema
  */
-var PoiSchema = new Schema({
+var QuestSchema = new Schema({
+  // Quest model fields
+  // ...
   name: {
     type: String,
     default: '',
-    required: 'Please fill Poi name',
+    required: 'Please fill quest name',
     trim: true
   },
   created: {
@@ -24,13 +26,16 @@ var PoiSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  desc : {
+  desc: {
     type: String,
-    default: 'desc',
-    trim: true,
-    required: 'Please fill Poi desc'
+    default: '',
+    required: 'Please fill quest desc',
+    trim: true
+  },
+  riddle: {
+    type: Schema.ObjectId,
+    ref: 'Riddle'
   }
-  
 });
 
-mongoose.model('Poi', PoiSchema);
+mongoose.model('Quest', QuestSchema);
