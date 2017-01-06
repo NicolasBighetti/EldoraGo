@@ -1,6 +1,6 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -13,37 +13,37 @@
     <link rel="stylesheet" href="bower_components/flat-ui/dist/css/flat-ui.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/cot-step.css">
+
     <!-- endbuild -->
-  </head>
-  <body ng-app="eldoragoApp">
+</head>
+<body ng-app="eldoragoApp">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <!-- Add your site or application content here -->
     <!-- <div class="header"> -->
-      <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <!-- <a class="navbar-brand" href="#/">EldoraGo</a> -->
-          </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- <a class="navbar-brand" href="#/">EldoraGo</a> -->
+            </div>
 
-          <div ng-include src="'views/navbar.html'"></div>
+            <div ng-include src="'views/navbar.html'"></div>
         </div>
-      </div>
+    </div>
     <!-- </div> -->
 
-    <div class="container">
-    <div ng-view=""></div>
+    <div class="" ng-controller="IndexCtrl">
+        <div ng-view=""></div>
     </div>
 
     <!-- <div class="footer">
@@ -51,11 +51,11 @@
         <p><span class="glyphicon glyphicon-heart"></span> from the EldoraGo team</p>
       </div>
     </div> -->
-
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -79,12 +79,16 @@
     <!-- endbuild -->
 
     <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/navbar.js"></script>
-        <script src="scripts/controllers/poi-list.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/index.js"></script>
+
+    <script src="scripts/controllers/navbar.js"></script>
+    <script src="scripts/controllers/poi-list.js"></script>
+    <script src="scripts/controllers/cotstep.js"></script>
+
+    <!-- endbuild -->
 
 </body>
 </html>
