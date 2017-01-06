@@ -34,6 +34,10 @@ angular
         templateUrl: 'views/cot-step.html',
         // controller: 'CotStepCtrl',
       })
+      .when('/enigma-form', {
+        templateUrl: 'views/enigma-form.html',
+        // controller: 'CotStepCtrl',
+      })
       .otherwise({
         redirectTo: '/'
       });
