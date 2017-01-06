@@ -19,14 +19,24 @@
           <input type="text" class="form-control" name="hint" placeholder="Indice" />
 
 
-          <!-- Square switch with customized icons -->
-          <div class="bootstrap-switch-square">
-            <input type="checkbox" data-on-text="<i class='fui-check'></i>" data-off-text="<i class='fui-cross'></i>" name="custom-square-switch-icons" id="switch-11" />
+          <div class="form-group">
+            <div class="col-xs-1">
+              <input type="checkbox" ng-model="disabletimelimit" />
+            </div>
+            <div class="col-xs-6">
+              <input class="form-control" placeholder="Temps limite" type="text" ng-disabled="!disabletimelimit">
+            </div>
           </div>
 
-          <label>Check me to check both: <input type="checkbox" ng-model="master"></label><br/>
 
-          <input id="checkSlave" type="text" ng-checked="master" aria-label="Slave input">
+          <div class="form-group">
+            <div class="col-xs-1">
+            <input type="checkbox" ng-model="disabledatelimit" />
+          </div>
+            <div class="col-xs-6">
+              <input class="form-control" placeholder="Date limite" type="text" ng-disabled="!disabledatelimit">
+            </div>
+          </div>
 
           <p class="input-group">
             <input type="text" class="form-control" name="answer" placeholder="Réponse" required/>
@@ -44,11 +54,3 @@
 
   </div>
 </div>
-<script>
-  $("[name='my-checkbox']").bootstrapSwitch({
-    disabled: true
-  });
-
-  $("[name='my-checkbox']").bootstrapSwitch(); //initialized somewhere
-$("[name='my-checkbox']").bootstrapSwitch('disabled',true);
-</script>
