@@ -1,5 +1,18 @@
 <ion-view view-title="Historique">
 <ion-content>
 
+<timeline>
+    <timeline-event ng-repeat="event in events" side="right">
+      <timeline-badge class="{{event.badgeClass}}">
+        <i class="glyphicon {{event.badgeIconClass}}"></i>
+      </timeline-badge>
+      <timeline-panel class="{{event.badgeClass}}">
+        <timeline-heading>
+          <h4>{{event.title}}</h4>
+        </timeline-heading>
+        <p>{{event.content}}</p>
+      </timeline-panel>
+    </timeline-event>
+  </timeline>
 </ion-content>
 </ion-view>

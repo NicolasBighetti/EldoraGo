@@ -29,6 +29,59 @@ angular.module('starter.controllers', [])
 
 .controller('HistoriqueCtrl', function($scope){
   console.log('timeline pls');
+
+  $scope.events = [{
+    badgeClass: 'info',
+    badgeIconClass: 'glyphicon-check',
+    title: 'First heading',
+    content: 'Some awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }, {
+    badgeClass: 'warning',
+    badgeIconClass: 'glyphicon-credit-card',
+    title: 'Second heading',
+    content: 'More awesome content.'
+  }];
+  
 })
 
 .controller('AccountCtrl', function($scope) {
