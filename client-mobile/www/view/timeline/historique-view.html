@@ -3,14 +3,14 @@
 
 <timeline>
     <timeline-event ng-repeat="event in events" side="right">
-      <timeline-badge class="{{event.badgeClass}}">
-        <i class="glyphicon {{event.badgeIconClass}}"></i>
+      <timeline-badge class="{{colors(event.type)}}">
+        <i class="{{icons(event.type)}}"></i>
       </timeline-badge>
-      <timeline-panel class="{{event.badgeClass}}">
+      <timeline-panel class="{{colors(event.type)}}">
         <timeline-heading>
-          <h4>{{event.title}}</h4>
+          <h4>{{event.joueur}}{{descriptions(event.type)}}</h4>
         </timeline-heading>
-        <p>{{event.content}}</p>
+        <p>{{event.timestamp}}</p>
       </timeline-panel>
     </timeline-event>
   </timeline>
