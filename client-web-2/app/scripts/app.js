@@ -17,9 +17,17 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'uiGmapgoogle-maps'
     // 'ui.router'
   ])
+  .config(
+      ['uiGmapGoogleMapApiProvider', function(GoogleMapApiProviders) {
+          GoogleMapApiProviders.configure({
+              china: true
+          });
+      }]
+  )
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -37,6 +45,10 @@ angular
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
         // controller: 'CotStepCtrl',
+      })
+      .when('/poi-list', {
+        templateUrl: 'views/poi-list.html',
+        controller: 'PoiListCtrl',
       })
       .otherwise({
         redirectTo: '/'

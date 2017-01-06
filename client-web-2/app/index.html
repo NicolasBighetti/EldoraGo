@@ -28,25 +28,16 @@
       <div class="navbar navbar-default navbar-fixed-bottom" role="navigation">
         <div class="container">
           <div class="navbar-header">
-
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-
-            <a class="navbar-brand" href="#/">EldoraGo</a>
+            <!-- <a class="navbar-brand" href="#/">EldoraGo</a> -->
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#!/">Home</a></li>
-              <li><a href="#!/cot-start"><i class="fa fa-plus-square"></i></a></li>
-              <li><a href="#!/enigma-form"><i class="glyphicon glyphicon-queen"></i></i></a></li>
-            </ul>
-          </div>
+          <div ng-include src="'views/navbar.html'"></div>
         </div>
       </div>
     <!-- </div> -->
@@ -77,12 +68,24 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/videojs/dist/video-js/video.js"></script>
     <script src="bower_components/flat-ui/dist/js/flat-ui.js"></script>
+    <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/markerclustererplus/src/markerclusterer.js"></script>
+    <script src="bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>
+    <script src="bower_components/google-maps-utility-library-v3-infobox/dist/infobox.js"></script>
+    <script src="bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>
+    <script src="bower_components/js-rich-marker/src/richmarker.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/navbar.js"></script>
+        <script src="scripts/controllers/poi-list.js"></script>
         <!-- endbuild -->
+        
 </body>
 </html>

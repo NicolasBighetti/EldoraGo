@@ -87,7 +87,7 @@ body {
 
 
 #centered-block-id {
-  background-color: white;
+  /*background-color: white;*/
 }
 
 /* http://css-tricks.com/perfect-full-page-background-image/ */
@@ -120,10 +120,12 @@ html:before {
 		}*/
 
 		body {
-			padding-top: 40px;
+			padding-top: 80px;
 			background: transparent;
 		}
 
 		.margin-base-vertical {
 			margin: 40px 0;
 		}
+
+.angular-google-map-container { height: 400px; }

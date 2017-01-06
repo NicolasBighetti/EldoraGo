@@ -1,3 +1,4 @@
-##ELDORAGO 
+##ELDORAGO
 
-Rémy Kaloustian
+Remy Kaloustian
+Alicia Marin
