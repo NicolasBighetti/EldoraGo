@@ -4,8 +4,6 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
-  console.log("coucou");
-
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -35,12 +33,14 @@ angular.module('starter.controllers', [])
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
 
+
   $scope.setChoice = function(Data) {
     $scope.choice = $scope.json[Data];
     $rootScope.choice = $scope.choice;
     console.log($scope.choice);
   };
 
+  //Get JSON
   $http.get('../templates/test.json').success(function (data) {
     $scope.json = data;
 
@@ -51,6 +51,18 @@ angular.module('starter.controllers', [])
     defer.reject('could not find json file')
   });
 
+
+  //Google mapss
+  document.addEventListener("deviceready", function() {
+    // Define a div tag with id="map_canvas"
+    var mapDiv = document.getElementById("map_canvas");
+
+    // Initialize the map plugin
+    var map = plugin.google.maps.Map.getMap(mapDiv);
+
+    // You have to wait the MAP_READY event.
+    map.on(plugin.google.maps.event.MAP_READY, onMapInit);
+  });
 
 
 });
