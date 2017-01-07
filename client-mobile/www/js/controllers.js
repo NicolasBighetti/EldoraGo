@@ -4,6 +4,8 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
+  console.log("coucou");
+
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -28,7 +30,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller("HomeCtrl", function($scope, $http, $rootScope){
+.controller("HomeCtrl", function($scope, $http, $rootScope, $state, $cordovaGeolocation){
   $scope.view = "templates/tabs.html";
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
@@ -51,17 +53,29 @@ angular.module('starter.controllers', [])
     defer.reject('could not find json file')
   });
 
+  $ionicPlatform.ready(function() {
+    $cordovaPlugin.someFunction().then(
 
-  //Google mapss
-  document.addEventListener("deviceready", function() {
-    // Define a div tag with id="map_canvas"
-    var mapDiv = document.getElementById("map_canvas");
+    );
+  });
 
-    // Initialize the map plugin
-    var map = plugin.google.maps.Map.getMap(mapDiv);
+  //Google maps
+  var options = {timeout: 10000, enableHighAccuracy: true};
 
-    // You have to wait the MAP_READY event.
-    map.on(plugin.google.maps.event.MAP_READY, onMapInit);
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  }, function(error){
+    console.log("Could not get location");
   });
 
 
