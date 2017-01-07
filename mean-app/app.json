@@ -1,0 +1,8 @@
+{
+  "name": "Eldorago",
+  "description": "A back end for Eldorago app",
+  "repository": "https://mjollnir.unice.fr/bitbucket/projects/TGJ/repos/private/browse",
+  "logo": "https://mlab.com/company/brand/resources/mLab-logo-onlight.png",
+  "keywords": ["node", "express", "MEAN", "mongodb", "REST", "API", "PNSGo"],
+  "addons": ["mongolab"]
+}

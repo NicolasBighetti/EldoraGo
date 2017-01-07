@@ -1,0 +1,25 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.cot._id ? 'Edit Cot' : 'New Cot'}}</h1>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.cotForm" class="form-horizontal" ng-submit="vm.save(vm.form.cotForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="name">Name</label>
+          <input name="name" type="text" ng-model="vm.cot.name" id="name" class="form-control" placeholder="Name"
+                 required>
+          <div ng-messages="vm.form.cotForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Cot name is required.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.cot._id ? 'Update' : 'Create'}}</button>
+        </div>
+        <div ng-show="vm.error" class="text-danger">
+          <strong ng-bind="vm.error"></strong>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

@@ -84,10 +84,113 @@ body {
 
 
 /******************************/
-#home-id {
-  padding-top: 60px;
+
+
+#centered-block-id {
+  /*background-color: white;*/
 }
 
-.margin-base-vertical {
-  margin: 40px 0;
+/* http://css-tricks.com/perfect-full-page-background-image/ */
+
+html:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+
+  display: block;
+  background-image: url('../images/cot.jpg');
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+
+		/*html {
+			background: url("../images/cot.jpg") no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}*/
+
+		body {
+			/*padding-top: 5%;*/
+			background: transparent;
+		}
+
+		.margin-base-vertical {
+			margin: 40px 0;
+		}
+
+.container-padding {
+  padding-top: 5%;
+}
+
+
+.popover.clockpicker-popover{
+    z-index: 1050;
+}
+
+.bootstrap-datetimepicker-widget .dropdown-menu {
+  z-index:9999 !important;
+
+}
+
+.angular-google-map-container { height: 700px; }
+
+
+
+
+/********************************************/
+/*************COT STEP PART*****************/
+/********************************************/
+
+
+
+#cot-step-steplist-div
+{
+  padding-top: 2%;
+
+    /*width:15%;*/
+    /*height:100%;*/
+
+}
+
+#cot-step-map-div
+{
+    width:50%;
+    height:800px;
+}
+
+#cot-step-quest-div
+{
+    /*width:18%;*/
+    /*height:100%;*/
+    padding-top: 2%
+}
+
+#cot-step-details-div
+{
+    /*width:17%;*/
+    /*height:100%;*/
+
+}
+
+#cot-step-row
+{
+    /*color:#0026ff;*/
+    background-color:#fefefe;
+}
+
+.panel > .primary-flat {
+    background-image: none;
+    background-color: #1abc9c;
+    color: white;
+
 }
