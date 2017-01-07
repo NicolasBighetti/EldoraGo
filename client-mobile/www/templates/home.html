@@ -1,0 +1,17 @@
+<ion-view title="coucou" ng-controller="HomeCtrl">
+    <ion-content class="padding centered">
+        <div class="bar bar-header bar-light">
+            <h1 class="title">Sélectionnez une quête</h1>
+        </div>
+
+        <!-- We list the available CoT -->
+        <ion-list>
+            <ion-item ng-repeat="item in json">
+
+                <a ng-click="setChoice(item.id)" ng-href="#/select" >{{item.name}}</a>
+            </ion-item>
+        </ion-list>
+
+
+    </ion-content>
+</ion-view>
