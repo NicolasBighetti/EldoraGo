@@ -120,13 +120,27 @@ html:before {
 		}*/
 
 		body {
-			padding-top: 5%;
+			/*padding-top: 5%;*/
 			background: transparent;
 		}
 
 		.margin-base-vertical {
 			margin: 40px 0;
 		}
+
+.container-padding {
+  padding-top: 5%;
+}
+
+
+.popover.clockpicker-popover{
+    z-index: 1050;
+}
+
+.bootstrap-datetimepicker-widget .dropdown-menu {
+  z-index:9999 !important;
+
+}
 
 .angular-google-map-container { height: 700px; }
 
@@ -141,8 +155,10 @@ html:before {
 
 #cot-step-steplist-div
 {
-    width:15%;
-    height:100%;
+  padding-top: 2%;
+
+    /*width:15%;*/
+    /*height:100%;*/
 
 }
 
@@ -154,20 +170,27 @@ html:before {
 
 #cot-step-quest-div
 {
-    width:18%;
-    height:100%;
-
+    /*width:18%;*/
+    /*height:100%;*/
+    padding-top: 2%
 }
 
 #cot-step-details-div
 {
-    width:17%;
-    height:100%;
+    /*width:17%;*/
+    /*height:100%;*/
 
 }
 
 #cot-step-row
 {
-    color:#0026ff;
+    /*color:#0026ff;*/
     background-color:#fefefe;
+}
+
+.panel > .primary-flat {
+    background-image: none;
+    background-color: #1abc9c;
+    color: white;
+
 }

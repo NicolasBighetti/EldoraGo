@@ -25,19 +25,19 @@ exports.invokeRolesPolicies = function () {
     roles: ['user'],
     allows: [{
       resources: '/api/cots',
-      permissions: ['get', 'post']
+      permissions: ['*']
     }, {
       resources: '/api/cots/:cotId',
-      permissions: ['get']
+      permissions: ['*']
     }]
   }, {
     roles: ['guest'],
     allows: [{
       resources: '/api/cots',
-      permissions: ['get']
+      permissions: ['*']
     }, {
       resources: '/api/cots/:cotId',
-      permissions: ['get']
+      permissions: ['*']
     }]
   }]);
 };

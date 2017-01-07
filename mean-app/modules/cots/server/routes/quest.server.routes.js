@@ -17,6 +17,6 @@ module.exports = function (app) {
     .put(quests.update)
     .delete(quests.delete);
 
-  // Finish by binding the Cot middleware
+  // Finish by binding the quest middleware
   app.param('questId', quests.questByID);
 };

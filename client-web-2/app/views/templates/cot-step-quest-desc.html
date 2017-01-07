@@ -1,0 +1,99 @@
+  <!-- LES QUESTS & détails POI -->
+  <div class="row">
+    <div class="btn btn-default center-block" ng-model="textSwitch" ng-click="switchQuest()">{{textSwitch}}</div>
+    <br/>
+  </div>
+  <div ng-show="isQuest">
+    <div class="panel panel-default">
+      <div class="panel-heading primary-flat">Quête 1</div>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="input-group">
+              <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+              <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="btn btn-default"><i class="fa fa-question"></i></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <input type="checkbox" ng-model="optquest1" /> Optionnelle
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default primary-flat">
+      <div class="panel-heading  primary-flat">Quête 2</div>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="input-group">
+              <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+              <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="btn btn-default"><i class="fa fa-question"></i></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <input type="checkbox" ng-model="optquest2" /> Optionnelle
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading primary-flat">Quête 3</div>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="input-group">
+              <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+              <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="btn btn-default"><i class="fa fa-question"></i></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <input type="checkbox" ng-model="optquest3" /> Optionnelle
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div ng-show="!isQuest">
+
+    <!-- Partie sur les quêtes -->
+    <div id="cot-step-questlist">
+      <!-- Liste des quêtes -->
+      <div class="cot-step-quest">
+        <!-- Un exemple d'une quête -->
+        <div class="row">
+          <div class="col-xs-6">
+            <p>Monument : La sculpture de Louis XIV</p>
+          </div>
+          <div class="col-xs-6">
+            <img src="../images/louis_xiv.jpg" class="img-responsive" alt="Cinque Terre">
+          </div>
+          <div class="col-xs-12">
+          <p>Cette statue équestre de Louis XIV est une statue équestre en bronze de Louis XIV située sur la place d'Armes devant le château de Versailles. Jusqu'en 2008-2009, elle se trouvait dans la cour d'Honneur.</p>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

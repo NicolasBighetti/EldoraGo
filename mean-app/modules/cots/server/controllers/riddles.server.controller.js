@@ -13,8 +13,11 @@ var path = require('path'),
  * Create a Riddle
  */
 exports.create = function (req, res) {
+
   var riddle = new Riddle(req.body);
+
   riddle.user = req.user;
+
 
   riddle.save(function (err) {
     if (err) {

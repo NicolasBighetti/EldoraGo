@@ -42,9 +42,12 @@ angular
         templateUrl: 'views/cot-step.html',
          controller: 'CotStepCtrl',
       })
+      .when('/cot-step-wip', {
+        templateUrl: 'views/cot-step-wip.html',
+        // controller: 'CotStepCtrl',
+      })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
-        // controller: 'CotStepCtrl',
       })
       .when('/poi-list', {
         templateUrl: 'views/poi-list.html',
