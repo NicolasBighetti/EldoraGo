@@ -1,0 +1,12 @@
+<ion-view title="coucou" ng-controller="HomeCtrl">
+    <ion-content class="padding centered">
+        <h1>{{choice.name}}</h1>
+
+        <div>{{choice.description}}</div>
+
+        <div ng-if="showtheview" ng-include="view"></div>
+
+        <button ng-click="showtheview = true">click</button>
+
+    </ion-content>
+</ion-view>

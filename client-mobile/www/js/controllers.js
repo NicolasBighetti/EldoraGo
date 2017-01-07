@@ -4,6 +4,8 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
+  console.log("coucou");
+
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -22,14 +24,33 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('HomeCtrl', function($scope){
-  console.log('banane');
-  $scope.showTabBar = false;
-})
-
-
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };
+})
+
+.controller("HomeCtrl", function($scope, $http, $rootScope){
+  $scope.view = "templates/tabs.html";
+  $scope.showtheview = false;
+  $scope.choice = $rootScope.choice;
+
+  $scope.setChoice = function(Data) {
+    $scope.choice = $scope.json[Data];
+    $rootScope.choice = $scope.choice;
+    console.log($scope.choice);
+  };
+
+  $http.get('../templates/test.json').success(function (data) {
+    $scope.json = data;
+
+    console.log(data);
+
+  })
+  .error(function (data) {
+    defer.reject('could not find json file')
+  });
+
+
+
 });

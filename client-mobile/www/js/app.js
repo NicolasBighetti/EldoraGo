@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -31,11 +31,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each state's controller can be found in controllers.js
 
 
-
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+   .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -80,19 +79,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'AccountCtrl'
       }
     }
-  });
+  })
 
-  $stateProvider.state('home', {
-    url: '/home',
-    views: {
-      'home': {
-        templateUrl: 'home/home.html',
-        controller: 'HomeCtrl'
-      }
-    }
-  });
+  .state('select', {
+    url: '/select',
+    templateUrl: 'templates/select.html'
+  })
+
+  .state('home', {
+  url: '/',
+  templateUrl: 'templates/home.html'
+});
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/');
 
 });
