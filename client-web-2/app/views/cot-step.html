@@ -2,7 +2,7 @@
   <div class="row" id="cot-step-row">
     <div class="col-xs-2" id="cot-step-steplist-div">
       LES STEPS
-
+      <div ng-include src="'views/templates/cot-step-leftside.html'"></div>
     </div>
 
     <div class="col-xs-6" id="cot-step-map-div">
@@ -21,216 +21,11 @@
 
     <div class="col-xs-4" id="cot-step-quest-div">
       <!-- LES QUESTS & détails POI -->
-      <div class="row">
-        <div class="btn btn-default center-block" ng-model="textSwitch" ng-click="switchQuest()">{{textSwitch}}</div>
-        <br/>
-      </div>
-      <div ng-show="isQuest">
-        <div class="panel panel-default">
-          <div class="panel-heading primary-flat">Quête 1</div>
-          <div class="panel-body">
-
-            <div class="row">
-              <div class="col-xs-10">
-                <div class="input-group">
-                  <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
-                  <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
-                </div>
-              </div>
-              <div class="col-xs-2">
-                <div class="btn btn-default"><i class="fa fa-question"></i></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <input type="checkbox" ng-model="optquest1" /> Optionnelle
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-default primary-flat">
-          <div class="panel-heading  primary-flat">Quête 2</div>
-          <div class="panel-body">
-
-            <div class="row">
-              <div class="col-xs-10">
-                <div class="input-group">
-                  <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
-                  <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
-                </div>
-              </div>
-              <div class="col-xs-2">
-                <div class="btn btn-default"><i class="fa fa-question"></i></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <input type="checkbox" ng-model="optquest2" /> Optionnelle
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading primary-flat">Quête 3</div>
-          <div class="panel-body">
-
-            <div class="row">
-              <div class="col-xs-10">
-                <div class="input-group">
-                  <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
-                  <span class="input-group-addon"><i class="fa fa-lightbulb-o"></i></span>
-                </div>
-              </div>
-              <div class="col-xs-2">
-                <div class="btn btn-default"><i class="fa fa-question"></i></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <input type="checkbox" ng-model="optquest3" /> Optionnelle
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div ng-show="!isQuest">
-
-        <!-- Partie sur les quêtes -->
-        <div id="cot-step-questlist">
-          <!-- Liste des quêtes -->
-          <div class="cot-step-quest">
-            <!-- Un exemple d'une quête -->
-            <div class="row">
-              <div class="col-xs-6">
-                <p>Monument : La sculpture de Louis XIV</p>
-              </div>
-              <div class="col-xs-6">
-                <img src="../images/louis_xiv.jpg" class="img-responsive" alt="Cinque Terre">
-              </div>
-              <div class="col-xs-12">
-              <p>Cette statue équestre de Louis XIV est une statue équestre en bronze de Louis XIV située sur la place d'Armes devant le château de Versailles. Jusqu'en 2008-2009, elle se trouvait dans la cour d'Honneur.</p>
-            </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <div ng-include src="'views/templates/cot-step-quest-desc.html'"></div>
     </div>
-
 
     <!-- Modal -->
-    <div id="editStep" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Informations générales</h4>
-          </div>
-          <div class="modal-body">
-            <form class="" id="editform">
-
-              <!-- Nom -->
-              <div class="row">
-                <div class="col-xs-6">
-                  <input type="text" class="form-control" name="name" placeholder="Nom" required/>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12">
-                  <!-- Description -->
-                  <textarea class="form-control" rows="4" name="desc" placeholder="Description" required></textarea>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-6">
-                  <!-- Durée estimée -->
-                  <div class="row">
-                    <div class="form-group">
-                      <div class="col-xs-12">
-                        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                          <input type="text" class="form-control" value="13:14">
-                          <span class="input-group-addon">
-                                <i class="fa fa-clock-o"></i>
-                          </span>
-                        </div>
-                        <!-- <input class="form-control" placeholder="Durée estimée" type="text"> -->
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Image URL -->
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="form-group">
-                        <div class="input-group">
-                          <input class="form-control" placeholder="Image URL" type="text">
-                          <span class="input-group-addon">
-                              <i class="fa fa-upload"></i>
-                        </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-xs-6">
-                  <!-- Temps limité -->
-                  <div class="row">
-                    <div class="form-group">
-                      <div class="col-xs-1">
-                        <input type="checkbox" ng-model="disabletimelimit" />
-                      </div>
-                      <div class="col-xs-10">
-                        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                          <input type="text" class="form-control" value="13:14" ng-disabled="!disabletimelimit">
-                          <span class="input-group-addon" ng-disabled="!disabledatelimit">
-                                <i class="fa fa-clock-o"></i>
-                          </span>
-                        </div>
-
-
-                        <!-- <input class="form-control" placeholder="Temps limite" type="text" ng-disabled="!disabletimelimit"> -->
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Date limite -->
-                  <div class="row">
-                    <div class="form-group">
-                      <div class="col-xs-1">
-                        <input type="checkbox" ng-model="disabledatelimit" />
-                      </div>
-                      <div class="col-xs-10">
-                        <div class="form-group">
-                          <div class='input-group date' id="datetimepicker3">
-                            <input type="text" class="form-control" data-bind="value: $data.visitdate" ng-disabled="!disabledatelimit" />
-                            <span class="input-group-addon">
-                <i class="fa fa-calendar-o"></i>
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" form="editform" value="Submit" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
+    <div ng-include src="'views/templates/cot-step-editStep.html'"></div>
   </div>
 </div>
 
@@ -244,7 +39,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#!/start" class="btn btn-default">Retour</a></li>
+        <li><a href="#!/cot-start" class="btn btn-default">Retour</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editStep">Valider</button></li>
