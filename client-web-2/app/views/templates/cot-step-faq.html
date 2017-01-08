@@ -1,0 +1,48 @@
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq">Foire (temporaire)</button>
+
+<div id="faq" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Enigmes</a></li>
+            <li><a >Objets cachés</a></li>
+            <li><a >Orientation</a></li>
+          </ul>
+        </h4>
+      </div>
+      <div class="modal-body">
+<div class="row">
+  <div class="col-xs-3">
+    <ul>
+      <li ng-repeat="quest in listEnigma">
+        <a href="" ng-click="select(quest)" >{{quest.name}}</a>
+      </li>
+    </ul>
+      </div>
+      <div class="col-xs-9">
+        <h5>{{questSelected.name}}</h5>
+        <p>{{questSelected.desc}}</p>
+      </div>
+
+    </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" form="editform" value="Submit" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

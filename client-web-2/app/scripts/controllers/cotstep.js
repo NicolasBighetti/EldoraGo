@@ -31,4 +31,22 @@
           }
       };
 
+
+      $scope.select = function(quest) {
+          $scope.questSelected = quest;
+        };
+
+      $scope.listEnigma = [{
+          name: "Quete 1",
+          desc: "4 plus 4 ?"
+        }, {
+          name: "Quete 2",
+          desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?"
+        }, {
+          name: "Quete avec un nom",
+          desc: "Oh! Oh! Oh!"
+        }, {
+          name: "Quete 4",
+          desc: "Ah! Ah! Ah!"
+        }];
   });
