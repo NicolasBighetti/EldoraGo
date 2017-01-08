@@ -1,15 +1,12 @@
 $(document).ready(function () {
 
-    console.log("JQUERY IN MANAGER");
 
     $(document).on("click", "#main-navbar a", function () {
-        console.log("Hiding title");
         HideTitle();
 
     });
 
     $(document).on("click", "#home-icon", function () {
-        console.log("Showing title");
         ShowTitle();
 
     });
