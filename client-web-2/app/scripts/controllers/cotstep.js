@@ -49,4 +49,13 @@
           name: "Quete 4",
           desc: "Ah! Ah! Ah!"
         }];
+
+      //function updateLat() {
+
+
+      //}
+
+      //$scope.$watch($scope.center.lat, updateLat);
+
+      console.log("LOCATION in cotstep controller : " + $scope.lat + " / " + $scope.lon);
   });
