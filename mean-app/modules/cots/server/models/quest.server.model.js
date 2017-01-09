@@ -18,19 +18,18 @@ var QuestSchema = new Schema({
     required: 'Please fill quest name',
     trim: true
   },
-  created: {
-    type: Date,
-    default: Date.now
-  },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   desc: {
     type: String,
     default: '',
-    required: 'Please fill quest desc',
+    //required: 'Please fill quest desc',
     trim: true
+  },
+  qtype: {
+    type: String,
+    default: 'Riddle'
+  },
+  optional:{
+    type: Boolean
   },
   riddle: {
     type: Schema.ObjectId,

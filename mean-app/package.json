@@ -2,8 +2,7 @@
   "name": "eldorago",
   "description": "Full-Stack app to create and manage tresure hunts",
   "version": "0.4.2",
-  "meanjs-version": "0.4.2",
-  "private": false,
+  "private": true,
   "author": "Polytech Nice France SI PNSGo team J",
   "license": "MIT",
   "repository": {
@@ -11,7 +10,7 @@
     "url": "https://github.com/meanjs/mean.git"
   },
   "engines": {
-    "node": ">=0.10.28",
+    "node": ">=0.10.0",
     "npm": ">=1.4.28"
   },
   "scripts": {
@@ -38,7 +37,7 @@
     "forever": "~0.14.2",
     "generate-password": "^1.1.1",
     "glob": "^5.0.13",
-    "grunt": "0.4.5",
+    "grunt": "^0.4.5",
     "grunt-cli": "~0.1.13",
     "helmet": "~0.9.1",
     "jasmine-core": "^2.3.4",
@@ -81,7 +80,6 @@
     "grunt-mocha-istanbul": "^2.4.0",
     "grunt-mocha-test": "~0.12.7",
     "grunt-ng-annotate": "^1.0.1",
-    "grunt-node-inspector": "~0.3.0",
     "grunt-nodemon": "~0.4.0",
     "grunt-protractor-coverage": "~0.2.15",
     "grunt-protractor-runner": "^2.1.0",
@@ -113,7 +111,7 @@
     "karma-ng-html2js-preprocessor": "^0.1.2",
     "karma-phantomjs-launcher": "~0.2.0",
     "load-grunt-tasks": "^3.2.0",
-    "mock-fs": "~3.4.0",
+    "mock-fs": "~3.9.0",
     "run-sequence": "^1.1.1",
     "should": "^7.0.1",
     "supertest": "^1.0.1"

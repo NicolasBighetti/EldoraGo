@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Cot instances</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="cot-instance in vm.cotInstances"
+       ui-sref="cotInstances.view({ cot-instanceId: cot-instance._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="cotInstance.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="cotInstance.user" ng-bind="cotInstance.user.displayName"></span>
+        <span ng-if="!cotInstance.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="cot-instance.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.cotInstances.$resolved && !vm.cotInstances.length">
+    No Cot instances yet, why don't you <a ui-sref="cotInstances.create">create one</a>?
+  </div>
+</section>

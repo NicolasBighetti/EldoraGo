@@ -6,18 +6,18 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Step = mongoose.model('Step');
+  Riddle = mongoose.model('Riddle');
 
 /**
  * Globals
  */
 var user,
-  step;
+  riddle;
 
 /**
  * Unit tests
  */
-describe('Step Model Unit Tests:', function () {
+describe('Riddle Model Unit Tests:', function () {
   beforeEach(function (done) {
     user = new User({
       firstName: 'Full',
@@ -29,9 +29,14 @@ describe('Step Model Unit Tests:', function () {
     });
 
     user.save(function () {
-      step = new Step({
+      riddle = new Riddle({
         // Add model fields
         // ...
+        name:' Riddle 1  !',
+        desc:' Quelle salle se trouve devant l\'acceuil ?',
+        hint: '14.',
+        answer: '141'
+        
       });
 
       done();
@@ -40,7 +45,7 @@ describe('Step Model Unit Tests:', function () {
 
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
-      return step.save(function (err) {
+      return riddle.save(function (err) {
         should.not.exist(err);
         done();
       });
@@ -48,7 +53,7 @@ describe('Step Model Unit Tests:', function () {
   });
 
   afterEach(function (done) {
-    Step.remove().exec();
+    Riddle.remove().exec();
     User.remove().exec();
 
     done();

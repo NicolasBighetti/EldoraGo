@@ -6,19 +6,19 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Step = mongoose.model('Step');
+  Player = mongoose.model('Player');
 
 /**
  * Globals
  */
 var user,
-  step;
+  player;
 
 /**
  * Unit tests
  */
-describe('Step Model Unit Tests:', function () {
-  beforeEach(function (done) {
+describe('Player Model Unit Tests:', function() {
+  beforeEach(function(done) {
     user = new User({
       firstName: 'Full',
       lastName: 'Name',
@@ -28,27 +28,29 @@ describe('Step Model Unit Tests:', function () {
       password: 'password'
     });
 
-    user.save(function () {
-      step = new Step({
+    user.save(function() {
+      player = new Player({
         // Add model fields
         // ...
+        name: 'Louigitte'
+        
       });
 
       done();
     });
   });
 
-  describe('Method Save', function () {
-    it('should be able to save without problems', function (done) {
-      return step.save(function (err) {
+  describe('Method Save', function() {
+    it('should be able to save without problems', function(done) {
+      return player.save(function(err) {
         should.not.exist(err);
         done();
       });
     });
   });
 
-  afterEach(function (done) {
-    Step.remove().exec();
+  afterEach(function(done) {
+    Player.remove().exec();
     User.remove().exec();
 
     done();
