@@ -24,9 +24,9 @@ var RiddleSchema = new Schema({
     required: 'Please fill riddle desc',
     trim: true
   },
-  kewords: {
+  keywords: {
     type: [String],
-    default: '',
+    default: [],
     trim: true
   },
   hint: {
@@ -39,14 +39,6 @@ var RiddleSchema = new Schema({
     default: '',
     required: 'Please fill riddle answer',
     trim: true
-  },
-  created: {
-    type: Date,
-    default: Date.now
-  },
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User'
   }
 
 });
