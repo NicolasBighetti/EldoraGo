@@ -16,6 +16,16 @@
         </h4>
       </div>
       <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-4 col-xs-offset-8">
+            <p class="input-group">
+              <input ng-model="searchQuest" class="form-control" placeholder="Recherche" name="srch-term" type="text"/>
+              <div ng-show="search" class="input-group-btn">
+                <a class="btn btn-default btn-social" ng-click="search=''"><i class="text-danger fa fa-times"></i></a>
+              </div>
+            </p>
+          </div>
+        </div>
 <div class="row">
   <div class="col-xs-3">
     <ul>
