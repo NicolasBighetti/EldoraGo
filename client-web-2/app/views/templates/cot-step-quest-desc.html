@@ -4,32 +4,34 @@
     <br/>
   </div>
   <div ng-show="isQuest">
-    <div class="panel panel-default">
-      <div class="panel-heading primary-flat">Quête 1</div>
+    <div class="panel panel-default" ng-repeat="quest in listQuest">
+      <div class="panel-heading primary-flat">{{quest.name}}</div>
       <div class="panel-body">
 
-        <div class="row">
+        <div class="row" >
           <div class="col-xs-10">
             <div class="input-group">
-              <input type="text" class="form-control" name="defi" placeholder="Choisir un défi">
+              <input type="text" class="form-control" name="defi" placeholder="Choisir un défi" ng-value="quest.id_riddle" disabled></input>
               <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
+                <button ng-click="selectQuest(quest)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
               </span>
             </div>
-          </div>
-          <div class="col-xs-2">
-            <div class="btn btn-default"><i class="fa fa-question"></i></div>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <input type="checkbox" ng-model="optquest1" /> Optionnelle
+            <div class="btn btn-default" data-toggle="popover" title="{{quest.id_riddle}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <input type="checkbox" ng-model="quest.id" ng-checked="quest.optionnelle"/> Optionnelle
           </div>
         </div>
       </div>
     </div>
 
-    <div class="panel panel-default primary-flat">
+    <!-- <div class="panel panel-default primary-flat">
       <div class="panel-heading  primary-flat">Quête 2</div>
       <div class="panel-body">
 
@@ -52,9 +54,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="panel panel-default">
+    <!-- <div class="panel panel-default">
       <div class="panel-heading primary-flat">Quête 3</div>
       <div class="panel-body">
 
@@ -77,7 +79,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 
@@ -103,3 +105,10 @@
       </div>
     </div>
   </div>
+
+
+  <script>
+  $(document).ready(function(){
+      $('[data-toggle="popover"]').popover();
+  });
+  </script>

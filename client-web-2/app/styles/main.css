@@ -167,7 +167,7 @@ h1
     font-size:1000%;
     text-align:center;
     margin-top:10%;
-   
+
 }
 
 #hr-home
@@ -211,7 +211,7 @@ h1
     background-color:  rgba(33, 33, 33, 0.5);
 }
 
-.angular-google-map-container { height: 700px; }
+.angular-google-map-container { height: 90vh; }
 
 /*/************************************************/
 /*********************  EFFECTS   *****************/
@@ -450,20 +450,21 @@ h1
 #cot-step-map-div
 {
     width:50%;
-    height:800px;
+    height: 90vh;
 }
 
 #cot-step-quest-div
 {
     /*width:18%;*/
     /*height:100%;*/
-    padding-top: 2%
+    padding-top: 2%;
+    overflow-y: scroll;
+    height: 90vh;
 }
 
 #cot-step-details-div
 {
-    /*width:17%;*/
-    /*height:100%;*/
+    height: 90vh;
 
 }
 
@@ -478,4 +479,9 @@ h1
     background-color: #1abc9c;
     color: white;
 
+}
+
+#leftQuest {
+  overflow-y: scroll;
+  height:200px;
 }

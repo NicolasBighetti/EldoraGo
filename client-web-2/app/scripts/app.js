@@ -34,12 +34,8 @@ angular
         templateUrl: 'views/home.html',
         // controller: 'HomeCtrl',
       })
-      .when('/cot-start', {
+      .when('/cot', {
         templateUrl: 'views/cot.html',
-         controller: 'CotStepCtrl',
-      })
-      .when('/cot-step', {
-        templateUrl: 'views/cot-step.html',
          controller: 'CotStepCtrl',
       })
       .when('/enigma-form', {
