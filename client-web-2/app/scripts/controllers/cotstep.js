@@ -92,6 +92,15 @@ angular.module('eldoragoApp')
 
     }
 
+    //Resets the steps _id to keep valid _ids
+    function ResetStepsId()
+    {
+      for (var i = 0; i < $scope.stepList.length; i++)
+      {
+          $scope.stepList[i]._id = i + 1;
+      }
+    }//ResetStepsId()
+
     $scope.marker = {
       events: {
         click: function(marker, eventName, args) {
@@ -113,7 +122,12 @@ angular.module('eldoragoApp')
     };
 
 
-
+    //Removes a step
+    $scope.RemoveStep = function(id)
+    {
+        $scope.stepList.splice(id - 1, 1);
+        ResetStepsId();
+    }
 
 
     /** STEP **/
@@ -136,7 +150,9 @@ angular.module('eldoragoApp')
       // modif BDD
     };
 
+    $scope.newQuest = function () {
 
+    }
 
 
 
@@ -223,20 +239,22 @@ angular.module('eldoragoApp')
       name: "Quete avec un nom",
       desc: "Oh! Oh! Oh!",
       qtype: "Enigme"
-    }, {
-      id: "quete4",
-      id_riddle: "riddle4",
-      name: "Quete 4",
-      desc: "Ah! Ah! Ah!",
-      qtype: "Enigme"
-    }, {
-      name: "Quete 5",
-      desc: "Ih! Ih! Ih!",
-      qtype: "Enigme"
-    }, {
-      name: "Quete 6",
-      desc: "Uh! Uh! Uh!",
-      qtype: "Enigme"
-    }];
+    }
+    //, {
+    //   id: "quete4",
+    //   id_riddle: "riddle4",
+    //   name: "Quete 4",
+    //   desc: "Ah! Ah! Ah!",
+    //   qtype: "Enigme"
+    // }, {
+    //   name: "Quete 5",
+    //   desc: "Ih! Ih! Ih!",
+    //   qtype: "Enigme"
+    // }, {
+    //   name: "Quete 6",
+    //   desc: "Uh! Uh! Uh!",
+    //   qtype: "Enigme"
+    // }
+  ];
 
   });
