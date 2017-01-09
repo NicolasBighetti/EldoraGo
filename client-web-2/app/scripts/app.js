@@ -35,16 +35,15 @@ angular
         // controller: 'HomeCtrl',
       })
       .when('/cot-start', {
-        templateUrl: 'views/cot-start.html',
-        // controller: 'CotStartCtrl',
+        templateUrl: 'views/cot.html',
+         controller: 'CotStepCtrl',
       })
       .when('/cot-step', {
         templateUrl: 'views/cot-step.html',
-        // controller: 'CotStepCtrl',
+         controller: 'CotStepCtrl',
       })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
-        // controller: 'CotStepCtrl',
       })
       .when('/poi-list', {
         templateUrl: 'views/poi-list.html',

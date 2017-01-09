@@ -1,1 +1,35 @@
 /* Empty. Add your own CSS if you like */
+
+html, body { height: 100%; }
+
+.justified{
+    text-align: justify;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Preview for a selected treasure hunt */
+
+.treasure-hunt-header{
+    padding-bottom: 5vh;
+}
+.treasure-hunt-title{
+    font-size: 8vw;
+}
+
+.sub-info{
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.scroll {
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}

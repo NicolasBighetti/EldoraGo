@@ -7,6 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'angular-timeline', 'starter.historique'])
 
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -23,6 +24,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
+  /*.run(function($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if(window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+      if(window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+      var div = document.getElementById("map_canvas");
+      var map = plugin.google.maps.Map.getMap(div);
+    });
+  })*/
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
@@ -31,11 +48,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // Each state's controller can be found in controllers.js
 
 
-
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+   .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -93,17 +109,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
   ;
 
-  $stateProvider.state('home', {
-    url: '/home',
-    views: {
-      'home': {
-        templateUrl: 'home/home.html',
-        controller: 'HomeCtrl'
-      }
-    }
-  });
+  .state('select', {
+    url: '/select',
+    templateUrl: 'templates/select.html'
+  })
+
+  .state('home', {
+  url: '/home',
+  templateUrl: 'templates/home.html'
+});
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/home');
 
 });

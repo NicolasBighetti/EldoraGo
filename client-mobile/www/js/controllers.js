@@ -4,6 +4,8 @@ angular.module('starter.controllers', [])
 
 .controller('ChatsCtrl', function($scope, Chats) {
 
+  console.log("coucou");
+
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -38,4 +40,55 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
+})
+
+.controller("HomeCtrl", function($scope, $http, $rootScope/*, $state, $cordovaGeolocation*/){
+  $scope.view = "templates/tabs.html";
+  $scope.showtheview = false;
+  $scope.choice = $rootScope.choice;
+
+
+  $scope.setChoice = function(Data) {
+    $scope.choice = $scope.json[Data];
+    $rootScope.choice = $scope.choice;
+    console.log($scope.choice);
+  };
+
+  //Get JSON
+  $http.get('templates/test.json').success(function (data) {
+    $scope.json = data;
+
+    console.log(data);
+
+  })
+  .error(function (data) {
+    defer.reject('could not find json file')
+  });
+
+  /*$ionicPlatform.ready(function() {
+    $cordovaPlugin.someFunction().then(
+
+    );
+  });*/
+
+  //Google maps
+  /*var options = {timeout: 10000, enableHighAccuracy: true};
+
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  }, function(error){
+    console.log("Could not get location");
+  });*/
+
+
 });

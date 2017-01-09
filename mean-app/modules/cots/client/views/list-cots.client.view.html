@@ -1,0 +1,22 @@
+<section>
+  <div class="page-header">
+    <h1>Cots</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="cot in vm.cots"
+       ui-sref="cots.view({ cotId: cot._id })"
+       class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="cot.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="cot.user" ng-bind="cot.user.displayName"></span>
+        <span ng-if="!cot.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="cot.name"></h4>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" ng-if="vm.cots.$resolved && !vm.cots.length">
+    No Cots yet, why don't you <a ui-sref="cots.create">create one</a>?
+  </div>
+</section>

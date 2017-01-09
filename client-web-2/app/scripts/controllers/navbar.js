@@ -5,6 +5,4 @@ angular.module('eldoragoApp')
       $scope.isActive = function(viewLocation) {
         return viewLocation === $location.path();
       };
-      console.log($location.path());
-      console.log("coucou");
     });
