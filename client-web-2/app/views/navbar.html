@@ -1,13 +1,20 @@
-    <div class="collapse navbar-collapse " ng-controller="NavBarCtrl" id="js-navbar-collapse">
+    <div ng-controller="NavBarCtrl" class="collapse navbar-collapse " id="js-navbar-collapse">
 
 
-        <ul class="nav navbar-nav">
+        <ul ng-show="!isActive('/cot')" class="nav navbar-nav">
             <li ng-class="{ active: isActive('/')}"><a href="#!/" class="hvr-overline-from-center-blue" id="home-icon"><i class="fa fa-home"></i></a></li>
-            <li ng-class="{ active: isActive('/cot-start')}"><a href="#!/cot-start" class="hvr-overline-from-center-green" id="add-icon"><i class="fa fa-plus-square"></i></a></li>
-            <li ng-class="{ active: isActive('/cot-step')}"><a href="#!/cot-step" class="hvr-overline-from-center-red" id="change-icon"><i class="fa fa-edit"></i></a></li>
+            <li ng-class="{ active: isActive('/cot')}"><a href="#!/cot" class="hvr-overline-from-center-green" id="add-icon"><i class="fa fa-plus-square"></i></a></li>
             <!-- <li ng-class="{ active: isActive('/cot-step-wip')}"><a href="#!/cot-step-wip"><i class="fa fa-heart"></i></a></li> -->
             <li ng-class="{ active: isActive('/enigma-form')}"><a href="#!/enigma-form" class="hvr-overline-from-center-orange" id="enigma-icon"><i class="fa fa-lightbulb-o"></i></a></li>
             <li ng-class="{ active: isActive('/poi-list')}"><a href="#!/poi-list" class="hvr-overline-from-center-violet" id="poi-icon"><i class="fa fa-map-marker"></i></a></li>
             <li ng-class="{ active: isActive('/stats')}"><a href="#!/stats" class="hvr-overline-from-center-pink" id="stats-icon"><i class="fa fa-bar-chart"></i></a></li>
         </ul>
+
+        <ul ng-show="isActive('/cot')" class="nav navbar-nav">
+          <li><a href="#!/" class="btn btn-default">Retour</a></li>
+        </ul>
+        <ul ng-show="isActive('/cot')" class="nav navbar-nav navbar-right">
+          <li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editStep">Valider</button></li>
+        </ul>
+
     </div>

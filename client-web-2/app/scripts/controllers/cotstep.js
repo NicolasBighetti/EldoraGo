@@ -97,33 +97,64 @@ angular.module('eldoragoApp')
       $scope.textSwitch = $scope.isQuest ? "Voir la fiche descriptive" : "Voir la liste des Quêtes";
     };
 
-    $scope.select = function(quest) {
-      $scope.questSelected = quest;
+    $scope.select = function(riddle) {
+      $scope.riddleSelected = riddle;
     };
 
     $scope.listEnigma = [{
-      id: "quete1",
-      name: "Quete 1",
+      id: "riddle1",
+      name: "Enigme 1",
       desc: "4 plus 4 ?",
       keywords: [],
       hint: "C'est une addition",
       answer: "8",
       qtype: "Enigme"
     }, {
-      id: "quete2",
-      name: "Quete 2",
+      id: "riddle2",
+      name: "Enigme 2",
       desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
       keywords: [],
       hint: "",
       answer: "Coca-cola",
       qtype: "Enigme"
     }, {
-      id: "quete3",
-      name: "Quete avec un nom",
+      id: "riddle3",
+      name: "Enigme avec un nom",
       desc: "Oh! Oh! Oh!",
       keywords: [],
       hint: "Tu vas trouver!",
       answer: "héhéhé",
+      qtype: "Enigme"
+    }, {
+      id: "riddle4",
+      name: "Enigme 4",
+      desc: "Ah! Ah! Ah!",
+      qtype: "Enigme"
+    }, {
+      name: "Enigme 5",
+      desc: "Ih! Ih! Ih!",
+      qtype: "Enigme"
+    }, {
+      name: "Enigme 6",
+      desc: "Uh! Uh! Uh!",
+      qtype: "Enigme"
+    }];
+
+    $scope.listQuest = [{
+      id: "quete1",
+      name: "Quete 1",
+      id_riddle: "riddle1",
+      desc: "4 plus 4 ?",
+      qtype: "Enigme"
+    }, {
+      id: "quete2",
+      name: "Quete 2",
+      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
+      qtype: "Enigme"
+    }, {
+      id: "quete3",
+      name: "Quete avec un nom",
+      desc: "Oh! Oh! Oh!",
       qtype: "Enigme"
     }, {
       id: "quete4",
@@ -140,12 +171,8 @@ angular.module('eldoragoApp')
       qtype: "Enigme"
     }];
 
-    //function updateLat() {
+    $scope.associateQuest = function(quest, riddle) {
+      // $scope.
+    };
 
-
-    //}
-
-
-    //$scope.$watch($scope.center.lat, updateLat);
-    console.log("LOCATION in cotstep controller : " + $scope.lat + " / " + $scope.lon);
   });
