@@ -105,11 +105,11 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   })
 
   .state('home', {
-  url: '/',
+  url: '/home',
   templateUrl: 'templates/home.html'
 });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/home');
 
 });
