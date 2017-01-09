@@ -35,7 +35,6 @@ angular.module('eldoragoApp')
             for (var i = 0; i < $scope.markerList.length; i++) {
               //rename _id en id
               $scope.markerList[i].id = $scope.markerList[i]._id;
-
               // adding marker on the map
               $scope.map.markers.push($scope.markerList[i]);
               // console.log($scope.markerList[i]);
