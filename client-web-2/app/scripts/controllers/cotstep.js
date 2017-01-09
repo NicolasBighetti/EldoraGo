@@ -83,7 +83,7 @@ angular.module('eldoragoApp')
       } //marker
     };
 
-    function AddStep(lat, lng) {
+    $scope.addStep = function(lat, lng) {
       $scope.stepList.push({
         _id: $scope.stepList.length + 1,
         _lat: lat,
@@ -108,7 +108,8 @@ angular.module('eldoragoApp')
           //$scope.open();
           //console.log(marker.position.lat() +" -- "+ marker.position.lng());
           console.log("Marker clicked ! ");
-          AddStep(marker.position.lat(), marker.position.lng());
+
+          // $scope.associateStepPoi(step, poi);
 
           console.log("$scope.markerList.length"+ $scope.markerList.length);
           for (var i = 0; i < $scope.markerList.length ; i++) {
@@ -150,7 +151,7 @@ angular.module('eldoragoApp')
       // modif BDD
     };
 
-    $scope.newQuest = function () {
+    $scope.addQuest = function () {
 
     }
 
