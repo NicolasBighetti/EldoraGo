@@ -102,17 +102,42 @@ angular.module('eldoragoApp')
     };
 
     $scope.listEnigma = [{
+      id: "quete1",
       name: "Quete 1",
-      desc: "4 plus 4 ?"
+      desc: "4 plus 4 ?",
+      keywords: [],
+      hint: "C'est une addition",
+      answer: "8",
+      qtype: "Enigme"
     }, {
+      id: "quete2",
       name: "Quete 2",
-      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?"
+      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
+      keywords: [],
+      hint: "",
+      answer: "Coca-cola",
+      qtype: "Enigme"
     }, {
+      id: "quete3",
       name: "Quete avec un nom",
-      desc: "Oh! Oh! Oh!"
+      desc: "Oh! Oh! Oh!",
+      keywords: [],
+      hint: "Tu vas trouver!",
+      answer: "héhéhé",
+      qtype: "Enigme"
     }, {
+      id: "quete4",
       name: "Quete 4",
-      desc: "Ah! Ah! Ah!"
+      desc: "Ah! Ah! Ah!",
+      qtype: "Enigme"
+    }, {
+      name: "Quete 5",
+      desc: "Ih! Ih! Ih!",
+      qtype: "Enigme"
+    }, {
+      name: "Quete 6",
+      desc: "Uh! Uh! Uh!",
+      qtype: "Enigme"
     }];
 
     //function updateLat() {
