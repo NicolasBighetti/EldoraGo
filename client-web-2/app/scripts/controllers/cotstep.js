@@ -1,6 +1,6 @@
 ﻿
 angular.module('eldoragoApp')
-  .controller('CotStepCtrl', function($scope) {
+  .controller('CotStepCtrl', function($scope, $location, $timeout, $http) {
 
     /** Show **/
     $scope.isStart = true;
@@ -28,7 +28,7 @@ angular.module('eldoragoApp')
 
           $scope.stepList = [];
 
-//Contains the markers we will add 
+//Contains the markers we will add
           $scope.markerList = [
               {
                   id: Date.now(), coords:
@@ -108,8 +108,7 @@ angular.module('eldoragoApp')
           console.log(e);
           var lat = e.latLng.lat(),
             lon = e.latLng.lng();
-
-           //Add a marker when clicking
+STEP           //Add a marker when clicking
         //  var marker = {
         //    id: Date.now(),
         //    coords: {
@@ -123,7 +122,7 @@ angular.module('eldoragoApp')
         //  $scope.$apply();
         //  console.log(marker.coords.latitude + marker.coords.lon);
         }
-      
+
     }//marker
     };
 
@@ -149,7 +148,7 @@ angular.module('eldoragoApp')
 
 
 
-    /** step **/
+    /** STEP **/
     $scope.isQuest = true;
     $scope.textSwitch = "Voir la fiche descriptive"
     $scope.switchQuest = function() {
@@ -169,6 +168,24 @@ angular.module('eldoragoApp')
       // modif BDD
     };
 
+
+    /** SUBMIT **/
+    $scope.submitCot = function(data) {
+      // sendBDD
+
+      $http.post("http://eldorago.herokuapp.com/api/cots", data)
+
+      $('#editStep').modal('hide');
+
+      $timeout(function () {
+      $location.path("/cot-list");
+    }, 1000);
+
+
+      console.log("COT sauvegardée");
+    }
+
+    /** BDD **/
     $scope.listEnigma = [{
       id: "riddle1",
       name: "Enigme 1",
