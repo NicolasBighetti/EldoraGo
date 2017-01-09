@@ -11,7 +11,7 @@ angular.module('eldoragoApp')
       }, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
           var location = results[0].geometry.location;
-          console.log("LOCATION in the cot-start controller: " + location);
+          console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
           //$scope.lat = location.lat();
           //$scope.lon = location.lng();
           $scope.updateLocation(location.lat(), location.lng());
@@ -26,8 +26,7 @@ angular.module('eldoragoApp')
       $scope.map.center.latitude = newlat;
       $scope.map.center.longitude = newlon;
       // console.log("Updated location with : " + newlat + " / "+ newlon);
-      console.log("Updated location with : " + $scope.lat + " / " + $scope.lon);
-      $scope.map.refresh();
+      console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
     };
 
 
