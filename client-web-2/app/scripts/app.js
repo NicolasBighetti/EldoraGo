@@ -35,8 +35,8 @@ angular
         // controller: 'HomeCtrl',
       })
       .when('/cot-start', {
-        templateUrl: 'views/cot-start.html',
-         controller: 'CotStartCtrl',
+        templateUrl: 'views/cot.html',
+         controller: 'CotStepCtrl',
       })
       .when('/cot-step', {
         templateUrl: 'views/cot-step.html',
