@@ -101,6 +101,14 @@ angular.module('eldoragoApp')
       $scope.riddleSelected = riddle;
     };
 
+    $scope.selectQuest = function(quest) {
+      $scope.questSelected = quest;
+    };
+
+    $scope.associateQuest = function(quest, riddle) {
+      // modif BDD
+    };
+
     $scope.listEnigma = [{
       id: "riddle1",
       name: "Enigme 1",
@@ -148,16 +156,19 @@ angular.module('eldoragoApp')
       qtype: "Enigme"
     }, {
       id: "quete2",
+      id_riddle: "riddle2",
       name: "Quete 2",
       desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
       qtype: "Enigme"
     }, {
       id: "quete3",
+      id_riddle: "riddle3",
       name: "Quete avec un nom",
       desc: "Oh! Oh! Oh!",
       qtype: "Enigme"
     }, {
       id: "quete4",
+      id_riddle: "riddle4",
       name: "Quete 4",
       desc: "Ah! Ah! Ah!",
       qtype: "Enigme"
@@ -170,9 +181,5 @@ angular.module('eldoragoApp')
       desc: "Uh! Uh! Uh!",
       qtype: "Enigme"
     }];
-
-    $scope.associateQuest = function(quest, riddle) {
-      // $scope.
-    };
 
   });

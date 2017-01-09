@@ -13,7 +13,7 @@
             <div class="input-group">
               <input type="text" class="form-control" name="defi" placeholder="Choisir un défi" ng-value="quest.id_riddle" disabled></input>
               <span class="input-group-btn">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
+                <button ng-click="selectQuest(quest)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
               </span>
             </div>
           </div>

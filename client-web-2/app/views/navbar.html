@@ -1,6 +1,5 @@
-    <div ng-controller="NavBarCtrl" class="collapse navbar-collapse " id="js-navbar-collapse">
-
-
+<div ng-controller="NavBarCtrl">
+    <div class="collapse navbar-collapse " id="js-navbar-collapse">
         <ul ng-show="!isActive('/cot')" class="nav navbar-nav">
             <li ng-class="{ active: isActive('/')}"><a href="#!/" class="hvr-overline-from-center-blue" id="home-icon"><i class="fa fa-home"></i></a></li>
             <li ng-class="{ active: isActive('/cot')}"><a href="#!/cot" class="hvr-overline-from-center-green" id="add-icon"><i class="fa fa-plus-square"></i></a></li>
@@ -9,6 +8,7 @@
             <li ng-class="{ active: isActive('/poi-list')}"><a href="#!/poi-list" class="hvr-overline-from-center-violet" id="poi-icon"><i class="fa fa-map-marker"></i></a></li>
             <li ng-class="{ active: isActive('/stats')}"><a href="#!/stats" class="hvr-overline-from-center-pink" id="stats-icon"><i class="fa fa-bar-chart"></i></a></li>
         </ul>
+      </div>
 
         <ul ng-show="isActive('/cot')" class="nav navbar-nav">
           <li><a href="#!/" class="btn btn-default">Retour</a></li>
@@ -16,5 +16,4 @@
         <ul ng-show="isActive('/cot')" class="nav navbar-nav navbar-right">
           <li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editStep">Valider</button></li>
         </ul>
-
-    </div>
+</div>
