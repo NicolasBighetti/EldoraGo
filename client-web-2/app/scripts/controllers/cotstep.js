@@ -20,34 +20,31 @@ angular.module('eldoragoApp')
           var location = results[0].geometry.location;
           console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
 
-          $scope.updateLocation(location.lat(), location.lng());
+          $scope.updateLocation(location.lat()+0.25, location.lng()-0.5);
           $scope.isStart = false;
           $scope.$apply();
 
           $scope.stepList = [];
-
-          /** Get de la BDD **/
-          $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
-            $scope.markerList = resp.data;
-            console.log($scope.markerList);
-
-            // foreach marker on markerList BDD
-            for (var i = 0; i < $scope.markerList.length; i++) {
-              //rename _id en id
-              $scope.markerList[i].id = $scope.markerList[i]._id;
-              // adding marker on the map
-              $scope.map.markers.push($scope.markerList[i]);
-              // console.log($scope.markerList[i]);
-            }
-            // console.log($scope.map.markers);
-            // $scope.$apply();
-
-          });
         }
       })
 
     };
 
+    /** Get Marker de la BDD **/
+    $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
+      $scope.markerList = resp.data;
+      // console.log($scope.markerList);
+
+      // foreach marker on markerList BDD
+      for (var i = 0; i < $scope.markerList.length; i++) {
+        //rename _id en id
+        $scope.markerList[i].id = $scope.markerList[i]._id;
+        // adding marker on the map
+        $scope.map.markers.push($scope.markerList[i]);
+      }
+      // $scope.$apply();
+
+    });
 
     $scope.updateLocation = function(newlat, newlon) {
       $scope.map.center.latitude = newlat;
@@ -55,16 +52,12 @@ angular.module('eldoragoApp')
       console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
     };
 
-
-    $scope.lat = 0;
-    $scope.lon = 0;
-
     $scope.map = {
       center: {
-        latitude: $scope.lat,
-        longitude: $scope.lon
+        latitude: 44,
+        longitude: 6
       },
-      zoom: 7,
+      zoom: 10,
       markers: [],
       events: {
         click: function(map, eventName, originalEventArgs) {
@@ -115,7 +108,6 @@ angular.module('eldoragoApp')
             }
           }
           console.log($scope.poiSelected);
-          // $scope.etapeSelected = $scope.listMarker(marker.key); // $scope.markerList[?].coords
         }
       }
     };

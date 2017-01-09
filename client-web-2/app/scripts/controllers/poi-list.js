@@ -1,7 +1,6 @@
 angular.module('eldoragoApp')
   .controller('PoiListCtrl', function($scope, $http) {
 
-    $scope.isEdited = false;
     $scope.btnMsg = "edit";
 
     $scope.edit = function() {
@@ -9,8 +8,14 @@ angular.module('eldoragoApp')
     }
 
     $scope.save = function() {
-      $scope.isEdited = false;
       // Save en BDD
+      $http.put("https://eldorago.herokuapp.com/api/pois/"+$scope.poiSelected._id, $scope.poiSelected).then(function(resp) {
+        console.log(resp);
+        $scope.isEdited = false;
+
+      }, function(error) {
+        alert(error);
+      });
     }
 
     $scope.map = {
@@ -65,7 +70,6 @@ angular.module('eldoragoApp')
             }
           }
           console.log($scope.poiSelected);
-          // $scope.etapeSelected = $scope.listMarker(marker.key); // $scope.markerList[?].coords
         }
       }
     };
