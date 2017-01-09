@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller("HomeCtrl", function($scope, $http, $rootScope, $state, $cordovaGeolocation){
+.controller("HomeCtrl", function($scope, $http, $rootScope/*, $state, $cordovaGeolocation*/){
   $scope.view = "templates/tabs.html";
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
@@ -43,7 +43,7 @@ angular.module('starter.controllers', [])
   };
 
   //Get JSON
-  $http.get('../templates/test.json').success(function (data) {
+  $http.get('templates/test.json').success(function (data) {
     $scope.json = data;
 
     console.log(data);
@@ -53,14 +53,14 @@ angular.module('starter.controllers', [])
     defer.reject('could not find json file')
   });
 
-  $ionicPlatform.ready(function() {
+  /*$ionicPlatform.ready(function() {
     $cordovaPlugin.someFunction().then(
 
     );
-  });
+  });*/
 
   //Google maps
-  var options = {timeout: 10000, enableHighAccuracy: true};
+  /*var options = {timeout: 10000, enableHighAccuracy: true};
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
 
   }, function(error){
     console.log("Could not get location");
-  });
+  });*/
 
 
 });

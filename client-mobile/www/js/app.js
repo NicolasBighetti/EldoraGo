@@ -25,7 +25,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   });
 })
 
-  .run(function($ionicPlatform) {
+  /*.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -39,7 +39,7 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       var div = document.getElementById("map_canvas");
       var map = plugin.google.maps.Map.getMap(div);
     });
-  })
+  })*/
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -105,11 +105,11 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
   })
 
   .state('home', {
-  url: '/',
+  url: '/home',
   templateUrl: 'templates/home.html'
 });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/home');
 
 });

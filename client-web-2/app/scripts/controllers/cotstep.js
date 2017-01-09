@@ -1,5 +1,160 @@
-﻿angular.module('eldoragoApp')
-  .controller('CotStepCtrl', function ($scope) {
+﻿
+angular.module('eldoragoApp')
+  .controller('CotStepCtrl', function($scope, $location, $timeout, $http) {
+
+    /** Show **/
+    $scope.isStart = true;
+
+    /** Form **/
+    $scope.cotToCreate = {};
+
+    /** Start **/
+    $scope.TreatAdress = function(lien) {
+
+      console.log("Le LIEN : " + lien);
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+        "address": lien
+      }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
+          var location = results[0].geometry.location;
+          console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
+          //$scope.lat = location.lat();
+          //$scope.lon = location.lng();
+
+          $scope.updateLocation(location.lat(), location.lng());
+          $scope.isStart = false;
+          // $scope.addMarker(location.lat(), location.lng())
+          $scope.$apply();
+          // $location.path("/#!/cot-step");
+
+
+          $scope.stepList = [];
+
+          //Contains the markers we will add
+          $scope.markerList = [{
+              id: Date.now(),
+              coords: {
+                latitude: 43.55651037504757,
+                longitude: 6.062621846795082
+              }
+            },
+            {
+              id: Date.now(),
+              coords: {
+                latitude: 43.897892391257976,
+                longitude: 4.678344503045082
+
+              }
+            },
+
+            {
+              id: Date.now(),
+              coords: {
+                latitude: 43.45859799999999,
+                longitude: 5.249702999999954
+              }
+            }
+          ];
+
+          for (var i = 0; i < 3; i++) {
+            $scope.map.markers.push($scope.markerList[i]);
+            console.log($scope.markerList[i]);
+            console.log($scope.map.markers);
+            $scope.$apply();
+
+          }
+
+
+          /** ajout du marker au centre **/
+          var marker = {
+            id: Date.now(),
+            coords: {
+              latitude: location.lat(),
+              longitude: location.lng()
+            }
+          };
+          //$scope.map.markers.push(marker);
+          //console.log(marker);
+          //console.log($scope.map.markers);
+          //$scope.$apply();
+
+
+        }
+      })
+
+    };
+
+
+    $scope.updateLocation = function(newlat, newlon) {
+      $scope.map.center.latitude = newlat;
+      $scope.map.center.longitude = newlon;
+      // console.log("Updated location with : " + newlat + " / "+ newlon);
+      console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
+    };
+
+
+    $scope.lat = 0;
+    $scope.lon = 0;
+
+    $scope.map = {
+      center: {
+        latitude: $scope.lat,
+        longitude: $scope.lon
+      },
+      zoom: 7,
+      markers: [],
+      events: {
+        click: function(map, eventName, originalEventArgs) {
+          var e = originalEventArgs[0];
+          console.log(e);
+          var lat = e.latLng.lat(),
+            lon = e.latLng.lng();
+          STEP //Add a marker when clicking
+          //  var marker = {
+          //    id: Date.now(),
+          //    coords: {
+          //      latitude: lat,
+          //      longitude: lon
+          //    }
+          //  };
+          //  $scope.map.markers.push(marker);
+          //  console.log(marker);
+          //  console.log($scope.map.markers);
+          //  $scope.$apply();
+          //  console.log(marker.coords.latitude + marker.coords.lon);
+        }
+
+      } //marker
+    };
+
+    function AddStep(lat, lng) {
+      $scope.stepList.push({
+        _id: $scope.stepList.length + 1,
+        _lat: lat,
+        _lng: lng
+      });
+
+    }
+
+    $scope.marker = {
+      events: {
+        click: function(marker, eventName, args) {
+          //$('#interestMarker').modal('show');
+          //$scope.open();
+          //console.log(marker.position.lat() +" -- "+ marker.position.lng());
+          console.log("Marker clicked ! ");
+          AddStep(marker.position.lat(), marker.position.lng());
+
+        }
+      }
+    };
+
+
+
+
+
+    /** STEP **/
     $scope.isQuest = true;
     $scope.textSwitch = "Voir la fiche descriptive"
     $scope.switchQuest = function() {
@@ -7,55 +162,119 @@
       $scope.textSwitch = $scope.isQuest ? "Voir la fiche descriptive" : "Voir la liste des Quêtes";
     };
 
+    $scope.select = function(riddle) {
+      $scope.riddleSelected = riddle;
+    };
 
-      $scope.map = {
-          center: {
-              latitude: $scope.lat,
-              longitude: $scope.lon
-          },
-          zoom: 12,
-          markers: [], // array of models to display
-          markersEvents: {
-              click: function (marker, eventName, model, arguments) {
-                  $scope.map.window.model = model;
-                  $scope.map.window.show = true;
-              }
-          },
-          window: {
-              marker: {},
-              show: false,
-              closeClick: function () {
-                  this.show = false;
-              },
-              options: {} // define when map is ready
-          }
-      };
+    $scope.selectQuest = function(quest) {
+      $scope.questSelected = quest;
+    };
+
+    $scope.associateQuest = function(quest, riddle) {
+      // modif BDD
+    };
 
 
-      $scope.select = function(quest) {
-          $scope.questSelected = quest;
-        };
-
-      $scope.listEnigma = [{
-          name: "Quete 1",
-          desc: "4 plus 4 ?"
-        }, {
-          name: "Quete 2",
-          desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?"
-        }, {
-          name: "Quete avec un nom",
-          desc: "Oh! Oh! Oh!"
-        }, {
-          name: "Quete 4",
-          desc: "Ah! Ah! Ah!"
-        }];
-
-      //function updateLat() {
 
 
-      //}
 
-      //$scope.$watch($scope.center.lat, updateLat);
+    /** SUBMIT **/
+    $scope.submitCot = function() {
+      // sendBDD
+      console.log($scope.cotToCreate);
+      // $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+      $http({
+        url: 'https://eldorago.herokuapp.com/api/cots',
+        dataType: 'json',
+        method: 'POST',
+        data: $scope.cotToCreate
+      }).then(function(resp) {
+        console.log(resp);
+        $('#editStep').modal('hide');
 
-      console.log("LOCATION in cotstep controller : " + $scope.lat + " / " + $scope.lon);
+        $timeout(function() {
+          $location.path("/cot-list");
+        }, 1000);
+
+      }, function(error) {
+        alert(error.data.message);
+      });
+
+      console.log("COT sauvegardée");
+    }
+
+    /** BDD **/
+    $scope.listEnigma = [{
+      id: "riddle1",
+      name: "Enigme 1",
+      desc: "4 plus 4 ?",
+      keywords: [],
+      hint: "C'est une addition",
+      answer: "8",
+      qtype: "Enigme"
+    }, {
+      id: "riddle2",
+      name: "Enigme 2",
+      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
+      keywords: [],
+      hint: "",
+      answer: "Coca-cola",
+      qtype: "Enigme"
+    }, {
+      id: "riddle3",
+      name: "Enigme avec un nom",
+      desc: "Oh! Oh! Oh!",
+      keywords: [],
+      hint: "Tu vas trouver!",
+      answer: "héhéhé",
+      qtype: "Enigme"
+    }, {
+      id: "riddle4",
+      name: "Enigme 4",
+      desc: "Ah! Ah! Ah!",
+      qtype: "Enigme"
+    }, {
+      name: "Enigme 5",
+      desc: "Ih! Ih! Ih!",
+      qtype: "Enigme"
+    }, {
+      name: "Enigme 6",
+      desc: "Uh! Uh! Uh!",
+      qtype: "Enigme"
+    }];
+
+    $scope.listQuest = [{
+      id: "quete1",
+      name: "Quete 1",
+      id_riddle: "riddle1",
+      desc: "4 plus 4 ?",
+      qtype: "Enigme"
+    }, {
+      id: "quete2",
+      id_riddle: "riddle2",
+      name: "Quete 2",
+      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
+      qtype: "Enigme"
+    }, {
+      id: "quete3",
+      id_riddle: "riddle3",
+      name: "Quete avec un nom",
+      desc: "Oh! Oh! Oh!",
+      qtype: "Enigme"
+    }, {
+      id: "quete4",
+      id_riddle: "riddle4",
+      name: "Quete 4",
+      desc: "Ah! Ah! Ah!",
+      qtype: "Enigme"
+    }, {
+      name: "Quete 5",
+      desc: "Ih! Ih! Ih!",
+      qtype: "Enigme"
+    }, {
+      name: "Quete 6",
+      desc: "Uh! Uh! Uh!",
+      qtype: "Enigme"
+    }];
+
   });

@@ -34,13 +34,13 @@ angular
         templateUrl: 'views/home.html',
         // controller: 'HomeCtrl',
       })
-      .when('/cot-start', {
-        templateUrl: 'views/cot-start.html',
-         controller: 'CotStartCtrl',
-      })
-      .when('/cot-step', {
-        templateUrl: 'views/cot-step.html',
+      .when('/cot', {
+        templateUrl: 'views/cot.html',
          controller: 'CotStepCtrl',
+      })
+      .when('/cot-list', {
+        templateUrl: 'views/cot-list.html',
+         controller: 'CotListCtrl',
       })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
