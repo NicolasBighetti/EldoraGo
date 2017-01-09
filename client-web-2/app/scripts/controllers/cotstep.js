@@ -23,23 +23,65 @@ angular.module('eldoragoApp')
           $scope.isStart = false;
           // $scope.addMarker(location.lat(), location.lng())
           $scope.$apply();
-          // $location.path("/#!/cot-step");
+            // $location.path("/#!/cot-step");
 
-          /** ajout du marker au centre **/
+
+
+//Contains the markers we will add 
+          $scope.markerList = [
+              {
+                  id: Date.now(), coords:
+                  {
+                      latitude: 43.55651037504757,
+                      longitude: 6.062621846795082
+                  }
+              },
+              {
+                  id: Date.now(), coords:
+                  {
+                      latitude: 43.897892391257976,
+                      longitude: 4.678344503045082
+
+                  }
+              },
+
+              {
+                  id: Date.now(), coords:
+                  {
+                      latitude: 43.45859799999999,
+                      longitude: 5.249702999999954
+                  }
+              }
+          ];
+
+          for (var i = 0; i < 3; i++) {
+              $scope.map.markers.push($scope.markerList[i]);
+              console.log($scope.markerList[i]);
+              console.log($scope.map.markers);
+              $scope.$apply();
+
+          }
+
+
+            /** ajout du marker au centre **/
+          var marker = {
+              id: Date.now(),
+              coords: {
+                  latitude: location.lat(),
+                  longitude: location.lng()
+              }
+          };
+          //$scope.map.markers.push(marker);
+          //console.log(marker);
+          //console.log($scope.map.markers);
+          //$scope.$apply();
+
+
         }
       })
 
     };
 
-
-    // $scope.addMarker = function (lat, lng) {
-    //   var marker = new google.maps.Marker({
-    //     map: $scope.map,
-    //     position:  new google.maps.LatLng(lat, lng)
-    //   });
-    //   $scope.map.markers.push(marker);
-    //   console.log("addMarker");
-    // };
 
     $scope.updateLocation = function(newlat, newlon) {
       $scope.map.center.latitude = newlat;
@@ -65,26 +107,32 @@ angular.module('eldoragoApp')
           console.log(e);
           var lat = e.latLng.lat(),
             lon = e.latLng.lng();
-          var marker = {
-            id: Date.now(),
-            coords: {
-              latitude: lat,
-              longitude: lon
-            }
-          };
-          $scope.map.markers.push(marker);
-          console.log(marker);
-          console.log($scope.map.markers);
-          $scope.$apply();
+
+           //Add a marker when clicking
+        //  var marker = {
+        //    id: Date.now(),
+        //    coords: {
+        //      latitude: lat,
+        //      longitude: lon
+        //    }
+        //  };
+        //  $scope.map.markers.push(marker);
+        //  console.log(marker);
+        //  console.log($scope.map.markers);
+        //  $scope.$apply();
+        //  console.log(marker.coords.latitude + marker.coords.lon);
         }
-      }
+      
+    }//marker
     };
 
     $scope.marker = {
       events: {
         click: function(marker, eventName, args) {
-          $('#interestMarker').modal('show');
-          $scope.open();
+          //$('#interestMarker').modal('show');
+            //$scope.open();
+            //console.log(marker.position.lat() +" -- "+ marker.position.lng());
+            console.log("Marker clicked ! ");
         }
       }
     };
