@@ -8,7 +8,7 @@ angular.module('eldoragoApp')
     /** Start **/
     $scope.TreatAdress = function(lien) {
 
-      console.log("Le LIEN : " + lien);
+        //Turning address to coordinates
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({
         "address": lien
@@ -16,16 +16,12 @@ angular.module('eldoragoApp')
         if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
           var location = results[0].geometry.location;
           console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
-          //$scope.lat = location.lat();
-          //$scope.lon = location.lng();
-
+         //updating scope variables
           $scope.updateLocation(location.lat(), location.lng());
           $scope.isStart = false;
-          // $scope.addMarker(location.lat(), location.lng())
           $scope.$apply();
-            // $location.path("/#!/cot-step");
 
-
+            //Contains the steps
           $scope.stepList = [];
 
 //Contains the markers we will add
@@ -55,6 +51,7 @@ angular.module('eldoragoApp')
               }
           ];
 
+            //Displaying the markers on the map
           for (var i = 0; i < 3; i++) {
               $scope.map.markers.push($scope.markerList[i]);
               console.log($scope.markerList[i]);
@@ -65,13 +62,13 @@ angular.module('eldoragoApp')
 
 
             /** ajout du marker au centre **/
-          var marker = {
-              id: Date.now(),
-              coords: {
-                  latitude: location.lat(),
-                  longitude: location.lng()
-              }
-          };
+          //var marker = {
+          //    id: Date.now(),
+          //    coords: {
+          //        latitude: location.lat(),
+          //        longitude: location.lng()
+          //    }
+          //};
           //$scope.map.markers.push(marker);
           //console.log(marker);
           //console.log($scope.map.markers);
@@ -83,11 +80,10 @@ angular.module('eldoragoApp')
 
     };
 
-
+      //Updates scope location variables
     $scope.updateLocation = function(newlat, newlon) {
       $scope.map.center.latitude = newlat;
       $scope.map.center.longitude = newlon;
-      // console.log("Updated location with : " + newlat + " / "+ newlon);
       console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
     };
 
@@ -126,25 +122,38 @@ STEP           //Add a marker when clicking
     }//marker
     };
 
-    function AddStep(lat, lng) {
+    //Adds a step 
+    function AddStep(lat, lng)
+    {
         $scope.stepList.push({ _id: $scope.stepList.length + 1 , _lat:lat, _lng : lng });
 
-    }
+    }//AddStep()
+
+      //Resets the steps _id to keep valid _ids
+    function ResetStepsId()
+    {
+        for (var i = 0; i < $scope.stepList.length; i++)
+        {
+            $scope.stepList[i]._id = i + 1;
+        }
+    }//ResetStepsId()
 
     $scope.marker = {
       events: {
         click: function(marker, eventName, args) {
-          //$('#interestMarker').modal('show');
-            //$scope.open();
-            //console.log(marker.position.lat() +" -- "+ marker.position.lng());
+          
             console.log("Marker clicked ! ");
             AddStep(marker.position.lat(), marker.position.lng());
-
         }
       }
     };
 
-
+      //Removes a step 
+    $scope.RemoveStep = function(id)
+    {
+        $scope.stepList.splice(id - 1, 1);
+        ResetStepsId();
+    }
 
 
 
