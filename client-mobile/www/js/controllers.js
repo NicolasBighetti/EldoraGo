@@ -33,6 +33,14 @@ angular.module('starter.controllers', [])
   $scope.descriptions = Historique.desc;
   $scope.icons = Historique.icon;
   $scope.colors = Historique.color;
+
+  $scope.addEvent = function() {
+    $scope.events.push({
+      joueur: 'Jean-Michel Retard',
+      type: 'poi',
+      timestamp: '10/11/12'
+      })
+  }
 })
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
@@ -99,31 +107,6 @@ console.log($scope.map);
   .error(function (data) {
     defer.reject('could not find json file')
   });
-
-  /*$ionicPlatform.ready(function() {
-    $cordovaPlugin.someFunction().then(
-
-    );
-  });*/
-
-  //Google maps
-  /*var options = {timeout: 10000, enableHighAccuracy: true};
-
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-  }, function(error){
-    console.log("Could not get location");
-  });*/
 
 
 });

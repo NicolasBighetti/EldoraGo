@@ -2,6 +2,7 @@
 <ion-content>
 
 <timeline>
+
     <timeline-event ng-repeat="event in events" side="right">
       <timeline-badge class="{{colors(event.type)}}">
         <i class="{{icons(event.type)}}"></i>
@@ -13,6 +14,7 @@
         <p>{{event.timestamp}}</p>
       </timeline-panel>
     </timeline-event>
+    <button ng-click="addEvent()">Add New Event</button>
   </timeline>
 </ion-content>
 </ion-view>
