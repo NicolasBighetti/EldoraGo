@@ -26,6 +26,7 @@ angular.module('eldoragoApp')
             // $location.path("/#!/cot-step");
 
 
+          $scope.stepList = [];
 
 //Contains the markers we will add 
           $scope.markerList = [
@@ -126,6 +127,11 @@ angular.module('eldoragoApp')
     }//marker
     };
 
+    function AddStep(lat, lng) {
+        $scope.stepList.push({ _id: $scope.stepList.length + 1 , _lat:lat, _lng : lng });
+
+    }
+
     $scope.marker = {
       events: {
         click: function(marker, eventName, args) {
@@ -133,9 +139,15 @@ angular.module('eldoragoApp')
             //$scope.open();
             //console.log(marker.position.lat() +" -- "+ marker.position.lng());
             console.log("Marker clicked ! ");
+            AddStep(marker.position.lat(), marker.position.lng());
+
         }
       }
     };
+
+
+
+
 
     /** step **/
     $scope.isQuest = true;

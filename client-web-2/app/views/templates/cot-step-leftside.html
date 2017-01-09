@@ -1,1 +1,4 @@
-{{map.center}}
+<p ng-repeat="step in stepList">
+    Step numero {{step._id}}
+    <button ng-click="RemoveStep(step._id)"> Supprimer</button>
+</p>{{map.center}}
