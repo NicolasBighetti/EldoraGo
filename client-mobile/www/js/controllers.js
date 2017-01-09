@@ -28,7 +28,7 @@ angular.module('starter.controllers', [])
   $scope.showTabBar = false;
 })
 
-.controller('HistoriqueCtrl', function($scope, Historique){
+.controller('HistoriqueCtrl', function($scope, Historique, $ionicScrollDelegate){
   $scope.events = Historique.all();
   $scope.descriptions = Historique.desc;
   $scope.icons = Historique.icon;
@@ -40,6 +40,8 @@ angular.module('starter.controllers', [])
       type: 'poi',
       timestamp: '10/11/12'
       })
+    $ionicScrollDelegate.scrollBottom();
+
   }
 })
 
