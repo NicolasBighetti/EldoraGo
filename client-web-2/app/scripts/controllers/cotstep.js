@@ -2,8 +2,12 @@
 angular.module('eldoragoApp')
   .controller('CotStepCtrl', function($scope) {
 
+    /** Show **/
+    $scope.isStart = true;
+
     /** Start **/
     $scope.TreatAdress = function(lien) {
+
       console.log("Le LIEN : " + lien);
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({
@@ -14,13 +18,28 @@ angular.module('eldoragoApp')
           console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
           //$scope.lat = location.lat();
           //$scope.lon = location.lng();
-          $scope.updateLocation(location.lat(), location.lng());
 
+          $scope.updateLocation(location.lat(), location.lng());
+          $scope.isStart = false;
+          // $scope.addMarker(location.lat(), location.lng())
+          $scope.$apply();
           // $location.path("/#!/cot-step");
 
+          /** ajout du marker au centre **/
         }
       })
+
     };
+
+
+    // $scope.addMarker = function (lat, lng) {
+    //   var marker = new google.maps.Marker({
+    //     map: $scope.map,
+    //     position:  new google.maps.LatLng(lat, lng)
+    //   });
+    //   $scope.map.markers.push(marker);
+    //   console.log("addMarker");
+    // };
 
     $scope.updateLocation = function(newlat, newlon) {
       $scope.map.center.latitude = newlat;
@@ -33,64 +52,42 @@ angular.module('eldoragoApp')
     $scope.lat = 0;
     $scope.lon = 0;
 
-    // $scope.map = {
-    //   center: {
-    //     latitude: $scope.lat,
-    //     longitude: $scope.lon
-    //   },
-    //   zoom: 12,
-    //   markers: [], // array of models to display
-    //   markersEvents: {
-    //     click: function(marker, eventName, model, arguments) {
-    //       $scope.map.window.model = model;
-    //       $scope.map.window.show = true;
-    //     }
-    //   },
-    //   window: {
-    //     marker: {},
-    //     show: false,
-    //     closeClick: function() {
-    //       this.show = false;
-    //     },
-    //     options: {} // define when map is ready
-    //   }
-    // };
-
-
     $scope.map = {
-            center: {
-                  latitude: $scope.lat,
-                  longitude: $scope.lon
-            },
-            zoom: 7,
-            markers: [],
-            events: {
-                click: function (map, eventName, originalEventArgs) {
-                    var e = originalEventArgs[0];
-                    console.log(e);
-                    var lat = e.latLng.lat(),lon = e.latLng.lng();
-                    var marker = {
-                        id: Date.now(),
-                        coords: {
-                            latitude: lat,
-                            longitude: lon
-                        }
-                    };
-                    $scope.map.markers.push(marker);
-                    console.log($scope.map.markers);
-                    $scope.$apply();
-                }
+      center: {
+        latitude: $scope.lat,
+        longitude: $scope.lon
+      },
+      zoom: 7,
+      markers: [],
+      events: {
+        click: function(map, eventName, originalEventArgs) {
+          var e = originalEventArgs[0];
+          console.log(e);
+          var lat = e.latLng.lat(),
+            lon = e.latLng.lng();
+          var marker = {
+            id: Date.now(),
+            coords: {
+              latitude: lat,
+              longitude: lon
             }
+          };
+          $scope.map.markers.push(marker);
+          console.log(marker);
+          console.log($scope.map.markers);
+          $scope.$apply();
+        }
+      }
     };
 
     $scope.marker = {
-    events: {
-        click: function (marker, eventName, args) {
-            $('#interestMarker').modal('show');
-            $scope.open();
+      events: {
+        click: function(marker, eventName, args) {
+          $('#interestMarker').modal('show');
+          $scope.open();
         }
-    }
-};
+      }
+    };
 
     /** step **/
     $scope.isQuest = true;
