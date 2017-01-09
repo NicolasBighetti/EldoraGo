@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'angular-timeline', 'starter.historique'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'angular-timeline', 'starter.historique'])
 
 
 .run(function($ionicPlatform) {
@@ -107,6 +107,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+
+  .state('tab.map', {
+    url: '/map',
+    cache: false,
+    views: {
+      'tab-map':{
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
+
 
   .state('select', {
     url: '/select',

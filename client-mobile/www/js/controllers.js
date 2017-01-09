@@ -35,6 +35,42 @@ angular.module('starter.controllers', [])
   $scope.colors = Historique.color;
 })
 
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
+  var options = {timeout: 10000, enableHighAccuracy: true}; 
+
+  $scope.init = function(){
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+        console.log("init");
+        var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+        var mapOptions = {
+          center: latLng,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        //Essayons de fix des trucs avec des lignes au hasard de l'internet
+        google.maps.event.trigger(map, 'resize');
+
+        console.log(map);
+      })
+    }
+
+
+
+console.log($scope.map);
+    $scope.map = map;
+    console.log($scope.map);
+
+      /*$scope.loading = $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });*/
+})
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
