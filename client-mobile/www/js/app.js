@@ -107,7 +107,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-  ;
 
   .state('select', {
     url: '/select',
