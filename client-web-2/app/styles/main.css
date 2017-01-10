@@ -197,11 +197,12 @@ h1
 
 .navbar-icon
 {
-    font-size:4rem !important; 
+    /*font-size:4rem !important;*/ 
+    font-size:200% !important;
     /*padding-left:45%;*/
     color:white !important;
-    margin-left:25% !important;
-    margin-right:25% !important;
+    /*margin-left:25% !important;
+    margin-right:25% !important;*/
 }
 
 #main-navbar
@@ -425,6 +426,41 @@ h1
   transition-timing-function: ease-out;
 }
 .hvr-overline-from-center-pink:hover:before, .hvr-overline-from-center-pink:focus:before, .hvr-overline-from-center-pink:active:before {
+  left: 0;
+  right: 0;
+}
+
+
+/* Overline From Center Yellow*/
+.hvr-overline-from-center-yellow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow: hidden;
+}
+.hvr-overline-from-center-yellow:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  right: 50%;
+  top: 0;
+  background: #FFCE54;
+  height: 3px;
+  -webkit-transition-property: left, right;
+  transition-property: left, right;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-overline-from-center-yellow:hover:before, .hvr-overline-from-center-yellow:focus:before, .hvr-overline-from-center-yellow:active:before {
   left: 0;
   right: 0;
 }
