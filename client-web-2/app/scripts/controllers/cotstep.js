@@ -5,6 +5,7 @@ angular.module('eldoragoApp')
     /**  Loading **/
     $scope.init = function() {
       $scope.getStepList();
+      $scope.getRiddleList();
       $scope.getMarkerList();
     }
 
@@ -35,18 +36,18 @@ angular.module('eldoragoApp')
         }
       })
 
-      setTimeout(function () {
+      setTimeout(function() {
 
-          //angular - google - map - container
-          //angular - google - map
+        //angular - google - map - container
+        //angular - google - map
 
-          var elements = document.getElementsByClassName('angular-google-map');
-          //var requiredElement = elements[0];
-          var requiredElement = document.getElementById('cot-step-map-div');
-          requiredElement.setAttribute("style", "width:500px");
-          requiredElement.setAttribute("style", "height:300px");
+        var elements = document.getElementsByClassName('angular-google-map');
+        //var requiredElement = elements[0];
+        var requiredElement = document.getElementById('cot-step-map-div');
+        requiredElement.setAttribute("style", "width:500px");
+        requiredElement.setAttribute("style", "height:300px");
 
-console.log("I WAITED U ASS");
+        console.log("I WAITED U ASS");
 
       }, 2000);
 
@@ -155,18 +156,69 @@ console.log("I WAITED U ASS");
       });
     }
 
-  $scope.getQuestList = function(step) {
-    $scope.questList = [];
+    $scope.getRiddleList = function() {
+      $http.get("https://eldorago.herokuapp.com/api/riddles").then(function(resp) {
+        $scope.riddleList = resp.data;
+      }, function(error) {
+        alert(error);
+      });
+    }
 
-    for (var i = 0; i < step.quests.length; i++) {
-      $http.get("https://eldorago.herokuapp.com/api/quests/"+step.quests[i]).then(function(resp) {
-        $scope.questList.push(resp.data);
+    $scope.getQuestList = function(step) {
+      $scope.questList = [];
+
+      // Convertit les riddles id en nom
+      var addRiddleName = function(quest){
+        if (quest.riddle != null) {
+          $http.get("https://eldorago.herokuapp.com/api/riddles/" + quest.riddle).then(function(resp) {
+            quest.riddle_name = resp.data.name;
+            // $scope.questList.push(quest);
+            addPoiName(quest);
+          }, function(error) {
+            alert(error);
+            console.dir(error);
+          });
+        }
+      }
+
+      // Convertit les pois id en nom
+      var addPoiName = function(quest){
+        if (quest.poi != null) {
+          $http.get("https://eldorago.herokuapp.com/api/pois/" + quest.poi).then(function(resp) {
+            quest.poi_name = resp.data.name;
+            $scope.questList.push(quest);
+
+          }, function(error) {
+            alert(error);
+            console.dir(error);
+          });
+        }
+      }
+
+      // recupere les quêtes
+      for (var i = 0; i < step.quests.length; i++) {
+        $http.get("https://eldorago.herokuapp.com/api/quests/" + step.quests[i]).then(function(resp) {
+          var quest = resp.data;
+
+          addRiddleName(quest);
+
+        }, function(error) {
+          alert(error);
+          console.dir(error);
+        });
+      }
+    }
+
+    $scope.convertRiddle = function(quest) {
+      $http.get("https://eldorago.herokuapp.com/api/riddles/" + quest.riddle).then(function(resp) {
+        quest.riddle_name = resp.data;
+        // $scope.questList.push(quest);
       }, function(error) {
         alert(error);
         console.dir(error);
       });
     }
-  }
+
 
     //Removes a step
     $scope.RemoveStep = function(id) {

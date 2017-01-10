@@ -15,7 +15,7 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-xs-8">{{questSelected}}, {{riddleSelected}}</div>
+          <div class="col-xs-8">{{questSelected._id}}, {{riddleSelected._id}}</div>
           <div class="col-xs-4 col-xs-offset-8">
             <p class="input-group">
               <input ng-model="searchQuest" class="form-control" placeholder="Recherche" name="srch-term" type="text" />
@@ -28,7 +28,7 @@
         <div class="row">
           <div class="col-xs-4" id="leftQuest">
             <ul>
-              <li ng-repeat="riddle in listEnigma | filter : searchQuest">
+              <li ng-repeat="riddle in riddleList | filter : searchQuest">
                 <a href="" ng-click="select(riddle)">{{riddle.name}}</a>
               </li>
             </ul>
