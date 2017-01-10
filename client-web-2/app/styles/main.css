@@ -74,7 +74,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    /*max-width: 730px;*/
+    max-width: 730px;
   }
 
   /* Remove the padding we set earlier */
@@ -197,7 +197,7 @@ h1
 
 .navbar-icon
 {
-    font-size:4rem !important; 
+    font-size:4rem !important;
     /*padding-left:45%;*/
     color:white !important;
     margin-left:25% !important;
@@ -523,12 +523,12 @@ h1
 }
 
 .stat-main > .angular-google-map, .angular-google-map-container{
-  position: absolute;
+  /*position: absolute;
   z-index: 0;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 65vh;
+  height: 65vh;*/
 }
 
 .stat-main .gmnoprint{
