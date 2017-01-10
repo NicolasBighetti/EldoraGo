@@ -1,0 +1,100 @@
+{
+    "_id": "5873bb9658f6c910006235ef",
+    "desc": "Lancez vous dans la première chasse au trésor d'Eldorago au programme: visite de l'école",
+    "__v": 0,
+    "participants": [],
+    "cotImageURL": "app/image/cots/default.png",
+    "steps": [],
+    "time_avg": 0,
+    "time_est": 60,
+    "date_start": "2017-01-09T16:34:30.034Z",
+    "created": "2017-01-09T16:34:30.034Z",
+    "name": "Premiere chasse !"
+  }
+
+JSON Objects
+Steps
+{587427ce8f17981000f7e10b   "name":"Premiers pas","desc":"Départ de la chasse ! Suivez les instructions dans la quête."}
+{  587428538f17981000f7e10c "name":"Un petit pas pour l'étudiant, un bon de géant pour l'éducation","desc":"Pour cette deuxième étape, vous découvrirez un lieu emblématique du campus"}
+{ 58742aab8f17981000f7e10d  "name":"Vous avez pas un petit creux ?","desc":"Rendez-vous au point culminant du campus"}
+{  58743f2c75d0d4100070bb0b
+ "name":"Vous y êtes presque","desc":"Vous êtes à quelques pas du trésor !"}
+
+
+Quests
+{58743dca75d0d4100070bb02
+  "name": "Allez à l'acceuil",
+  "desc": "Pour cette première quête rendez vous à l'acceuil et répondez à l'énigme",
+  "poi": "5873ca46fd5f5f10002bf7ed"
+}
+{58743ded75d0d4100070bb03
+  "name": "Rendez-vous au learning centre",
+  "desc": "Aucune description",
+  "poi": "5874444e75d0d4100070bb0c"
+}
+{58743dfd75d0d4100070bb04
+  "name": "Rendez-vous au restaurant universitaire",
+  "desc": "Beaucoup d'escalier à monter !",
+  "poi": "587444c375d0d4100070bb0d"
+}
+{58743e0d75d0d4100070bb05
+  "name": "Dernière quête",
+  "desc": "Vérifions que vous avez bien trouvé le trésor !",
+  "poi": "587444c375d0d4100070bb0d"
+}
+
+
+Riddle
+{58743e4d75d0d4100070bb06
+	"name": "Première énigme",
+	"desc": "Quelle salle se trouve devant l'acceuil ?",
+	"hint": "14.",
+	"answer": "141"
+}
+{58743e6b75d0d4100070bb07
+	"name": "Deuxième énigme",
+	"desc": "Quel est le personnage présenté par l'exposition",
+	"hint": "A. T.",
+	"answer": "Alan Turing"
+}
+{58743e8475d0d4100070bb08
+	"name": "Troisième énigme",
+	"desc": "Quel est le prix d'un repas ?",
+	"hint": "Moins de 4€, utilisez une virgule, ne pas mettre le symbole €",
+	"answer": "3,80"
+}{58743e9c75d0d4100070bb09
+	"name": "Trésor",
+	"desc": "Faites 18 pas vers l'ouest. Sous la pierre blanche, vous trouverez le trésor ! Quel est le personnage représenté dessus ? Merci de le laisser sur place pour les prochain aventuriers",
+	"hint": "P.",
+	"answer": "Pirate"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+POIS
+[{"_id":"5873ca46fd5f5f10002bf7ed","__v":0,"image":"./images/default.jpg","coords":{"latitude":43.615978,"longitude":7.072379},"desc":"Demande de renseignements, feutressssssssssssss","name":"Accueil Polytech"},{"_id":"5873cae3fd5f5f10002bf7ef","__v":0,"image":"./images/default.jpg","coords":{"latitude":9.072379,"longitude":42.615978},"desc":"la bas","name":"Endroit super !"},{"_id":"5873cafdfd5f5f10002bf7f0","__v":0,"image":"./images/default.jpg","coords":{"latitude":18.072379,"longitude":40.615978},"desc":"shhhh c 'est un secret","name":"Lieu misterieux"},{"_id":"5873cc36fd5f5f10002bf7f1","__v":0,"image":"./images/default.jpg","coords":{"latitude":43.55651037504757,"longitude":6.062621846795082},"desc":"shhhh c 'est un secret !!!!!","name":"Lieu mysterieux"},{"_id":"5873cc77fd5f5f10002bf7f2","__v":0,"image":"./images/default.jpg","coords":{"latitude":43.897892391257976,"longitude":4.678344503045082},"desc":"N'allez surtout pas la bas !","name":"Lieu énigmatique 2"},{"_id":"5873cc7dfd5f5f10002bf7f3","__v":0,"image":"./images/default.jpg","coords":{"latitude":43.897892391257976,"longitude":4.678344503045082},"desc":"N'allez surtout pas la bas !","name":"Lieu énigmatique 2"},{"_id":"5873ccd6fd5f5f10002bf7f4","__v":0,"image":"./images/default.jpg","coords":{"latitude":43.45859799999999,"longitude":5.249702999999954},"desc":"test de marqueur","name":"Woooooops"},{"_id":"5874444e75d0d4100070bb0c","__v":0,"image":"./images/default.jpg","coords":{"latitude":0,"longitude":0},"desc":"Bibliothèque, fauteuils confortables, écrans, chauffage/clim et café gratuit! L'idéal pour travailler dans de bonnes conditions","name":"Learning centre polytech Nice"},{"_id":"587444c375d0d4100070bb0d","__v":0,"image":"./images/default.jpg","coords":{"latitude":0,"longitude":0},"desc":"Des repas varié à petit prix. Venez casser la croute :)","name":"Restaurant universitaire hélios"}]
+
+
+QUESTS
+[{"_id":"58743dca75d0d4100070bb02","__v":0,"riddle":"58743e4d75d0d4100070bb06","qtype":"Riddle","desc":"Pour cette première quête rendez vous à l'acceuil et répondez à l'énigme","name":"Allez à l'acceuil"},{"_id":"58743ded75d0d4100070bb03","__v":0,"riddle":"58743e6b75d0d4100070bb07","qtype":"Riddle","desc":"Aucune description","name":"Rendez-vous au learning centre"},{"_id":"58743dfd75d0d4100070bb04","__v":0,"riddle":"58743e8475d0d4100070bb08","qtype":"Riddle","desc":"Beaucoup d'escalier à monter !","name":"Rendez-vous au restaurant universitaire"},{"_id":"58743e0d75d0d4100070bb05","__v":0,"riddle":"58743e9c75d0d4100070bb09","qtype":"Riddle","desc":"Vérifions que vous avez bien trouvé le trésor !","name":"Dernière quête"}]
+
+STEPS
+[{"_id":"58743f2c75d0d4100070bb0b","__v":1,"quests":["58743e0d75d0d4100070bb05"],"desc":"Vous êtes à quelques pas du trésor !","created":"2017-01-10T01:55:56.875Z","name":"Vous y êtes presque"},{"_id":"58742aab8f17981000f7e10d","__v":1,"quests":["58743dfd75d0d4100070bb04"],"desc":"Rendez-vous au point culminant du campus","created":"2017-01-10T00:28:27.574Z","name":"Vous avez pas un petit creux ?"},{"_id":"587428538f17981000f7e10c","__v":1,"quests":["58743ded75d0d4100070bb03"],"desc":"Pour cette deuxième étape, vous découvrirez un lieu emblématique du campus","created":"2017-01-10T00:18:27.094Z","name":"Un petit pas pour l'étudiant, un bon de géant pour l'éducation"},{"_id":"587427ce8f17981000f7e10b","__v":3,"quests":["58743dca75d0d4100070bb02"],"desc":"Départ de la chasse ! Suivez les instructions dans la quête.","created":"2017-01-10T00:16:14.444Z","name":"Premiers pas"},{"_id":"587427948f17981000f7e10a","__v":0,"quests":[],"desc":"sample description","created":"2017-01-10T00:15:16.379Z","name":"step example"}]
+
+COTS
+[{"_id":"5873c43858f6c910006235f6","desc":"Ceci est un test","__v":0,"participants":[],"cotImageURL":"modules/users/client/img/profile/default.png","steps":[],"time_avg":0,"time_est":0,"date_start":"2017-01-09T17:11:20.223Z","created":"2017-01-09T17:11:20.223Z","name":"Test de création"},{"_id":"5873c2b058f6c910006235f2","desc":"Ca marche","__v":0,"participants":[],"cotImageURL":"modules/users/client/img/profile/default.png","steps":[],"time_avg":0,"time_est":0,"date_start":"2017-01-09T17:04:48.939Z","created":"2017-01-09T17:04:48.938Z","name":"AHAHA"},{"_id":"5873c22c58f6c910006235f1","desc":"okoko","__v":0,"participants":[],"cotImageURL":"modules/users/client/img/profile/default.png","steps":[],"time_avg":0,"time_est":0,"date_start":"2017-01-09T17:02:36.048Z","created":"2017-01-09T17:02:36.048Z","name":"ok"},{"_id":"5873bb9658f6c910006235ef","desc":"Lancez vous dans la première chasse au trésor d'Eldorago au programme: visite de l'école","__v":1,"participants":[],"cotImageURL":"app/image/cots/default.png","steps":["587427ce8f17981000f7e10b","587428538f17981000f7e10c","58742aab8f17981000f7e10d","58743f2c75d0d4100070bb0b"],"time_avg":0,"time_est":60,"date_start":"2017-01-09T16:34:30.034Z","created":"2017-01-09T16:34:30.034Z","name":"Premiere chasse !"}]
+
+
+Riddles
+[{"_id":"586fb00af464e11000d5c74a","created":"2017-01-06T14:56:10.388Z","kewords":[""],"__v":0,"answer":"rien","hint":"","keywords":[],"desc":"Qu'es ce qui est meilleur que dieu, pire que le diable, les riches en ont besoin et les pauvres l'ont","name":"Are you in SI"},{"_id":"586faf80f464e11000d5c749","created":"2017-01-06T14:53:52.799Z","kewords":[""],"__v":0,"answer":"1","hint":"","keywords":[],"desc":"za","name":"heu"},{"_id":"5873b6004d4adf1000960ce4","__v":0,"answer":"rien","hint":"","keywords":[],"desc":"Qu'es ce qui est meilleur que dieu, pire que le diable, les riches en ont besoin et les pauvres l'ont","name":"Heaven's gate"},{"_id":"58743e4d75d0d4100070bb06","__v":0,"answer":"141","hint":"14.","keywords":[],"desc":"Quelle salle se trouve devant l'acceuil ?","name":"Première énigme"},{"_id":"58743e6b75d0d4100070bb07","__v":0,"answer":"Alan Turing","hint":"A. T.","keywords":[],"desc":"Quel est le personnage présenté par l'exposition","name":"Deuxième énigme"},{"_id":"58743e8475d0d4100070bb08","__v":0,"answer":"3,80","hint":"Moins de 4€, utilisez une virgule, ne pas mettre le symbole €","keywords":[],"desc":"Quel est le prix d'un repas ?","name":"Troisième énigme"},{"_id":"58743e9c75d0d4100070bb09","__v":0,"answer":"Pirate","hint":"P.","keywords":[],"desc":"Faites 18 pas vers le sud. Sous la pierre blanche, vous trouverez le trésor ! Quel est le personnage représenté dessus ? Merci de le laisser sur place pour les prochain aventuriers","name":"Trésor"}]

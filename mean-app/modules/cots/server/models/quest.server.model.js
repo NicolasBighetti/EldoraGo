@@ -29,11 +29,17 @@ var QuestSchema = new Schema({
     default: 'Riddle'
   },
   optional:{
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   riddle: {
     type: Schema.ObjectId,
+
     ref: 'Riddle'
+  },
+  poi: {
+    type: Schema.ObjectId,
+    ref: 'Poi'
   }
 });
 

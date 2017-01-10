@@ -24,19 +24,23 @@ var PoiSchema = new Schema({
     required: 'Please fill Poi desc',
     trim: true
   },
-  long:{
-    type: String,
-    default: '0',
-    required: 'Please fill Poi longitude',
-    trim: true
+  coords: {
+    longitude:{
+      type: Number,
+      default: 0,
+      required: 'Please fill Poi longitude',
+    },
+    latitude:{
+      type: Number,
+      default: 0,
+      required: 'Please fill Poi latitude',
+    }
   },
-  lat:{
+  image:{
     type: String,
-    default: '0',
-    required: 'Please fill Poi latitude',
-    trim: true
+    default: './images/default.jpg'
   }
-  
+
 });
 
 mongoose.model('Poi', PoiSchema);
