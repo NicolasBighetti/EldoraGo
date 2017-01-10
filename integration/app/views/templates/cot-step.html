@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="row" id="cot-step-row">
+    <div class="col-xs-2" id="cot-step-steplist-div">
+      LES STEPS
+      <div ng-include src="'views/templates/cot-step-leftside.html'"></div>
+    </div>
+
+    <div class="col-xs-6" id="cot-step-map-div">
+
+      <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+        <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" events="marker.events"></ui-gmap-marker>
+      </ui-gmap-google-map>
+
+    </div>
+
+    <div class="col-xs-4" id="cot-step-quest-div">
+      <!-- LES QUESTS & détails POI -->
+      <div ng-include src="'views/templates/cot-step-rightside.html'"></div>
+    </div>
+
+    <!-- Modal -->
+    <div ng-include src="'views/templates/cot-step-faq.html'"></div>
+  </div>
+</div>
+
+<!-- <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul ng-show="isActive('/cot')" class="nav navbar-nav">
+        <li><a href="#!/" class="btn btn-default">Retour</a></li>
+      </ul>
+      <ul ng-show="isActive('/cot')" class="nav navbar-nav navbar-right">
+        <li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editStep">Valider</button></li>
+      </ul>
+    </div>
+  </div>
+</nav> -->
+
+<br/>
