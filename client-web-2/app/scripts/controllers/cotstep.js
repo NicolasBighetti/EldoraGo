@@ -172,17 +172,18 @@ angular.module('eldoragoApp')
         if (quest.riddle != null) {
           $http.get("https://eldorago.herokuapp.com/api/riddles/" + quest.riddle).then(function(resp) {
             quest.riddle_name = resp.data.name;
-            // $scope.questList.push(quest);
             addPoiName(quest);
           }, function(error) {
             alert(error);
             console.dir(error);
           });
+        } else {
+          addPoiName(quest);
         }
       }
 
       // Convertit les pois id en nom
-      var addPoiName = function(quest){
+      var addPoiName = function(quest) {
         if (quest.poi != null) {
           $http.get("https://eldorago.herokuapp.com/api/pois/" + quest.poi).then(function(resp) {
             quest.poi_name = resp.data.name;
@@ -192,6 +193,8 @@ angular.module('eldoragoApp')
             alert(error);
             console.dir(error);
           });
+        } else {
+          $scope.questList.push(quest);
         }
       }
 
@@ -266,7 +269,8 @@ angular.module('eldoragoApp')
         $http.put("https://eldorago.herokuapp.com/api/steps/" + step._id, {
           quests: step.quests
         }).then(function(resp) {
-          console.log("ajout de l'id de la nouvelle quete dans " + step);
+          console.log("ajout de l'id de la nouvelle quete dans ");
+          console.log(step);
           $scope.getQuestList(step);
         }, function(error) {
           alert(error);

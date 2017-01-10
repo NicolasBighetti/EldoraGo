@@ -1,88 +1,86 @@
-  <!-- LES QUESTS & détails POI -->
-  <div class="row">
-    <div class="btn btn-default center-block" ng-model="textSwitch" ng-click="switchQuest()">{{textSwitch}}</div>
-    <br/>
-  </div>
-  <div ng-show="isQuest">
-    <div class="panel panel-default" ng-repeat="quest in questList">
-      <div class="panel-heading primary-flat">{{quest.name}}</div>
-      <div class="panel-body">
+<!-- LES QUESTS & détails POI -->
+<div class="row">
+  <div class="btn btn-default center-block" ng-model="textSwitch" ng-click="switchQuest()">{{textSwitch}}</div>
+  <br/>
+</div>
+<div ng-show="isQuest">
+  <div class="panel panel-default" ng-repeat="quest in questList | orderBy:'_id'">
+    <div class="panel-heading primary-flat">{{quest.name}}</div>
+    <div class="panel-body">
 
-        <div class="row" >
-          <div class="col-xs-10">
-              <div class="well well-sm">
-                <div ng-show="quest.riddle">
-                  {{quest.riddle_name}}
-                </div>
-                <div ng-show="!quest.riddle">
-                  Choisir un jeu
-                </div>
-              </div>
-          </div>
-          <div class="col-xs-2">
-            <button ng-click="selectQuest(quest)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
-          </div>
-        </div>
-        <div class="row" >
-          <div class="col-xs-8">
+      <div class="row" >
+        <div class="col-xs-10">
             <div class="well well-sm">
-              <div ng-show="quest.poi">
-                {{quest.poi_name}}
+              <div ng-show="quest.riddle">
+                {{quest.riddle_name}}
               </div>
-              <div ng-show="!quest.poi">
-                Associer un POI
+              <div ng-show="!quest.riddle">
+                Choisir un jeu
               </div>
             </div>
-          </div>
-          <div class="col-xs-4">
-            <!-- associe quete / poi -->
-            <button ng-click="associateQuestPoi(quest)" type="button" class="btn btn-info btn-lg">
-              Associer <i class="fa fa-university"></i>
-            </button>
+        </div>
+        <div class="col-xs-2">
+          <button ng-click="selectQuest(quest)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-xs-8">
+          <div class="well well-sm">
+            <div ng-show="quest.poi">
+              {{quest.poi_name}}
+            </div>
+            <div ng-show="!quest.poi">
+              Associer un POI
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-7">
-            <div class="btn btn-default" data-toggle="popover" title="{{quest.riddle}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
-          </div>
-          <div class="col-xs-5">
-            <input type="checkbox" ng-model="quest.id" ng-checked="quest.optionnelle"/> Optionnelle
-          </div>
+        <div class="col-xs-4">
+          <!-- associe quete / poi -->
+          <button ng-click="associateQuestPoi(quest)" type="button" class="btn btn-info btn-lg">
+            Associer <i class="fa fa-university"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-7">
+          <div class="btn btn-default" data-toggle="popover" title="{{quest.riddle_name}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
+        </div>
+        <div class="col-xs-5">
+          <input type="checkbox" ng-model="quest.id" ng-checked="quest.optionnelle"/> Optionnelle
         </div>
       </div>
     </div>
-    <button ng-click="addQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
   </div>
+  <button ng-click="addQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+</div>
 
-  <div ng-show="!isQuest">
+<div ng-show="!isQuest">
 
-    <!-- Partie sur les quêtes -->
-    <div id="cot-step-questlist">
-      <!-- Liste des quêtes -->
-      <div class="cot-step-quest">
-        <!-- Un exemple d'une quête -->
-        <div class="row">
-          <div class="col-xs-6">
-            <p>{{poiSelected.name}}</p>
-            <!-- <p>Monument : La sculpture de Louis XIV</p> -->
-          </div>
-          <div class="col-xs-6">
-            <!-- <img src="../images/louis_xiv.jpg" class="img-responsive" alt="Cinque Terre"> -->
-            <img src="{{poiSelected.image}}" class="img-rounded img-responsive">
-          </div>
-          <div class="col-xs-12">
-            <p>{{poiSelected.desc}}</p>
+  <!-- Partie sur les quêtes -->
+  <div id="cot-step-questlist">
+    <!-- Liste des quêtes -->
+    <div class="cot-step-quest">
+      <!-- Un exemple d'une quête -->
+      <div class="row">
+        <div class="col-xs-6">
+          <p>{{poiSelected.name}}</p>
+          <!-- <p>Monument : La sculpture de Louis XIV</p> -->
+        </div>
+        <div class="col-xs-6">
+          <!-- <img src="../images/louis_xiv.jpg" class="img-responsive" alt="Cinque Terre"> -->
+          <img src="{{poiSelected.image}}" class="img-rounded img-responsive">
+        </div>
+        <div class="col-xs-12">
+          <p>{{poiSelected.desc}}</p>
           <!-- <p>Cette statue équestre de Louis XIV est une statue équestre en bronze de Louis XIV située sur la place d'Armes devant le château de Versailles. Jusqu'en 2008-2009, elle se trouvait dans la cour d'Honneur.</p> -->
         </div>
-
-        </div>
       </div>
     </div>
   </div>
+</div>
 
-
-  <script>
-  $(document).ready(function(){
-      $('[data-toggle="popover"]').popover();
-  });
-  </script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>
