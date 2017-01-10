@@ -4,7 +4,6 @@ angular.module('eldoragoApp')
 
     /**  Loading **/
     $scope.init = function() {
-      $scope.getStepList();
       $scope.getRiddleList();
       $scope.getMarkerList();
     }
@@ -13,7 +12,6 @@ angular.module('eldoragoApp')
     $scope.isStart = true;
 
     /** Form **/
-    $scope.cotToCreate = {};
     $scope.questList = [];
 
     /** Start **/
@@ -85,17 +83,25 @@ angular.module('eldoragoApp')
     };
 
     $scope.addStep = function(lat, lng) {
-
+      var cot = $scope.cotSelected;
       var newStep = {
         name: "Nom step",
         desc: "test"
       };
 
       $http.post("https://eldorago.herokuapp.com/api/steps", newStep).then(function(resp) {
-        console.log("addStep");
-        $scope.getStepList();
+        newStep = resp.data;
+        cot.steps.push(newStep._id);
+
+        $http.put("https://eldorago.herokuapp.com/api/cots/"+cot._id, {steps: cot.steps}).then(function(resp) {
+          $scope.getStepList();
+        }, function(error) {
+          alert(error);
+          console.dir(error);
+        });
       }, function(error) {
         alert(error);
+        console.dir(error);
       });
     }
 
@@ -149,11 +155,15 @@ angular.module('eldoragoApp')
     }
 
     $scope.getStepList = function() {
-      $http.get("https://eldorago.herokuapp.com/api/steps").then(function(resp) {
-        $scope.stepList = resp.data;
-      }, function(error) {
-        alert(error);
-      });
+      $scope.stepList = [];
+      var cot = $scope.cotSelected;
+      for (var i = 0; i < cot.steps.length; i++) {
+        $http.get("https://eldorago.herokuapp.com/api/steps/"+cot.steps[i]).then(function(resp) {
+          $scope.stepList.push(resp.data);
+        }, function(error) {
+          alert(error);
+        });
+      }
     }
 
     $scope.getRiddleList = function() {
@@ -293,7 +303,9 @@ angular.module('eldoragoApp')
 
       $http.post("https://eldorago.herokuapp.com/api/cots", newCot).then(function(resp) {
         console.log("Cot initiated");
-        $scope.cotToCreate = resp.data;
+        $scope.cotSelected = resp.data;
+
+        $scope.getStepList();
       }, function(error) {
         alert(error);
       });
@@ -344,13 +356,13 @@ angular.module('eldoragoApp')
     /** SUBMIT **/
     $scope.submitCot = function() {
       // sendBDD
-      console.log($scope.cotToCreate);
+      console.log($scope.cotSelected);
       // $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
       $http({
-        url: 'https://eldorago.herokuapp.com/api/cots',
+        url: 'https://eldorago.herokuapp.com/api/cots/'+$scope.cotSelected._id,
         dataType: 'json',
-        method: 'POST',
-        data: $scope.cotToCreate
+        method: 'PUT',
+        data: $scope.cotSelected
       }).then(function(resp) {
         console.log(resp);
         $('#editStep').modal('hide');

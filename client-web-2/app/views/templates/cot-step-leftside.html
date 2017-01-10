@@ -1,4 +1,5 @@
-<ul class="list-group" ng-repeat="step in stepList | orderBy:'_id'">
+<!-- <ul class="list-group" ng-repeat="step in stepList | orderBy:'_id'"> -->
+<ul class="list-group" ng-repeat="step in stepList">
   <li ng-class="{active : stepSelected === step}" ng-click="setActive(step)" class="list-group-item"> {{step.name}}
     <!-- <span ng-click="RemoveStep(step._id)" class="badge">
       <i class="fa fa-times"></i>
