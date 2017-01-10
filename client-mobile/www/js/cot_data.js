@@ -67,26 +67,10 @@ angular.module('starter.cot-datas', [])
       return data;
     })
   },
-  joinTeam: function($http, name){
+  joinTeam: function($http, $scope, name){
     var teamPromise = this.getTeams($http, name);
     teamPromise.then(function(result){
-      if(result.data.length == 0){
-        var req = {
-          method: 'POST',
-          url: 'https://eldorago.herokuapp.com/api/teams',
-          data:{
-            name: name,
-            players:[
-            state.get("idJoueur")
-            ]
-          }
-        }
-
-        return $http(req).then(function(result){
-
-        })
-      }
-      else{
+      console.log("resultat test " + (result.data.length == 0))
         for(var team in result.data){
           if(result.data[team].name == name){
             result.data[team].players.push(state.get("idJoueur"));
@@ -98,12 +82,29 @@ angular.module('starter.cot-datas', [])
               }
             }
             return $http(req).then(function(result){
-
+              console.log("reponse PUT team");
+              console.log(result);
+                $scope.teamData = result.data;
             })
           }
+          else{
+              var req = {
+          method: 'POST',
+          url: 'https://eldorago.herokuapp.com/api/teams',
+          data:{
+            name: name,
+            players:[
+            state.get("idJoueur")
+            ]
+          }
         }
-
-      }
+        return $http(req).then(function(result){
+            console.log("Result POST TEAM");
+            console.log(result);
+            $scope.teamData = result.data;
+        })
+          }
+        }
     });
   },
   getTeams: function($http, name){
