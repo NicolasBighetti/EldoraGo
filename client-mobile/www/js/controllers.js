@@ -13,10 +13,10 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+$scope.chats = Chats.all();
+$scope.remove = function(chat) {
+  Chats.remove(chat);
+};
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -33,13 +33,14 @@ angular.module('starter.controllers', [])
   $scope.descriptions = Historique.desc;
   $scope.icons = Historique.icon;
   $scope.colors = Historique.color;
+  $ionicScrollDelegate.scrollBottom();
 
   $scope.addEvent = function() {
     $scope.events.push({
       joueur: 'Jean-Michel Retard',
       type: 'poi',
       timestamp: '10/11/12'
-      })
+    })
     $ionicScrollDelegate.scrollBottom();
 
   }
@@ -47,57 +48,64 @@ angular.module('starter.controllers', [])
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
 
-  function hide(){
-    $ionicLoading.hide().then(function(){
-       console.log("The loading indicator is now hidden");
-    });
-  };
-
   $scope.checkIn = function(){
-      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
-                console.log(map);
+      console.log(map);
 
-        var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 
-        var marker = new google.maps.Marker({
-          position: latLng,
-          map: map,
-          title: 'Hello World!'
-        });
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        title: 'Hello World!'
+      });
 
-        
-      })
+
+    })
   }
 
   $scope.init = function(){
+
+    console.log("init pre loading");
+    $scope.show($ionicLoading);
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+      console.log("init in loading");
+      mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+      var marker = new google.maps.Marker({
+        position: mapOptions.center,
+        map: map,
+        title: 'Position'
+      });
+      $scope.hide($ionicLoading);
+    })
+
+
+  }
+
+
+  $scope.show = function($ionicLoading) {
     $ionicLoading.show({
-          content: 'Getting current location...',
-          showBackdrop: false
-        });
+      content: 'Getting current location...',
+      showBackdrop: false
+    });
+  }
 
-      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-        console.log("init");
-        mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  $scope.hide = function($ionicLoading){
+    $ionicLoading.hide().then(function(){
+     console.log("The loading indicator is now hidden");
 
-        var marker = new google.maps.Marker({
-          position: mapOptions.center,
-          map: map,
-          title: 'Position'
-        });
+   })
+  }
+  
 
-      })
 
-      hide();
-    }
 
-    $scope.map = map;
-    console.log($scope.map);
-    
-      
 })
 
 .controller('AccountCtrl', function($scope) {
@@ -111,30 +119,41 @@ angular.module('starter.controllers', [])
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
 
-  function hide(){
-    $ionicLoading.hide().then(function(){
-       console.log("The loading indicator is now hidden");
-    });
-  };
+
 
   $scope.init = function(){
-      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-        console.log("init");
-        mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    $scope.show($ionicLoading);
 
-        var map = new google.maps.Map(document.getElementById("map-preview"), mapOptions);
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+      mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-        var marker = new google.maps.Marker({
-          position: mapOptions.center,
-          map: map,
-          title: 'Position'
-        });
+      var map = new google.maps.Map(document.getElementById("map-preview"), mapOptions);
 
-      })
-      hide();
-    }
-    
+      var marker = new google.maps.Marker({
+        position: mapOptions.center,
+        map: map,
+        title: 'Position'
+      });
+      $scope.hide($ionicLoading);
+    })
 
+
+  }
+
+    $scope.show = function($ionicLoading) {
+    $ionicLoading.show({
+      content: 'Getting current location...',
+      showBackdrop: false
+    });
+  }
+
+
+  $scope.hide = function($ionicLoading){
+    $ionicLoading.hide().then(function(){
+     console.log("The loading indicator is now hidden");
+
+   })
+  }
 
   $scope.setChoice = function(Data) {
     $scope.choice = $scope.json[Data];
@@ -157,16 +176,16 @@ angular.module('starter.controllers', [])
 });
 
 var mapOptions = {
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          zoomControl: false,
-          mapTypeControl: false,
-          scaleControl: false,
-          streetViewControl: false,
-          rotateControl: false,
-          fullscreenControl: false
+  zoom: 15,
+  mapTypeId: google.maps.MapTypeId.ROADMAP,
+  zoomControl: false,
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  rotateControl: false,
+  fullscreenControl: false
 
-        };
+};
 
 var options = {timeout: 10000, enableHighAccuracy: true}; 
 
