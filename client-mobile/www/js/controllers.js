@@ -20,7 +20,9 @@ $scope.remove = function(chat) {
 })
 
 .controller('TeamviewCtrl', function($scope){
-  
+  $scope.activeQuest = $scope.choice.name;
+  $scope.playerName = 'Mamadou' + Math.floor((Math.random() * 1000) + 1);
+  console.log($scope.activeQuest);
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
