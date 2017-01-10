@@ -20,18 +20,21 @@ $scope.remove = function(chat) {
 })
 
 .controller('TeamviewCtrl', function($scope, $http, CotData){
+  $scope.init = function(){
+    console.log("init player");
   $scope.activeQuest = $scope.choice.name;
   $scope.playerName = 'Mamadou' + Math.floor((Math.random() * 1000) + 1);
   var playerAnswer = CotData.addPlayer($http, $scope.playerName);
   playerAnswer.then(function(result){
       $scope.playerData = result.data;
-      console.log("Result async ");
-      console.log($scope.playerData)
+      CotData.setIdJoueur($scope.playerData._id);
   })
-  console.log('yolo');
-  console.log($scope.activeQuest);
-  console.log('test cot');
-  console.log($scope.cot);
+  }
+  var teamAnswer = CotData.joinTeam($http, 'Les joyeux lurons');
+  teamAnswer.then(function(result){
+    $scope.teamData = result.data;
+    CotData.setIdTeam($scope.teamData._id);
+  })
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -177,7 +180,7 @@ $scope.remove = function(chat) {
 
         $scope.choice = $scope.cot[cot];
         $rootScope.choice = $scope.choice;
-        console.log($scope.choice);
+        CotData.setIdCot($scope.choice._id);
         break;
       }
     }

@@ -2,56 +2,121 @@ angular.module('starter.cot-datas', [])
 
 .factory('CotData', function() {
 
-	return {
-		cots: function($http){
-				var cots;
-				return $http.get('https://eldorago.herokuapp.com/api/cots').then(function (data) {
-    			console.log('Cot get!');
-          console.log(data.data);
-          return data.data;
-  		});
-			
-		},
-		step: function($http, id){
-			var step;
-				return $http.get('https://eldorago.herokuapp.com/api/steps/'+id).then(function (data) {
-    			console.log('Step get!');
-          console.log(data);
-          return data.data;
-  		});
-		},
-		quest: function($http, id){
-			var quest;
-				return $http.get('https://eldorago.herokuapp.com/api/quests/'+id).then(function (data) {
-    			console.log('Quests get!');
-          console.log(data);
-          return data.data;
-  		});
+  var state = new Map();
 
-		},
-		poi: function($http, id){
-			var poi;
-				return $http.get('https://eldorago.herokuapp.com/api/pois/'+id).then(function (data) {
-          console.log('Poi get!')
-          console.log(data);
-          return data.data;
-  		});
+  return {
+    setIdCot: function(idCot){
+      return state.set("idCot", idCot);
+    },
+    setIdJoueur: function(idJoueur){
+      console.log(idJoueur);
+      return state.set("idJoueur", idJoueur);
+    },
+    setIdTeam: function(idTeam){
+      return state.set("idTeam", idTeam);
+    },
+    cots: function($http){
+      var cots;
+      return $http.get('https://eldorago.herokuapp.com/api/cots').then(function (data) {
+       console.log('Cot get!');
+       console.log(data.data);
+       return data.data;
+     });
 
-		},
-    addPlayer: function($http, name){
-      var req = {
-        method: 'POST',
-        url: 'https://eldorago.herokuapp.com/api/players',
-        data:{
-          name: name
-        }
+    },
+    step: function($http, id){
+     var step;
+     return $http.get('https://eldorago.herokuapp.com/api/steps/'+id).then(function (data) {
+       console.log('Step get!');
+       console.log(data);
+       return data.data;
+     });
+   },
+   quest: function($http, id){
+     var quest;
+     return $http.get('https://eldorago.herokuapp.com/api/quests/'+id).then(function (data) {
+       console.log('Quests get!');
+       console.log(data);
+       return data.data;
+     });
+
+   },
+   poi: function($http, id){
+     var poi;
+     return $http.get('https://eldorago.herokuapp.com/api/pois/'+id).then(function (data) {
+      console.log('Poi get!')
+      console.log(data);
+      return data.data;
+    });
+
+   },
+   addPlayer: function($http, name){
+    var req = {
+      method: 'POST',
+      url: 'https://eldorago.herokuapp.com/api/players',
+      data:{
+        name: name,
+        cots:[
+        state.get("idCot")
+        ]
       }
-      return $http(req).then(function(data){
-        console.log('Réponse nom');
-        console.log(data);
-        return data;
-      })
     }
-	};
+    return $http(req).then(function(data){
+      console.log('Réponse nom');
+      console.log(data);
+      return data;
+    })
+  },
+  joinTeam: function($http, name){
+    var teamPromise = this.getTeams($http, name);
+    teamPromise.then(function(result){
+      if(result.data.length == 0){
+        var req = {
+          method: 'POST',
+          url: 'https://eldorago.herokuapp.com/api/teams',
+          data:{
+            name: name,
+            players:[
+            state.get("idJoueur")
+            ]
+          }
+        }
+
+        return $http(req).then(function(result){
+
+        })
+      }
+      else{
+        for(var team in result.data){
+          if(result.data[team].name == name){
+            result.data[team].players.push(state.get("idJoueur"));
+            var req = {
+              method: 'PUT',
+              url: 'https://eldorago.herokuapp.com/api/teams/'+result.data[team]._id,
+              data:{
+                players: result.data[team].players
+              }
+            }
+            return $http(req).then(function(result){
+
+            })
+          }
+        }
+
+      }
+    });
+  },
+  getTeams: function($http, name){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/teams'
+    }
+    return $http(req).then(function(data){
+      console.log('Réponse get teams');
+      console.log(data);
+      return data;
+    })
+  }
+};
 });
 
