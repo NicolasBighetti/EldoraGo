@@ -46,39 +46,58 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
-  var options = {timeout: 10000, enableHighAccuracy: true}; 
 
-  $scope.init = function(){
+  function hide(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };
+
+  $scope.checkIn = function(){
       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-        console.log("init");
+
+                console.log(map);
+
         var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-        var mapOptions = {
-          center: latLng,
-          zoom: 15,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
 
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: map,
+          title: 'Hello World!'
+        });
+
+        
+      })
+  }
+
+  $scope.init = function(){
+    $ionicLoading.show({
+          content: 'Getting current location...',
+          showBackdrop: false
+        });
+
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+        console.log("init");
+        mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-        //Essayons de fix des trucs avec des lignes au hasard de l'internet
-        google.maps.event.trigger(map, 'resize');
+        var marker = new google.maps.Marker({
+          position: mapOptions.center,
+          map: map,
+          title: 'Position'
+        });
 
-        console.log(map);
       })
+
+      hide();
     }
 
-
-
-console.log($scope.map);
     $scope.map = map;
     console.log($scope.map);
-
-      /*$scope.loading = $ionicLoading.show({
-          content: 'Getting current location...',
-          showBackdrop: false
-        });*/
+    
+      
 })
 
 .controller('AccountCtrl', function($scope) {
@@ -87,10 +106,34 @@ console.log($scope.map);
   };
 })
 
-.controller("HomeCtrl", function($scope, $http, $rootScope/*, $state, $cordovaGeolocation*/){
+.controller("HomeCtrl", function($scope, $http, $rootScope, $cordovaGeolocation, $ionicLoading){
   $scope.view = "templates/tabs.html";
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
+
+  function hide(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };
+
+  $scope.init = function(){
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+        console.log("init");
+        mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+        var map = new google.maps.Map(document.getElementById("map-preview"), mapOptions);
+
+        var marker = new google.maps.Marker({
+          position: mapOptions.center,
+          map: map,
+          title: 'Position'
+        });
+
+      })
+      hide();
+    }
+    
 
 
   $scope.setChoice = function(Data) {
@@ -112,3 +155,18 @@ console.log($scope.map);
 
 
 });
+
+var mapOptions = {
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          zoomControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          streetViewControl: false,
+          rotateControl: false,
+          fullscreenControl: false
+
+        };
+
+var options = {timeout: 10000, enableHighAccuracy: true}; 
+
