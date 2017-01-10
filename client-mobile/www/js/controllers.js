@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['starter.cot-datas'])
 
 .controller('DashCtrl', function($scope) {})
 
@@ -19,10 +19,19 @@ $scope.remove = function(chat) {
 };
 })
 
-.controller('TeamviewCtrl', function($scope){
+.controller('TeamviewCtrl', function($scope, $http, CotData){
   $scope.activeQuest = $scope.choice.name;
   $scope.playerName = 'Mamadou' + Math.floor((Math.random() * 1000) + 1);
+  var playerAnswer = CotData.addPlayer($http, $scope.playerName);
+  playerAnswer.then(function(result){
+      $scope.playerData = result.data;
+      console.log("Result async ");
+      console.log($scope.playerData)
+  })
+  console.log('yolo');
   console.log($scope.activeQuest);
+  console.log('test cot');
+  console.log($scope.cot);
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -120,7 +129,7 @@ $scope.remove = function(chat) {
   };
 })
 
-.controller("HomeCtrl", function($scope, $http, $rootScope, $cordovaGeolocation, $ionicLoading){
+.controller("HomeCtrl", function($scope, $http, $rootScope, $cordovaGeolocation, $ionicLoading, CotData){
   $scope.view = "templates/tabs.html";
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
@@ -162,20 +171,23 @@ $scope.remove = function(chat) {
   }
 
   $scope.setChoice = function(Data) {
-    $scope.choice = $scope.json[Data];
-    $rootScope.choice = $scope.choice;
-    console.log($scope.choice);
+    for(var cot in $scope.cot){
+      if($scope.cot[cot]._id == Data)
+      {
+
+        $scope.choice = $scope.cot[cot];
+        $rootScope.choice = $scope.choice;
+        console.log($scope.choice);
+        break;
+      }
+    }
+    
   };
 
-  //Get JSON
-  $http.get('templates/test.json').success(function (data) {
-    $scope.json = data;
-
-    console.log(data);
-
-  })
-  .error(function (data) {
-    defer.reject('could not find json file')
+  var cotPromise = CotData.cots($http);
+  cotPromise.then(function(result){
+    $scope.cot = result;
+    console.log($scope.cot);
   });
 
 
