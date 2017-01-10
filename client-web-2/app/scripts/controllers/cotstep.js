@@ -1,11 +1,18 @@
 ﻿
 angular.module('eldoragoApp')
-  .controller('CotStepCtrl', function($scope, $location, $timeout, $http) {
+  .controller('CotStepCtrl', function($scope, $location, $timeout, $http, CotFactory) {
 
     /**  Loading **/
     $scope.init = function() {
       $scope.getRiddleList();
       $scope.getMarkerList();
+      $scope.cotSelected = CotFactory.getCurrentCot();
+      CotFactory.setCurrentCot(null);
+
+      // si on vient de la page cot-list
+      if ($scope.cotSelected != null) {
+        $scope.getStepList();
+      }
     }
 
     /** Show **/
@@ -154,6 +161,16 @@ angular.module('eldoragoApp')
       });
     }
 
+    $scope.getCot = function() {
+      $scope.stepList = [];
+      var cot = $scope.cotSelected;
+      $http.get("https://eldorago.herokuapp.com/api/cots/"+cot._id).then(function(resp) {
+        $scope.cotSelected = resp.data;
+      }, function(error) {
+        alert(error);
+      });
+    }
+
     $scope.getStepList = function() {
       $scope.stepList = [];
       var cot = $scope.cotSelected;
@@ -236,7 +253,13 @@ angular.module('eldoragoApp')
     //Removes a step
     $scope.RemoveStep = function(id) {
       $http.delete("https://eldorago.herokuapp.com/api/steps/" + id).then(function(resp) {
-        console.log("step " + id + "delete");
+        console.log("deleted");
+
+        //remove
+        var index = $scope.cotSelected.steps.indexOf(id);
+        $scope.cotSelected.steps.splice(index, 1);
+
+        // refresh step
         $scope.getStepList();
       }, function(error) {
         alert(error);
@@ -304,6 +327,7 @@ angular.module('eldoragoApp')
       $http.post("https://eldorago.herokuapp.com/api/cots", newCot).then(function(resp) {
         console.log("Cot initiated");
         $scope.cotSelected = resp.data;
+        CotFactory.setCurrentCot(resp.data);
 
         $scope.getStepList();
       }, function(error) {
