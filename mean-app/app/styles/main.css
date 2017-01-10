@@ -619,6 +619,23 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   font-weight: 300;
 }
 
+.stat-tab-title{
+  height: auto;
+  overflow: auto;
+  font-size: 90%;
+}
+
+.stat-tab-line{
+  height: auto;
+  overflow: auto;
+  font-size: 80%;
+}
+
+/*******************************/
+/**********End Stat page********/
+/*******************************/
+
+
 /*** COT-LEFTSIDE ****/
 .list-group-item.active {
   background-color: #1abc9c;
@@ -630,7 +647,3 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   background-color: #1abc9c;
   border-color: #ffffff;
 }
-
-/*******************************/
-/**********End Stat page********/
-/*******************************/

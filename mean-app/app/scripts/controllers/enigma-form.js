@@ -5,7 +5,7 @@ angular.module('eldoragoApp')
     $scope.riddleToCreate = {};
     $scope.createRiddle = function() {
       var newRiddle = $scope.riddleToCreate;
-      $http.post("https://eldorago.herokuapp.com/api/riddles", newRiddle).then(function(resp) {
+      $http.post(DB_PATH+"riddles", newRiddle).then(function(resp) {
         alert("Enigme crée");
         $scope.riddleToCreate = {};
       }, function(error) {

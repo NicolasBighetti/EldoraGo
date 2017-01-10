@@ -1,8 +1,7 @@
 'use strict';
 
-var DB_PATH = "";
-//var DB_PATH = "https://eldorago.herokuapp.com/api/pois";
-
+var DB_PATH="";
+var DB_PATH= "https://eldorago.herokuapp.com/api/";
 /**
  * @ngdoc overview
  * @name clientYo2App

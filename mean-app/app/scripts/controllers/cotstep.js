@@ -96,11 +96,11 @@ angular.module('eldoragoApp')
         desc: "test"
       };
 
-      $http.post(DB_PATH + "/api/steps", newStep).then(function(resp) {
+      $http.post(DB_PATH+"steps", newStep).then(function(resp) {
         newStep = resp.data;
         cot.steps.push(newStep._id);
 
-        $http.put(DB_PATH + "/api/cots/"+cot._id, {steps: cot.steps}).then(function(resp) {
+        $http.put(DB_PATH+"cots/"+cot._id, {steps: cot.steps}).then(function(resp) {
           $scope.getStepList();
         }, function(error) {
           alert(error);
@@ -146,7 +146,7 @@ angular.module('eldoragoApp')
     /** Get Marker de la BDD **/
     $scope.getMarkerList = function() {
 
-      $http.get(DB_PATH + "/api/pois").then(function(resp) {
+      $http.get(DB_PATH+"pois").then(function(resp) {
         $scope.markerList = resp.data;
 
         // foreach marker on markerList BDD
@@ -164,7 +164,7 @@ angular.module('eldoragoApp')
     $scope.getCot = function() {
       $scope.stepList = [];
       var cot = $scope.cotSelected;
-      $http.get(DB_PATH + "/api/cots/"+cot._id).then(function(resp) {
+      $http.get(DB_PATH+"cots/"+cot._id).then(function(resp) {
         $scope.cotSelected = resp.data;
       }, function(error) {
         alert(error);
@@ -175,7 +175,7 @@ angular.module('eldoragoApp')
       $scope.stepList = [];
       var cot = $scope.cotSelected;
       for (var i = 0; i < cot.steps.length; i++) {
-        $http.get(DB_PATH + "/api/steps/"+cot.steps[i]).then(function(resp) {
+        $http.get(DB_PATH+"steps/"+cot.steps[i]).then(function(resp) {
           $scope.stepList.push(resp.data);
         }, function(error) {
           alert(error);
@@ -184,7 +184,7 @@ angular.module('eldoragoApp')
     }
 
     $scope.getRiddleList = function() {
-      $http.get(DB_PATH + "/api/riddles").then(function(resp) {
+      $http.get(DB_PATH+"riddles").then(function(resp) {
         $scope.riddleList = resp.data;
       }, function(error) {
         alert(error);
@@ -197,7 +197,7 @@ angular.module('eldoragoApp')
       // Convertit les riddles id en nom
       var addRiddleName = function(quest){
         if (quest.riddle != null) {
-          $http.get(DB_PATH + "/api/riddles/" + quest.riddle).then(function(resp) {
+          $http.get(DB_PATH+"riddles/" + quest.riddle).then(function(resp) {
             quest.riddle_name = resp.data.name;
             addPoiName(quest);
           }, function(error) {
@@ -212,7 +212,7 @@ angular.module('eldoragoApp')
       // Convertit les pois id en nom
       var addPoiName = function(quest) {
         if (quest.poi != null) {
-          $http.get(DB_PATH + "/api/pois/" + quest.poi).then(function(resp) {
+          $http.get(DB_PATH+"pois/" + quest.poi).then(function(resp) {
             quest.poi_name = resp.data.name;
             $scope.questList.push(quest);
 
@@ -227,7 +227,7 @@ angular.module('eldoragoApp')
 
       // recupere les quêtes
       for (var i = 0; i < step.quests.length; i++) {
-        $http.get(DB_PATH + "/api/quests/" + step.quests[i]).then(function(resp) {
+        $http.get(DB_PATH+"quests/" + step.quests[i]).then(function(resp) {
           var quest = resp.data;
 
           addRiddleName(quest);
@@ -240,7 +240,7 @@ angular.module('eldoragoApp')
     }
 
     $scope.convertRiddle = function(quest) {
-      $http.get(DB_PATH + "/api/riddles/" + quest.riddle).then(function(resp) {
+      $http.get(DB_PATH+"riddles/" + quest.riddle).then(function(resp) {
         quest.riddle_name = resp.data;
         // $scope.questList.push(quest);
       }, function(error) {
@@ -252,7 +252,7 @@ angular.module('eldoragoApp')
 
     //Removes a step
     $scope.RemoveStep = function(id) {
-      $http.delete(DB_PATH + "/api/steps/" + id).then(function(resp) {
+      $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
         console.log("deleted");
 
         //remove
@@ -293,13 +293,13 @@ angular.module('eldoragoApp')
       }
       console.log("newQuest");
 
-      $http.post(DB_PATH + "/api/quests", newQuest).then(function(resp) {
+      $http.post(DB_PATH+"quests", newQuest).then(function(resp) {
         console.log("Quête créée");
         newQuest = resp.data;
         // On ajoute l'id de la nouvelle quete à la step concernée
         step.quests.push(newQuest._id);
 
-        $http.put(DB_PATH + "/api/steps/" + step._id, {
+        $http.put(DB_PATH+"steps/" + step._id, {
           quests: step.quests
         }).then(function(resp) {
           console.log("ajout de l'id de la nouvelle quete dans ");
@@ -324,7 +324,7 @@ angular.module('eldoragoApp')
         desc: "Ajoutez une description"
       }
 
-      $http.post(DB_PATH + "/api/cots", newCot).then(function(resp) {
+      $http.post(DB_PATH+"cots", newCot).then(function(resp) {
         console.log("Cot initiated");
         $scope.cotSelected = resp.data;
         CotFactory.setCurrentCot(resp.data);
@@ -337,7 +337,7 @@ angular.module('eldoragoApp')
 
     $scope.associateQuestPoi = function(quest) {
       var poi = $scope.poiSelected;
-      $http.put(DB_PATH + "/api/quests/" + quest._id, {
+      $http.put(DB_PATH+"quests/" + quest._id, {
         poi: poi._id
       }).then(function(resp) {
         console.log(quest + " associée à " + poi);
@@ -351,7 +351,7 @@ angular.module('eldoragoApp')
     $scope.associateQuestRiddle = function() {
       var quest = $scope.questSelected;
       var riddle = $scope.riddleSelected;
-      $http.put(DB_PATH + "/api/quests/" + quest._id, {
+      $http.put(DB_PATH+"quests/" + quest._id, {
         riddle: riddle._id
       }).then(function(resp) {
         console.log("riddle associée à quest");

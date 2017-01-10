@@ -7,7 +7,7 @@ angular.module('eldoragoApp')
     }
 
     $scope.getCotList = function() {
-      $http.get("https://eldorago.herokuapp.com/api/cots").then(function(resp) {
+      $http.get(DB_PATH+"cots").then(function(resp) {
         $scope.cotList = resp.data;
       });
     }
@@ -18,7 +18,7 @@ angular.module('eldoragoApp')
     }
 
     $scope.removeCot = function(id) {
-      $http.delete("https://eldorago.herokuapp.com/api/cots/" + id).then(function(resp) {
+      $http.delete(DB_PATH+"cots/" + id).then(function(resp) {
         console.log("cot " + id + " delete");
         var removedCot = resp.data;
 
@@ -26,13 +26,13 @@ angular.module('eldoragoApp')
 
         // delete en cascade -- steps
         for (var i; i < removedCot.steps.length; i++) {
-          $http.delete("https://eldorago.herokuapp.com/api/steps/" + removedCot.steps[i]).then(function(resp) {
+          $http.delete(DB_PATH+"steps/" + removedCot.steps[i]).then(function(resp) {
             console.log("step " + id + " delete");
             var removedStep = resp.data;
 
             // delete en cascade -- quests
             for (var j; j < removedStep.quests.length; j++) {
-              $http.delete("https://eldorago.herokuapp.com/api/quests/" + id).then(function(resp) {
+              $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
                 console.log("quest " + id + " delete");
               }, function(error) {
                 alert(error);
@@ -50,7 +50,7 @@ angular.module('eldoragoApp')
     }
 
     $scope.removeStep = function(id) {
-      $http.delete("https://eldorago.herokuapp.com/api/steps/" + id).then(function(resp) {
+      $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
         console.log("cot " + id + " delete");
         $scope.getAllStepList();
       }, function(error) {
@@ -59,7 +59,7 @@ angular.module('eldoragoApp')
     }
 
     $scope.removeQuest = function(id) {
-      $http.delete("https://eldorago.herokuapp.com/api/quests/" + id).then(function(resp) {
+      $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
         console.log("quest " + id + " delete");
 
         $scope.getAllQuestList();
@@ -70,7 +70,7 @@ angular.module('eldoragoApp')
 
 
     // $scope.getAllStepList = function() {
-    //     $http.get("https://eldorago.herokuapp.com/api/steps/").then(function(resp) {
+    //     $http.get(DB_PATH+"steps/").then(function(resp) {
     //       $scope.stepList = resp.data;
     //     }, function(error) {
     //       alert(error);
@@ -78,7 +78,7 @@ angular.module('eldoragoApp')
     // }
 
     // $scope.getAllQuestList = function() {
-    //     $http.get("https://eldorago.herokuapp.com/api/quests/").then(function(resp) {
+    //     $http.get(DB_PATH+"quests/").then(function(resp) {
     //       $scope.questList = resp.data;
     //     }, function(error) {
     //       alert(error);

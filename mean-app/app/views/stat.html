@@ -41,33 +41,38 @@
 
             <thead>
             <tr>
-                <th st-sort="name" class="text-center">Nom</th>
-                <th st-sort="name" class="text-center">Nombre de personnes</th>
-                <th st-sort="name" class="text-center">Temps moyen</th>
+                <th st-sort="name" class="text-center">
+                    <div class="stat-tab-title">Nom</div>
+                </th>
+                <th st-sort="name" class="text-center">
+                    <div class="stat-tab-title">Nombre de personnes</div>
+                </th>
+                <th st-sort="name" class="text-center">
+                    <div class="stat-tab-title">Temps moyen</div>
+                </th>
 
             </tr>
             </thead>
 
             <tbody>
             <tr ng-repeat="user in displayedCollection">
-                <!--<td title="'Nom'" filter="{ name: 'text'}" sortable="'name'">
-                    {{user.name}}</td>
-                <td title="'Nombre de personnes'" filter="{ pers: 'number'}" sortable="'age'">
-                    {{user.age}}</td>
-                <td title="'Temps moyen'" filter="{ time: 'number'}" sortable="'age'">
-                    {{user.age}}</td>
-            </tr>-->
 
-                <td class="text-center" >{{user.name}}</td>
-                <td class="text-center">{{user.people}}</td>
-                <td class="text-center">{{user.avg_time}}</td>
+                <td class="text-center" >
+                    <div class="stat-tab-line">{{user.name}}</div>
+                </td>
+                <td class="text-center">
+                    <div class="stat-tab-line">{{user.people}}</div>
+                </td>
+                <td class="text-center">
+                    <div class="stat-tab-line">{{user.avg_time}}</div>
+                </td>
             </tr>
             </tbody>
 
             <tfoot>
             <tr>
                 <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="4" st-displayed-pages="4"></div>
+                    <div st-pagination="" st-items-by-page="3" st-displayed-pages="6"></div>
                 </td>
             </tr>
             </tfoot>
