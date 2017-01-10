@@ -12,7 +12,7 @@
           <div class="col-xs-10">
               <div class="well well-sm">
                 <div ng-show="quest.riddle">
-                  {{quest.riddle}}
+                  {{quest.riddle_name}}
                 </div>
                 <div ng-show="!quest.riddle">
                   Choisir un jeu
@@ -25,7 +25,14 @@
         </div>
         <div class="row" >
           <div class="col-xs-8">
-            <div class="well well-sm">{{quest.poi}}</div>
+            <div class="well well-sm">
+              <div ng-show="quest.poi">
+                {{quest.poi_name}}
+              </div>
+              <div ng-show="!quest.poi">
+                Associer un POI
+              </div>
+            </div>
           </div>
           <div class="col-xs-4">
             <!-- associe quete / poi -->
@@ -36,7 +43,7 @@
         </div>
         <div class="row">
           <div class="col-xs-7">
-            <div class="btn btn-default" data-toggle="popover" title="{{quest.id_riddle}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
+            <div class="btn btn-default" data-toggle="popover" title="{{quest.riddle}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
           </div>
           <div class="col-xs-5">
             <input type="checkbox" ng-model="quest.id" ng-checked="quest.optionnelle"/> Optionnelle
