@@ -62,7 +62,7 @@ angular.module('eldoragoApp')
       };
 
 
-      $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
+      $http.get(DB_PATH + "/api/pois").then(function(resp) {
 
 
         $scope.markerList = resp.data;

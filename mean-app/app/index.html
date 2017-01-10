@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -20,6 +19,7 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <!--<link rel="stylesheet" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />-->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/switch.css">
 
 
     <!-- endbuild -->
@@ -79,8 +79,7 @@
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/markerclustererplus/src/markerclusterer.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPjKGpGKiylkoKNU_Ga18wlz3ODhOh0fY"></script>
+	<script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAPjKGpGKiylkoKNU_Ga18wlz3ODhOh0fY'></script>
     <script src="bower_components/google-maps-utility-library-v3-markerwithlabel/dist/markerwithlabel.js"></script>
     <script src="bower_components/google-maps-utility-library-v3-infobox/dist/infobox.js"></script>
     <script src="bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>
@@ -94,6 +93,8 @@
     <!-- endbuild -->
     <!--<script src="bower_components/angular-datatables/dist/angular-datatables.js"></script>
     <link rel="stylesheet" href="bower_components/angular-datatables/demo/src/angular-datatables.css">-->
+
+
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
@@ -104,8 +105,10 @@
     <script src="scripts/controllers/cotstep.js"></script>
     <script src="scripts/controllers/stat.js"></script>
     <script src="scripts/controllers/cot-list.js"></script>
+    <script src="scripts/controllers/enigma-form.js"></script>
 
     <script src="scripts/directives/ngEnter.js"></script>
+    <script src="scripts/factories/cotFactory.js"></script>
 
     <!-- Jquery files -->
     <script src="scripts/jquery/home-hr-color.js"></script>
