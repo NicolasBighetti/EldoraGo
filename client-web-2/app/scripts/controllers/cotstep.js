@@ -36,7 +36,7 @@ angular.module('eldoragoApp')
       })
 
       setTimeout(function () {
-          
+
           //angular - google - map - container
           //angular - google - map
 
@@ -197,32 +197,13 @@ console.log("I WAITED U ASS");
       $scope.questSelected = quest;
     };
 
-    $scope.associateQuestStep = function(quest, step) {
-      // modif BDD
-    };
-
-    // $scope.associateQuestStep = function(quest, ) {
-    //   // modif BDD
-    //
-    //   $http.put("https://eldorago.herokuapp.com/api/steps/"+step._id,  ).then(function(resp) {
-    //     console.log(riddle + " associée à "+ quest);
-    //     $('#editStep').modal('hide');
-    //   }, function(error) {
-    //     alert(error);
-    //   });
-    //
-    // };
-
-
     $scope.addQuest = function() {
       var step = $scope.stepSelected;
       var newQuest = {
-        name: $scope.stepSelected.name,
+        name: "Nom quete",
         desc: $scope.stepSelected.desc
       }
-
       console.log("newQuest");
-      console.log(newQuest);
 
       $http.post("https://eldorago.herokuapp.com/api/quests", newQuest).then(function(resp) {
         console.log("Quête créée");
@@ -248,13 +229,31 @@ console.log("I WAITED U ASS");
 
     }
 
-    $scope.associateQuestPoi = function(quest, poi) {
-      $http.put("https://eldorago.herokuapp.com/api/pois/" + quest._id, {
+    $scope.associateQuestPoi = function(quest) {
+      var poi = $scope.poiSelected;
+      $http.put("https://eldorago.herokuapp.com/api/quests/" + quest._id, {
         poi: poi._id
       }).then(function(resp) {
         console.log(quest + " associée à " + poi);
+        $scope.getQuestList($scope.stepSelected);
       }, function(error) {
         alert(error);
+        console.dir(error);
+      });
+    }
+
+    $scope.associateQuestRiddle = function() {
+      var quest = $scope.questSelected;
+      var riddle = $scope.riddleSelected;
+      $http.put("https://eldorago.herokuapp.com/api/quests/" + quest._id, {
+        riddle: riddle._id
+      }).then(function(resp) {
+        console.log("riddle associée à quest");
+        $('#faq').modal('hide');
+        $scope.getQuestList($scope.stepSelected);
+      }, function(error) {
+        alert(error);
+        console.dir(error);
       });
     }
 
