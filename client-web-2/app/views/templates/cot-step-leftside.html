@@ -1,4 +1,15 @@
-<p ng-repeat="step in stepList">
-    Step numero {{step._id}}
-    <button ng-click="RemoveStep(step._id)"> Supprimer</button>
-</p>
+<ul class="list-group" ng-repeat="step in stepList">
+  <li class="list-group-item">Step numero {{step._id}}
+    <span ng-click="RemoveStep(step._id)" class="badge text-danger">
+      <i class="fa fa-times"></i>
+    </span>
+  </li>
+
+</ul>
+
+<button ng-click="addStep()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+
+<!-- <div class="list-group" ng-repeat="step in stepList">
+  <a href="" class="list-group-item">Step numero {{step._id}}</a>
+  <button ng-click="RemoveStep(step._id)" class="btn btn-danger"> Supprimer</button>
+</div> -->

@@ -30,8 +30,15 @@ describe('Cot Model Unit Tests:', function () {
 
     user.save(function () {
       cot = new Cot({
-        name: 'Cot Name',
-        user: user
+        name: 'Premiere chasse !',
+        user: user,
+        desc: 'Lancez vous dans la première chasse au trésor d\'Eldorago au programme: visite de l\'école',
+        time_est: 60,
+        time_avg: 0,
+        steps: [],
+        cotImageURL: 'modules/user/client/img/profile/default.png',
+        date_start: new Date(2017, 1, 7) // 7 jan
+
       });
 
       done();
@@ -55,6 +62,15 @@ describe('Cot Model Unit Tests:', function () {
         done();
       });
     });
+    it('should be able to show an error when try to save without description', function (done) {
+      cot.desc = '';
+
+      return cot.save(function (err) {
+        should.exist(err);
+        done();
+      });
+    });
+
   });
 
   afterEach(function (done) {

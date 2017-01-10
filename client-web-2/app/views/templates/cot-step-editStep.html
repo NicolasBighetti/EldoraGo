@@ -8,18 +8,18 @@
         <h4 class="modal-title">Informations générales</h4>
       </div>
       <div class="modal-body">
-        <form class="" id="editform">
+        <form ng-submit="submitCot()" id="editform">
 
           <!-- Nom -->
           <div class="row">
             <div class="col-xs-6">
-              <input type="text" class="form-control" name="name" placeholder="Nom" required/>
+              <input type="text" class="form-control" ng-model="cotToCreate.name" placeholder="Nom" required/>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
               <!-- Description -->
-              <textarea class="form-control" rows="4" name="desc" placeholder="Description" required></textarea>
+              <textarea class="form-control" rows="4" ng-model="cotToCreate.desc" placeholder="Description" required></textarea>
             </div>
           </div>
 

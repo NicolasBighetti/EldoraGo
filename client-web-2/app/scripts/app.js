@@ -38,6 +38,10 @@ angular
         templateUrl: 'views/cot.html',
          controller: 'CotStepCtrl',
       })
+      .when('/cot-list', {
+        templateUrl: 'views/cot-list.html',
+         controller: 'CotListCtrl',
+      })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
       })

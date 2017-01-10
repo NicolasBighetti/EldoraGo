@@ -20,33 +20,42 @@ var CotSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  date_start:{
+    type: Date,
+    default: Date.now
+  },
+  date_end:{
+    type: Date,
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'
   },
   desc: {
     type: String,
-    default: '',
-    required: 'Please fill Cot desc',
-    trim: true
+    required: 'Please fill Cot desc'
   },
-  duree_estime: {
+  time_est: {
     type: Number,
     default: 0,
     min: 0
   },
-  duree_moyenne: {
+  time_avg: {
     type: Number,
     default: 0,
     min: 0
   },
-  etapes: {
+  steps: {
     type: [Schema.Types.ObjectId],
     ref: 'Step'
   },
   cotImageURL: {
     type: String,
-    default: 'modules/cots/client/img/profile/default.png'
+    default: 'modules/users/client/img/profile/default.png'
+  },
+  participants: {
+    type: [Schema.ObjectId],
+    ref: 'Player'
   }
 });
 

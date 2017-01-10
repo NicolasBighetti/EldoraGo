@@ -6,18 +6,18 @@
 var should = require('should'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  Etape = mongoose.model('Etape');
+  Step = mongoose.model('Step');
 
 /**
  * Globals
  */
 var user,
-  etape;
+  step;
 
 /**
  * Unit tests
  */
-describe('Etape Model Unit Tests:', function () {
+describe('Step Model Unit Tests:', function () {
   beforeEach(function (done) {
     user = new User({
       firstName: 'Full',
@@ -29,7 +29,7 @@ describe('Etape Model Unit Tests:', function () {
     });
 
     user.save(function () {
-      etape = new Etape({
+      step = new Step({
         // Add model fields
         // ...
       });
@@ -40,7 +40,7 @@ describe('Etape Model Unit Tests:', function () {
 
   describe('Method Save', function () {
     it('should be able to save without problems', function (done) {
-      return etape.save(function (err) {
+      return step.save(function (err) {
         should.not.exist(err);
         done();
       });
@@ -48,7 +48,7 @@ describe('Etape Model Unit Tests:', function () {
   });
 
   afterEach(function (done) {
-    Etape.remove().exec();
+    Step.remove().exec();
     User.remove().exec();
 
     done();

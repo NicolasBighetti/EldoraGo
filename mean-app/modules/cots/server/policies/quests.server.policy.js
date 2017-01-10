@@ -25,10 +25,10 @@ exports.invokeRolesPolicies = function () {
     roles: ['user'],
     allows: [{
       resources: '/api/quests',
-      permissions: ['get', 'post']
+      permissions: ['*']
     }, {
       resources: '/api/quests/:questId',
-      permissions: ['get']
+      permissions: ['*']
     }]
   }, {
     roles: ['guest'],

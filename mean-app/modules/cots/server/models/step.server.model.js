@@ -29,10 +29,10 @@ var StepSchema = new Schema({
   desc: {
     type: String,
     default: '',
-    required: 'Please fill step desc',
+    //required: 'Please fill step desc',
     trim: true
   },
-  quest: {
+  quests: {
     type: [Schema.Types.ObjectId],
     ref: 'Quest'
   }
