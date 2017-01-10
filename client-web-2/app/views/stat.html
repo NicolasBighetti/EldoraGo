@@ -1,0 +1,51 @@
+<div class="container-fluid" ng-controller="StatCtrl" ng-init="init()">
+
+    <div class="row stat-main"  ng-show="active">
+
+        <!--<button ng-click="active = false">{{active}}</button>
+        <div>Maps</div>-->
+        <div class="search-bar row">
+         <input id="pac-input" class="controls text-center center-block" type="text" placeholder="Cherchez une chasse ou un POI">
+        </div>
+
+        <ui-gmap-google-map center="map.center" zoom="map.zoom">
+
+            <!--<ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>-->
+
+
+            <ui-gmap-markers idkey="'id'"
+                             models="map.markers"
+                             coords="'self'"
+                             docluster="false"
+                             fit="'true'" icon="'icon'" events="map.markersEvents" options="'options'">
+            </ui-gmap-markers>
+
+            <!--<ui-gmap-window ng-repeat="marker in map.markers" show="map.window.show" coords="map.window.model" options="map.window.options" closeclick="map.window.closeClick()">
+
+                <div>{{marker.name}}</div>
+
+            </ui-gmap-window>-->
+
+
+
+
+
+
+        </ui-gmap-google-map>
+
+
+
+
+    </div>
+
+    <div class="row stat-sub">
+
+    </div>
+
+
+
+    <div ng-hide="active">
+        <div class="animate-switch">graph</div>
+    </div>
+
+</div>
