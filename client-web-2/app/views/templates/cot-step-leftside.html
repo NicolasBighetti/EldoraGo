@@ -1,6 +1,9 @@
 <ul class="list-group" ng-repeat="step in stepList">
   <li class="list-group-item">Step numero {{step._id}}
-    <span ng-click="RemoveStep(step._id)" class="badge text-danger">
+    <!-- <span ng-click="RemoveStep(step._id)" class="badge">
+      <i class="fa fa-times"></i>
+    </span> -->
+    <span ng-click="RemoveStep(step._id)" class="label label-danger">
       <i class="fa fa-times"></i>
     </span>
   </li>
