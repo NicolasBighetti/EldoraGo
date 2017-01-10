@@ -1,0 +1,9 @@
+<div ng-init="init()"></div>
+<div ng-show="isStart">
+  <div ng-include src="'views/templates/cot-start.html'"></div>
+</div>
+<div ng-show="!isStart">
+  <div ng-include src="'views/templates/cot-step.html'"></div>
+</div>
+
+<div ng-include src="'views/templates/cot-step-editStep.html'"></div>
