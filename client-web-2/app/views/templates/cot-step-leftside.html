@@ -1,5 +1,5 @@
 <ul class="list-group" ng-repeat="step in stepList">
-  <li class="list-group-item">Step numero {{step._id}}
+  <li ng-class="{active : stepSelected === step}" ng-click="setActive(step)" class="list-group-item">Step numero {{step._id}}
     <!-- <span ng-click="RemoveStep(step._id)" class="badge">
       <i class="fa fa-times"></i>
     </span> -->

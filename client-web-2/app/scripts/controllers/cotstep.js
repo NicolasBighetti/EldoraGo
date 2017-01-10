@@ -62,19 +62,22 @@ console.log("I WAITED U ASS");
     });
 
     $scope.updateLocation = function(newlat, newlon) {
-      //$scope.map.center.latitude = newlat;
-      //$scope.map.center.longitude = newlon;
+      $scope.map.center.latitude = newlat;
+      $scope.map.center.longitude = newlon;
         console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
         //Center the map !!!!
-      $scope.map.center = new google.maps.LatLng(newlat, newlon);
+      // $scope.map.center = new google.maps.LatLng(newlat, newlon);
     };
+
+    $scope.lat = 44;
+    $scope.lon = 6;
 
     $scope.map = {
       center: {
-        latitude: 44,
-        longitude: 6
+        latitude: $scope.lat,
+        longitude: $scope.lon
       },
-      zoom: 8,
+      zoom: 10,
       markers: [],
       events: {
         click: function(map, eventName, originalEventArgs) {
@@ -166,23 +169,33 @@ console.log("I WAITED U ASS");
 
     $scope.associateQuest = function(quest, riddle) {
       // modif BDD
+      // adresse à revoir
+      // $http.put("https://eldorago.herokuapp.com/api/cot/"+$scope.quest._id, $scope.riddle._id ).then(function(resp) {
+      //   console.log(riddle + " associée à "+ quest);
+      //   $('#editStep').modal('hide');
+      // }, function(error) {
+      //   alert(error);
+      // });
+
     };
 
     $scope.addQuest = function () {
 
     }
 
-      //When enter pressed, Treating teh address
+    /** LEFT SIDE **/
+    $scope.setActive = function(menuItem) {
+      $scope.stepSelected = menuItem;
+    }
+
     $scope.EnterPressed = function (keyEvent, lieu) {
-        
+
         if (keyEvent.which === 13)
         {
             $scope.TreatAdress(lieu);
         }
-            
-    }//EnterPressed()
-
-
+            //alert('I am     an alert');
+    }
 
     /** SUBMIT **/
     $scope.submitCot = function() {
@@ -200,7 +213,7 @@ console.log("I WAITED U ASS");
 
         $timeout(function() {
           $location.path("/cot-list");
-        }, 1000);
+        }, 750);
 
       }, function(error) {
         alert(error.data.message);
