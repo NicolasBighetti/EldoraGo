@@ -19,90 +19,45 @@ angular.module('eldoragoApp')
         if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
           var location = results[0].geometry.location;
           console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
-          //$scope.lat = location.lat();
-          //$scope.lon = location.lng();
 
-          $scope.updateLocation(location.lat(), location.lng());
+          $scope.updateLocation(location.lat()+0.25, location.lng()-0.5);
           $scope.isStart = false;
-          // $scope.addMarker(location.lat(), location.lng())
           $scope.$apply();
-          // $location.path("/#!/cot-step");
-
 
           $scope.stepList = [];
-
-          //Contains the markers we will add
-          $scope.markerList = [{
-              id: Date.now(),
-              coords: {
-                latitude: 43.55651037504757,
-                longitude: 6.062621846795082
-              }
-            },
-            {
-              id: Date.now(),
-              coords: {
-                latitude: 43.897892391257976,
-                longitude: 4.678344503045082
-
-              }
-            },
-
-            {
-              id: Date.now(),
-              coords: {
-                latitude: 43.45859799999999,
-                longitude: 5.249702999999954
-              }
-            }
-          ];
-
-          for (var i = 0; i < 3; i++) {
-            $scope.map.markers.push($scope.markerList[i]);
-            console.log($scope.markerList[i]);
-            console.log($scope.map.markers);
-            $scope.$apply();
-
-          }
-
-
-          /** ajout du marker au centre **/
-          var marker = {
-            id: Date.now(),
-            coords: {
-              latitude: location.lat(),
-              longitude: location.lng()
-            }
-          };
-          //$scope.map.markers.push(marker);
-          //console.log(marker);
-          //console.log($scope.map.markers);
-          //$scope.$apply();
-
-
         }
       })
 
     };
 
+    /** Get Marker de la BDD **/
+    $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
+      $scope.markerList = resp.data;
+      // console.log($scope.markerList);
+
+      // foreach marker on markerList BDD
+      for (var i = 0; i < $scope.markerList.length; i++) {
+        //rename _id en id
+        $scope.markerList[i].id = $scope.markerList[i]._id;
+        // adding marker on the map
+        $scope.map.markers.push($scope.markerList[i]);
+      }
+      // $scope.$apply();
+
+    });
 
     $scope.updateLocation = function(newlat, newlon) {
       $scope.map.center.latitude = newlat;
       $scope.map.center.longitude = newlon;
-      // console.log("Updated location with : " + newlat + " / "+ newlon);
       console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
     };
 
-
-    $scope.lat = 0;
-    $scope.lon = 0;
-
     $scope.map = {
       center: {
-        latitude: $scope.lat,
-        longitude: $scope.lon
+        latitude: 44,
+        longitude: 6
       },
-      zoom: 7,
+      zoom: 10,
       markers: [],
       events: {
         click: function(map, eventName, originalEventArgs) {
@@ -110,7 +65,7 @@ angular.module('eldoragoApp')
           console.log(e);
           var lat = e.latLng.lat(),
             lon = e.latLng.lng();
-          STEP //Add a marker when clicking
+          // STEP //Add a marker when clicking
           //  var marker = {
           //    id: Date.now(),
           //    coords: {
@@ -128,7 +83,7 @@ angular.module('eldoragoApp')
       } //marker
     };
 
-    function AddStep(lat, lng) {
+    $scope.addStep = function(lat, lng) {
       $scope.stepList.push({
         _id: $scope.stepList.length + 1,
         _lat: lat,
@@ -137,6 +92,15 @@ angular.module('eldoragoApp')
 
     }
 
+    //Resets the steps _id to keep valid _ids
+    function ResetStepsId()
+    {
+      for (var i = 0; i < $scope.stepList.length; i++)
+      {
+          $scope.stepList[i]._id = i + 1;
+      }
+    }//ResetStepsId()
+
     $scope.marker = {
       events: {
         click: function(marker, eventName, args) {
@@ -144,14 +108,27 @@ angular.module('eldoragoApp')
           //$scope.open();
           //console.log(marker.position.lat() +" -- "+ marker.position.lng());
           console.log("Marker clicked ! ");
-          AddStep(marker.position.lat(), marker.position.lng());
 
+          // $scope.associateStepPoi(step, poi);
+
+          console.log("$scope.markerList.length"+ $scope.markerList.length);
+          for (var i = 0; i < $scope.markerList.length ; i++) {
+            if ($scope.markerList[i].id === marker.key) {
+              $scope.poiSelected = $scope.markerList[i];
+            }
+          }
+          console.log($scope.poiSelected);
         }
       }
     };
 
 
-
+    //Removes a step
+    $scope.RemoveStep = function(id)
+    {
+        $scope.stepList.splice(id - 1, 1);
+        ResetStepsId();
+    }
 
 
     /** STEP **/
@@ -174,7 +151,9 @@ angular.module('eldoragoApp')
       // modif BDD
     };
 
+    $scope.addQuest = function () {
 
+    }
 
 
 
@@ -261,20 +240,22 @@ angular.module('eldoragoApp')
       name: "Quete avec un nom",
       desc: "Oh! Oh! Oh!",
       qtype: "Enigme"
-    }, {
-      id: "quete4",
-      id_riddle: "riddle4",
-      name: "Quete 4",
-      desc: "Ah! Ah! Ah!",
-      qtype: "Enigme"
-    }, {
-      name: "Quete 5",
-      desc: "Ih! Ih! Ih!",
-      qtype: "Enigme"
-    }, {
-      name: "Quete 6",
-      desc: "Uh! Uh! Uh!",
-      qtype: "Enigme"
-    }];
+    }
+    //, {
+    //   id: "quete4",
+    //   id_riddle: "riddle4",
+    //   name: "Quete 4",
+    //   desc: "Ah! Ah! Ah!",
+    //   qtype: "Enigme"
+    // }, {
+    //   name: "Quete 5",
+    //   desc: "Ih! Ih! Ih!",
+    //   qtype: "Enigme"
+    // }, {
+    //   name: "Quete 6",
+    //   desc: "Uh! Uh! Uh!",
+    //   qtype: "Enigme"
+    // }
+  ];
 
   });
