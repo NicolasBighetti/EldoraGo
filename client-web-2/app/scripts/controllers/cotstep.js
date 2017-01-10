@@ -2,11 +2,18 @@
 angular.module('eldoragoApp')
   .controller('CotStepCtrl', function($scope, $location, $timeout, $http) {
 
+    /**  Loading **/
+    $scope.init = function() {
+      $scope.getStepList();
+      $scope.getMarkerList();
+    }
+
     /** Show **/
     $scope.isStart = true;
 
     /** Form **/
     $scope.cotToCreate = {};
+    $scope.questList = [];
 
     /** Start **/
     $scope.TreatAdress = function(lien) {
@@ -20,37 +27,23 @@ angular.module('eldoragoApp')
           var location = results[0].geometry.location;
           console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
 
-          $scope.updateLocation(location.lat()+0.25, location.lng()-0.5);
+          $scope.updateLocation(location.lat() + 0.25, location.lng() - 0.5);
           $scope.isStart = false;
           $scope.$apply();
 
-          $scope.stepList = [];
+          // $scope.stepList = [];
         }
       })
 
     };
 
-    /** Get Marker de la BDD **/
-    $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
-      $scope.markerList = resp.data;
-      // console.log($scope.markerList);
 
-      // foreach marker on markerList BDD
-      for (var i = 0; i < $scope.markerList.length; i++) {
-        //rename _id en id
-        $scope.markerList[i].id = $scope.markerList[i]._id;
-        // adding marker on the map
-        $scope.map.markers.push($scope.markerList[i]);
-      }
-      // $scope.$apply();
-
-    });
 
     $scope.updateLocation = function(newlat, newlon) {
       $scope.map.center.latitude = newlat;
       $scope.map.center.longitude = newlon;
-        console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
-        //Center the map !!!!
+      console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
+      //Center the map !!!!
       // $scope.map.center = new google.maps.LatLng(newlat, newlon);
     };
 
@@ -70,41 +63,34 @@ angular.module('eldoragoApp')
           console.log(e);
           var lat = e.latLng.lat(),
             lon = e.latLng.lng();
-          // STEP //Add a marker when clicking
-          //  var marker = {
-          //    id: Date.now(),
-          //    coords: {
-          //      latitude: lat,
-          //      longitude: lon
-          //    }
-          //  };
-          //  $scope.map.markers.push(marker);
-          //  console.log(marker);
-          //  console.log($scope.map.markers);
-          //  $scope.$apply();
-          //  console.log(marker.coords.latitude + marker.coords.lon);
         }
 
       } //marker
     };
 
     $scope.addStep = function(lat, lng) {
-      $scope.stepList.push({
-        _id: $scope.stepList.length + 1,
-        _lat: lat,
-        _lng: lng
-      });
 
+      var newStep = {
+        name: "Nom step",
+        desc: "test"
+      };
+
+      $http.post("https://eldorago.herokuapp.com/api/steps", newStep).then(function(resp) {
+        console.log("addStep");
+        $scope.getStepList();
+      }, function(error) {
+        alert(error);
+      });
     }
 
     //Resets the steps _id to keep valid _ids
-    function ResetStepsId()
-    {
-      for (var i = 0; i < $scope.stepList.length; i++)
-      {
-          $scope.stepList[i]._id = i + 1;
-      }
-    }//ResetStepsId()
+    // function ResetStepsId()
+    // {
+    //   for (var i = 0; i < $scope.stepList.length; i++)
+    //   {
+    //       $scope.stepList[i]._id = i + 1;
+    //   }
+    // }//ResetStepsId()
 
     $scope.marker = {
       events: {
@@ -116,8 +102,8 @@ angular.module('eldoragoApp')
 
           // $scope.associateStepPoi(step, poi);
 
-          console.log("$scope.markerList.length"+ $scope.markerList.length);
-          for (var i = 0; i < $scope.markerList.length ; i++) {
+          console.log("$scope.markerList.length" + $scope.markerList.length);
+          for (var i = 0; i < $scope.markerList.length; i++) {
             if ($scope.markerList[i].id === marker.key) {
               $scope.poiSelected = $scope.markerList[i];
             }
@@ -128,11 +114,55 @@ angular.module('eldoragoApp')
     };
 
 
+    /** Get Marker de la BDD **/
+    $scope.getMarkerList = function() {
+
+      $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
+        $scope.markerList = resp.data;
+
+        // foreach marker on markerList BDD
+        for (var i = 0; i < $scope.markerList.length; i++) {
+          //rename _id en id
+          $scope.markerList[i].id = $scope.markerList[i]._id;
+          // adding marker on the map
+          $scope.map.markers.push($scope.markerList[i]);
+        }
+        // $scope.$apply();
+
+      });
+    }
+
+    $scope.getStepList = function() {
+      $http.get("https://eldorago.herokuapp.com/api/steps").then(function(resp) {
+        $scope.stepList = resp.data;
+      }, function(error) {
+        alert(error);
+      });
+    }
+
+  $scope.getQuestList = function(step) {
+    $scope.questList = [];
+
+    for (var i = 0; i < step.quests.length; i++) {
+      $http.get("https://eldorago.herokuapp.com/api/quests/"+step.quests[i]).then(function(resp) {
+        $scope.questList.push(resp.data);
+      }, function(error) {
+        alert(error);
+        console.dir(error);
+      });
+    }
+  }
+
     //Removes a step
-    $scope.RemoveStep = function(id)
-    {
-        $scope.stepList.splice(id - 1, 1);
-        ResetStepsId();
+    $scope.RemoveStep = function(id) {
+      $http.delete("https://eldorago.herokuapp.com/api/steps/" + id).then(function(resp) {
+        console.log("step " + id + "delete");
+        $scope.getStepList();
+      }, function(error) {
+        alert(error);
+      });
+      // $scope.stepList.splice(id - 1, 1);
+      // ResetStepsId();
     }
 
 
@@ -152,34 +182,79 @@ angular.module('eldoragoApp')
       $scope.questSelected = quest;
     };
 
-    $scope.associateQuest = function(quest, riddle) {
+    $scope.associateQuestStep = function(quest, step) {
       // modif BDD
-      // adresse à revoir
-      // $http.put("https://eldorago.herokuapp.com/api/cot/"+$scope.quest._id, $scope.riddle._id ).then(function(resp) {
-      //   console.log(riddle + " associée à "+ quest);
-      //   $('#editStep').modal('hide');
-      // }, function(error) {
-      //   alert(error);
-      // });
-
     };
 
-    $scope.addQuest = function () {
+    // $scope.associateQuestStep = function(quest, ) {
+    //   // modif BDD
+    //
+    //   $http.put("https://eldorago.herokuapp.com/api/steps/"+step._id,  ).then(function(resp) {
+    //     console.log(riddle + " associée à "+ quest);
+    //     $('#editStep').modal('hide');
+    //   }, function(error) {
+    //     alert(error);
+    //   });
+    //
+    // };
 
+
+    $scope.addQuest = function() {
+      var step = $scope.stepSelected;
+      var newQuest = {
+        name: $scope.stepSelected.name,
+        desc: $scope.stepSelected.desc
+      }
+
+      console.log("newQuest");
+      console.log(newQuest);
+
+      $http.post("https://eldorago.herokuapp.com/api/quests", newQuest).then(function(resp) {
+        console.log("Quête créée");
+        newQuest = resp.data;
+        // On ajoute l'id de la nouvelle quete à la step concernée
+        step.quests.push(newQuest._id);
+
+        $http.put("https://eldorago.herokuapp.com/api/steps/" + step._id, {
+          quests: step.quests
+        }).then(function(resp) {
+          console.log("ajout de l'id de la nouvelle quete dans " + step);
+          $scope.getQuestList(step);
+        }, function(error) {
+          alert(error);
+          console.dir(error);
+        });
+
+      }, function(error) {
+        alert(error);
+        console.dir(error);
+      });
+
+
+    }
+
+    $scope.associateQuestPoi = function(quest, poi) {
+      $http.put("https://eldorago.herokuapp.com/api/pois/" + quest._id, {
+        poi: poi._id
+      }).then(function(resp) {
+        console.log(quest + " associée à " + poi);
+      }, function(error) {
+        alert(error);
+      });
     }
 
     /** LEFT SIDE **/
-    $scope.setActive = function(menuItem) {
-      $scope.stepSelected = menuItem;
+    $scope.setActive = function(step) {
+      $scope.stepSelected = step;
+      $scope.getQuestList(step);
     }
 
-    $scope.EnterPressed = function (keyEvent, lieu) {
+    $scope.EnterPressed = function(keyEvent, lieu) {
 
-        if (keyEvent.which === 13)
-        {
-            $scope.TreatAdress(lieu);
-        }
-            //alert('I am     an alert');
+      if (keyEvent.which === 13) {
+        $scope.TreatAdress(lieu);
+      }
+      //alert('I am     an alert');
     }
 
     /** SUBMIT **/
@@ -247,40 +322,40 @@ angular.module('eldoragoApp')
       qtype: "Enigme"
     }];
 
-    $scope.listQuest = [{
-      id: "quete1",
-      name: "Quete 1",
-      id_riddle: "riddle1",
-      desc: "4 plus 4 ?",
-      qtype: "Enigme"
-    }, {
-      id: "quete2",
-      id_riddle: "riddle2",
-      name: "Quete 2",
-      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
-      qtype: "Enigme"
-    }, {
-      id: "quete3",
-      id_riddle: "riddle3",
-      name: "Quete avec un nom",
-      desc: "Oh! Oh! Oh!",
-      qtype: "Enigme"
-    }
-    //, {
-    //   id: "quete4",
-    //   id_riddle: "riddle4",
-    //   name: "Quete 4",
-    //   desc: "Ah! Ah! Ah!",
-    //   qtype: "Enigme"
-    // }, {
-    //   name: "Quete 5",
-    //   desc: "Ih! Ih! Ih!",
-    //   qtype: "Enigme"
-    // }, {
-    //   name: "Quete 6",
-    //   desc: "Uh! Uh! Uh!",
-    //   qtype: "Enigme"
-    // }
-  ];
+    //   $scope.listQuests = [{
+    //     id: "quete1",
+    //     name: "Quete 1",
+    //     id_riddle: "riddle1",
+    //     desc: "4 plus 4 ?",
+    //     qtype: "Enigme"
+    //   }, {
+    //     id: "quete2",
+    //     id_riddle: "riddle2",
+    //     name: "Quete 2",
+    //     desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
+    //     qtype: "Enigme"
+    //   }, {
+    //     id: "quete3",
+    //     id_riddle: "riddle3",
+    //     name: "Quete avec un nom",
+    //     desc: "Oh! Oh! Oh!",
+    //     qtype: "Enigme"
+    //   }
+    //   //, {
+    //   //   id: "quete4",
+    //   //   id_riddle: "riddle4",
+    //   //   name: "Quete 4",
+    //   //   desc: "Ah! Ah! Ah!",
+    //   //   qtype: "Enigme"
+    //   // }, {
+    //   //   name: "Quete 5",
+    //   //   desc: "Ih! Ih! Ih!",
+    //   //   qtype: "Enigme"
+    //   // }, {
+    //   //   name: "Quete 6",
+    //   //   desc: "Uh! Uh! Uh!",
+    //   //   qtype: "Enigme"
+    //   // }
+    // ];
 
   });

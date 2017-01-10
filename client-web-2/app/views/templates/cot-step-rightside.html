@@ -4,7 +4,7 @@
     <br/>
   </div>
   <div ng-show="isQuest">
-    <div class="panel panel-default" ng-repeat="quest in listQuest">
+    <div class="panel panel-default" ng-repeat="quest in questList">
       <div class="panel-heading primary-flat">{{quest.name}}</div>
       <div class="panel-body">
 
@@ -22,6 +22,17 @@
             <button ng-click="selectQuest(quest)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
           </div>
         </div>
+        <div class="row" >
+          <div class="col-xs-10">
+            <div class="well well-sm">Nom Poi</div>
+          </div>
+          <div class="col-xs-2">
+            <!-- associe quete / poi -->
+            <button ng-click="" type="button" class="btn btn-info btn-lg">
+              <i class="fa fa-university"></i>
+            </button>
+          </div>
+        </div>
         <div class="row">
           <div class="col-xs-7">
             <div class="btn btn-default" data-toggle="popover" title="{{quest.id_riddle}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
@@ -32,7 +43,7 @@
         </div>
       </div>
     </div>
-    <button ng-click="newQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+    <button ng-click="addQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
   </div>
 
   <div ng-show="!isQuest">
