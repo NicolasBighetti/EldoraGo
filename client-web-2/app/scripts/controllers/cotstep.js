@@ -5,6 +5,7 @@ angular.module('eldoragoApp')
     /**  Loading **/
     $scope.init = function() {
       $scope.getStepList();
+      $scope.getRiddleList();
       $scope.getMarkerList();
     }
 
@@ -150,6 +151,14 @@ console.log("I WAITED U ASS");
     $scope.getStepList = function() {
       $http.get("https://eldorago.herokuapp.com/api/steps").then(function(resp) {
         $scope.stepList = resp.data;
+      }, function(error) {
+        alert(error);
+      });
+    }
+
+    $scope.getRiddleList = function() {
+      $http.get("https://eldorago.herokuapp.com/api/riddles").then(function(resp) {
+        $scope.riddleList = resp.data;
       }, function(error) {
         alert(error);
       });
