@@ -1,3 +1,0 @@
-##ELDORAGO 
-
-Rémy Kaloustian
