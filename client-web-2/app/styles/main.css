@@ -74,7 +74,7 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    /*max-width: 730px;*/
   }
 
   /* Remove the padding we set earlier */
@@ -195,13 +195,13 @@ h1
   text-align: center;
 }
 
-.fa
+.navbar-icon
 {
-    font-size:4rem;
+    font-size:4rem !important; 
     /*padding-left:45%;*/
-    color:white;
-    margin-left:25%;
-    margin-right:25%;
+    color:white !important;
+    margin-left:25% !important;
+    margin-right:25% !important;
 }
 
 #main-navbar
@@ -430,6 +430,15 @@ h1
 }
 
 
+
+/********************************************/
+/*************COT START PART*****************/
+/********************************************/
+
+#cot-start-help
+{
+    font-size:2rem;
+}
 
 
 /********************************************/

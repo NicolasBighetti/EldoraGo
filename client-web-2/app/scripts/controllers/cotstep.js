@@ -82,9 +82,11 @@ angular.module('eldoragoApp')
 
       //Updates scope location variables
     $scope.updateLocation = function(newlat, newlon) {
-      $scope.map.center.latitude = newlat;
-      $scope.map.center.longitude = newlon;
-      console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
+      //$scope.map.center.latitude = newlat;
+      //$scope.map.center.longitude = newlon;
+        console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
+        //Center the map !!!!
+      $scope.map.center = new google.maps.LatLng(newlat, newlon);
     };
 
 
@@ -96,7 +98,7 @@ angular.module('eldoragoApp')
         latitude: $scope.lat,
         longitude: $scope.lon
       },
-      zoom: 7,
+      zoom: 8,
       markers: [],
       events: {
         click: function(map, eventName, originalEventArgs) {
