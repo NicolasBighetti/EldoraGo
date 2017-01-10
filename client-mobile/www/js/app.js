@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'angular-timeline', 'starter.historique'])
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'angular-timeline', 'starter.historique', 'starter.cot-datas'])
 
 
 .run(function($ionicPlatform) {
@@ -118,7 +118,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       }
     }
   })
-
+  
+  .state('tab.team',{
+    url: '/team',
+    views: {
+      'tab-team':{
+        templateUrl: 'templates/teamview.html',
+        controller: 'TeamviewCtrl'
+      }
+    }
+  })
 
   .state('select', {
     url: '/select',
