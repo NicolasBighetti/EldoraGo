@@ -110,7 +110,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
 
   .state('tab.map', {
     url: '/map',
-    cache: false,
+    //cache: false,
     views: {
       'tab-map':{
         templateUrl: 'templates/map.html',
