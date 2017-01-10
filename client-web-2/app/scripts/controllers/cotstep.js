@@ -168,10 +168,18 @@ angular.module('eldoragoApp')
 
     }
 
-
     /** LEFT SIDE **/
     $scope.setActive = function(menuItem) {
       $scope.stepSelected = menuItem;
+    }
+
+    $scope.EnterPressed = function (keyEvent, lieu) {
+
+        if (keyEvent.which === 13)
+        {
+            $scope.TreatAdress(lieu);
+        }
+            //alert('I am     an alert');
     }
 
     /** SUBMIT **/
