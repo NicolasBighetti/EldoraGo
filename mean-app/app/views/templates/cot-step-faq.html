@@ -1,0 +1,54 @@
+<div id="faq" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">
+          <ul class="nav nav-tabs">
+            <li class="active"><a>Enigmes</a></li>
+            <li><a >Objets cachés</a></li>
+            <li><a >Orientation</a></li>
+          </ul>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- <div class="col-xs-8">{{questSelected._id}}, {{riddleSelected._id}}</div> -->
+          <div class="col-xs-4 col-xs-offset-8">
+            <p class="input-group">
+              <input ng-model="searchQuest" class="form-control" placeholder="Recherche" name="srch-term" type="text" />
+              <div ng-show="search" class="input-group-btn">
+                <a class="btn btn-default btn-social" ng-click="search=''"><i class="text-danger fa fa-times"></i></a>
+              </div>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4" id="leftQuest">
+            <ul>
+              <li ng-repeat="riddle in riddleList | filter : searchQuest">
+                <a href="" ng-click="select(riddle)">{{riddle.name}}</a>
+              </li>
+            </ul>
+          </div>
+          <div ng-show="riddleSelected" class="col-xs-7">
+            <h5>{{riddleSelected.name}}</h5>
+            <p>{{riddleSelected.desc}}</p>
+
+            <p class="pull-right">Réponse : {{riddleSelected.answer}} <br/> <small>Indice : {{riddleSelected.hint}}</small></p>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- <button ng-click="associateQuest(questSelected, riddleSelected)" type="button" data-dismiss="modal" class="btn btn-success pull-right"><i class="fa fa-check"></i></button> -->
+        <button ng-click="associateQuestRiddle()" type="button" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
+      </div>
+    </div>
+
+  </div>
+</div>

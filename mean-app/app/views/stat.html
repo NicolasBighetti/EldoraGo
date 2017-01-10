@@ -1,0 +1,83 @@
+<div class="container-fluid" ng-controller="StatCtrl as ctrl" ng-init="init()">
+
+    <div class="row stat-main"  ng-show="active">
+
+        <!--<button ng-click="active = false">{{active}}</button>
+        <div>Maps</div>-->
+
+        <div class="search-bar row">
+         <input id="pac-input" class="controls text-center center-block" type="text" placeholder="Cherchez une chasse ou un POI">
+
+            <!--<form ng-submit="$event.preventDefault()">
+
+                <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="What is your favorite US state?">
+                    <md-item-template>
+                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No states matching "{{ctrl.searchText}}" were found.
+                        <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                    </md-not-found>
+                </md-autocomplete>
+                <br>
+
+            </form>-->
+
+
+
+        </div>
+
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+            <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" events="marker.events"></ui-gmap-marker>
+        </ui-gmap-google-map>
+
+
+
+
+    </div>
+
+    <div class="row stat-sub">
+        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+
+            <thead>
+            <tr>
+                <th st-sort="name" class="text-center">Nom</th>
+                <th st-sort="name" class="text-center">Nombre de personnes</th>
+                <th st-sort="name" class="text-center">Temps moyen</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="user in displayedCollection">
+                <!--<td title="'Nom'" filter="{ name: 'text'}" sortable="'name'">
+                    {{user.name}}</td>
+                <td title="'Nombre de personnes'" filter="{ pers: 'number'}" sortable="'age'">
+                    {{user.age}}</td>
+                <td title="'Temps moyen'" filter="{ time: 'number'}" sortable="'age'">
+                    {{user.age}}</td>
+            </tr>-->
+
+                <td class="text-center" >{{user.name}}</td>
+                <td class="text-center">{{user.people}}</td>
+                <td class="text-center">{{user.avg_time}}</td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination="" st-items-by-page="4" st-displayed-pages="4"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+
+    <div ng-hide="active">
+        <div class="animate-switch">graph</div>
+    </div>
+
+</div>

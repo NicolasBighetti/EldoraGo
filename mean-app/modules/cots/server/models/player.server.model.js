@@ -30,13 +30,12 @@ var PlayerSchema = new Schema({
     ref: 'User'
   },*/
   cots: {
-    type: [Object],
+    type: [Schema.ObjectId],
     default: [],
     ref: 'Cot'
   },
-  teams: {
-    type: [Schema.ObjectId],
-    default: [],
+  team: {
+    type: Schema.ObjectId,
     ref: 'Team'
   }
   //trésors ...

@@ -156,13 +156,17 @@ module.exports.initHelmetHeaders = function (app) {
  */
 module.exports.initModulesClientRoutes = function (app) {
   // Setting the app router and static folder
-  app.use('/', express.static(path.resolve('./public')));
+  app.use('/', express.static(path.resolve('./app')));
+  //app.use(express.static('app'));
+  //app.use(express.static('public'));
+  //app.use(express.static(path.join(__dirname, 'app/')));
 
   // Globbing static routing
-  config.folders.client.forEach(function (staticPath) {
+/*  config.folders.client.forEach(function (staticPath) {
     app.use(staticPath, express.static(path.resolve('./' + staticPath)));
-  });
+  });*/
 };
+
 
 /**
  * Configure the modules ACL policies
@@ -219,7 +223,7 @@ module.exports.configureSocketIO = function (app, db) {
 module.exports.init = function (db) {
   // Initialize express app
   var app = express();
-
+  // Add headers
   // Initialize local variables
   this.initLocalVariables(app);
 

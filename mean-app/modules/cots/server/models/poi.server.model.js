@@ -39,6 +39,14 @@ var PoiSchema = new Schema({
   image:{
     type: String,
     default: './images/default.jpg'
+  },
+  people:{
+    type: Number,
+    default: 0
+  },
+  avg_time:{
+    type:Number,
+    default: 0
   }
 
 });

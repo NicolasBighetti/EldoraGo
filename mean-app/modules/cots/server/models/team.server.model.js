@@ -18,12 +18,13 @@ var TeamSchema = new Schema({
     required: 'Please fill Cot name',
     trim: true
   },
-  player: {
+  players: {
     type: [Schema.ObjectId],
     ref: 'Player'
   },
   cot: {
-
+    type: Schema.ObjectId,
+    ref: 'Cot'
   }
 });
 
