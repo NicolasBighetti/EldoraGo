@@ -564,13 +564,13 @@ h1
   background-color: #2980b9;
 }
 
-.stat-main > .angular-google-map, .angular-google-map-container{
-  /*position: absolute;
+div.stat-main div.angular-google-map div.angular-google-map-container{
+  position: absolute;
   z-index: 0;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 65vh;*/
+  height: 65vh;
 }
 
 .stat-main .gmnoprint{
