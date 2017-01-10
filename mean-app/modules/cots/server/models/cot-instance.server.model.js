@@ -10,10 +10,9 @@ var mongoose = require('mongoose'),
  * Cot instance Schema
  */
 var CotInstanceSchema = new Schema({
-  user: {
+  player: {
     type: Schema.ObjectId,
-    required: 'Please fill user',
-    ref: 'User'
+    ref: 'Player'
   },
   started: {
     type: Date,

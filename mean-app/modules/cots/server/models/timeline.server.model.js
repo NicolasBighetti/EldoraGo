@@ -10,38 +10,34 @@ var mongoose = require('mongoose'),
  * Timeline Schema
  */
 var TimelineSchema = new Schema({
-  user: {
-    type: Schema.ObjectId,
-    ref: 'User',
-    required: 'Please fill user id',
 
-  },
   date: {
     type: Date,
     default: Date.now
   },
+  date_s: {
+    type: String,
+    default: 'Today'
+  },
   action: {
     type: String,
-    default: 'quest',
-    required: 'Please fill action type'
+    default: 'quest'
   },
   poi: {
     type: Schema.ObjectId,
     ref: 'Poi'
   },
-/*
   quest: {
     type: Schema.ObjectId,
     ref: 'Quest'
   },
-  etape: {
-    type: Schema.ObjectId,
-    ref: 'Quest'
-  },
-*/
   team: {
     type: Schema.ObjectId,
     ref: 'Team'
+  },
+  player: {
+    type: Schema.ObjectId,
+    ref: 'Player'
   }
 });
 

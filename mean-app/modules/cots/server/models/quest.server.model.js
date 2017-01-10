@@ -40,6 +40,10 @@ var QuestSchema = new Schema({
   poi: {
     type: Schema.ObjectId,
     ref: 'Poi'
+  },
+  avg_time: {
+    type: Number,
+    default: 0
   }
 });
 
