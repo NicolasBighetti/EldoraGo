@@ -18,6 +18,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ui.bootstrap',
     'uiGmapgoogle-maps'
     // 'ui.router'
   ])
@@ -48,6 +49,10 @@ angular
       .when('/poi-list', {
         templateUrl: 'views/poi-list.html',
         controller: 'PoiListCtrl',
+      })
+      .when('/stat', {
+        templateUrl: 'views/stat.html',
+        controller: 'StatCtrl'
       })
       .otherwise({
         redirectTo: '/'
