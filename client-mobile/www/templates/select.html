@@ -1,5 +1,5 @@
-<ion-view title="select" ng-controller="HomeCtrl">
-    <ion-content class="padding centered">
+<ion-view title="select" ng-controller="HomeCtrl" ng-init="init()">
+    <ion-content class="padding centered" scroll="false">
 
         <div class="treasure-hunt-header">
             <div class="treasure-hunt-title">{{choice.name}}</div>
@@ -7,6 +7,9 @@
         </div>
 
         <div class="justified">{{choice.description}}</div>
+
+        <div id="map-preview" data-tap-disabled="true" style="width: 100%;
+    height: 100%;"></div>
 
         <!--<div ng-if="showtheview" ng-include="view"></div>-->
 
