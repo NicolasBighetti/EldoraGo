@@ -3,7 +3,14 @@
  */
 
 angular.module('eldoragoApp')
-  .controller('StatCtrl', function ($scope, $location, $timeout) {
+  .controller('StatCtrl',  function ($scope, $location, $timeout, $q, $log) {
+
+    /*$scope.isDisabled = true;
+    $scope.simulateQuery = false;
+    $scope.isDisabled    = false;
+    $scope.querySearch   = querySearch;*/
+
+
     $scope.map = {};
     $scope.init = function(){
 
@@ -32,6 +39,12 @@ angular.module('eldoragoApp')
           options: {} // define when map is ready
         }
       };
+
+      //var self = this;
+      $scope.data = [{name: "Musé jean Paul", pers: 50, time: 20}, {name: "Statue jean louis", pers: 10, time: 24}, {name: "Frank Provot", pers: 30, time: 5} /*,*/];
+      //self.tableParams = new NgTableParams({}, { dataset: data});
+      $scope.displayedCollection = $scope.data;
+      $scope.rowCollection = $scope.data;
 
       $scope.markerList = [
         {
@@ -69,5 +82,14 @@ angular.module('eldoragoApp')
       //console.log("Done");
       }, 0);
     };
+
+
+
+    //Table of POI
+    /*$scope.rowCollection = [
+      {firstName: 'Laurent', lastName: 'Renard', birthDate: new Date('1987-05-21'), balance: 102, email: 'whatever@gmail.com'},
+      {firstName: 'Blandine', lastName: 'Faivre', birthDate: new Date('1987-04-25'), balance: -2323.22, email: 'oufblandou@gmail.com'},
+      {firstName: 'Francoise', lastName: 'Frere', birthDate: new Date('1955-08-27'), balance: 42343, email: 'raymondef@gmail.com'}
+    ];*/
 
   });

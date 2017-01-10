@@ -19,6 +19,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.bootstrap',
+    'smart-table',
     'uiGmapgoogle-maps'
     // 'ui.router'
   ])
