@@ -28,6 +28,21 @@ angular.module('eldoragoApp')
         }
       })
 
+      setTimeout(function () {
+          
+          //angular - google - map - container
+          //angular - google - map
+
+          var elements = document.getElementsByClassName('angular-google-map');
+          //var requiredElement = elements[0];
+          var requiredElement = document.getElementById('cot-step-map-div');
+          requiredElement.setAttribute("style", "width:500px");
+          requiredElement.setAttribute("style", "height:300px");
+
+console.log("I WAITED U ASS");
+
+      }, 2000);
+
     };
 
     /** Get Marker de la BDD **/
@@ -157,17 +172,15 @@ angular.module('eldoragoApp')
 
     }
 
-
+      //When enter pressed, Treating teh address
     $scope.EnterPressed = function (keyEvent, lieu) {
         
         if (keyEvent.which === 13)
         {
             $scope.TreatAdress(lieu);
         }
-            //alert('I am     an alert');
-
-
-    }
+            
+    }//EnterPressed()
 
 
 
