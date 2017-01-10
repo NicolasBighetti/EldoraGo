@@ -46,6 +46,7 @@ angular
       })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
+        controller: 'EnigmaFormCtrl'
       })
       .when('/poi-list', {
         templateUrl: 'views/poi-list.html',

@@ -29,11 +29,6 @@ angular.module('eldoragoApp')
       }
     ];
 
-    /*$scope.isDisabled = true;
-    $scope.simulateQuery = false;
-    $scope.isDisabled    = false;
-    $scope.querySearch   = querySearch;*/
-
     $scope.poiList;
 
 
@@ -67,7 +62,7 @@ angular.module('eldoragoApp')
       };
 
 
-      $http.get("/api/pois").then(function(resp) {
+      $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
 
 
         $scope.markerList = resp.data;
@@ -81,23 +76,7 @@ angular.module('eldoragoApp')
         }
 
         console.log($scope.map.markers);
-        // $scope.$apply();
 
-      /*console.log($scope.map.markers);
-
-      console.log("previous");
-      console.log($scope.markerList);*/
-      /*$timeout(function() {
-
-        for (var i = 0; i < 3; i++) {
-          //$scope.markerList[i].id = $scope.markerList[i].id;
-          $scope.map.markers.push($scope.poiList[i]);
-          console.log($scope.poiList[i]);
-          //console.log($scope.map.markers);
-          $scope.$apply();
-        }
-        //console.log("Done");
-      }, 0);*/
     });
 
 
@@ -105,31 +84,10 @@ angular.module('eldoragoApp')
       //var self = this;
       $scope.data = [{name: "Musé jean Paul", pers: 50, time: 20}, {name: "Statue jean louis", pers: 10, time: 24}, {name: "Frank Provot", pers: 30, time: 5} /*,*/];
       //self.tableParams = new NgTableParams({}, { dataset: data});
-      $scope.displayedCollection = $scope.data;
-      $scope.rowCollection = $scope.data;
+      $scope.displayedCollection = $scope.map.markers;
+      $scope.rowCollection = $scope.map.markers;
 
-
-
-      /*$timeout(function() {
-
-        for (var i = 0; i < 3; i++) {
-          //$scope.markerList[i].id = $scope.markerList[i].id;
-          $scope.map.markers.push($scope.markerList[i]);
-          console.log($scope.poiList[i]);
-          //console.log($scope.map.markers);
-          $scope.$apply();
-        }
-      //console.log("Done");
-      }, 0);*/
     };
 
-
-
-    //Table of POI
-    /*$scope.rowCollection = [
-      {firstName: 'Laurent', lastName: 'Renard', birthDate: new Date('1987-05-21'), balance: 102, email: 'whatever@gmail.com'},
-      {firstName: 'Blandine', lastName: 'Faivre', birthDate: new Date('1987-04-25'), balance: -2323.22, email: 'oufblandou@gmail.com'},
-      {firstName: 'Francoise', lastName: 'Frere', birthDate: new Date('1955-08-27'), balance: 42343, email: 'raymondef@gmail.com'}
-    ];*/
 
   });

@@ -9,7 +9,7 @@ angular.module('eldoragoApp')
 
     $scope.save = function() {
       // Save en BDD
-      $http.put("/api/pois/"+$scope.poiSelected._id, $scope.poiSelected).then(function(resp) {
+      $http.put("https://eldorago.herokuapp.com/api/pois/"+$scope.poiSelected._id, $scope.poiSelected).then(function(resp) {
         console.log(resp);
         $scope.isEdited = false;
 
@@ -37,7 +37,7 @@ angular.module('eldoragoApp')
 
 
     /** Get de la BDD **/
-    $http.get("/api/pois").then(function(resp) {
+    $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
       $scope.markerList = resp.data;
       console.log($scope.markerList);
 
