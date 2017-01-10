@@ -34,6 +34,11 @@ h2
     font-family:RalewayThin;
 }
 
+input, textarea
+{
+    border:1px solid #bdbdbd !important;
+}
+
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;

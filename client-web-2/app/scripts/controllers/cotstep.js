@@ -158,6 +158,18 @@ angular.module('eldoragoApp')
     }
 
 
+    $scope.EnterPressed = function (keyEvent, lieu) {
+        
+        if (keyEvent.which === 13)
+        {
+            $scope.TreatAdress(lieu);
+        }
+            //alert('I am     an alert');
+
+
+    }
+
+
 
     /** SUBMIT **/
     $scope.submitCot = function() {
