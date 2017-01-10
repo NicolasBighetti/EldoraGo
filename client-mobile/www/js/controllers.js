@@ -153,19 +153,32 @@ $scope.remove = function(chat) {
       mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       var map = new google.maps.Map(document.getElementById("map-preview"), mapOptions);
+      /*
+      for(var steps in $scope.choice.steps)
+      {
+        console.log('step');
+        console.log(steps);
+        for(var quests in CotData.step($http,$scope.choice.steps[])){
+          for(var poi in CotData.quest($http,steps[quests].)){
+            for(var data in CotData.poi($http,poi)){
+              
+            }
 
+          }
+        }
+      }*/
       var marker = new google.maps.Marker({
-        position: mapOptions.center,
-        map: map,
-        title: 'Position'
-      });
+              position: mapOptions.center,
+              map: map,
+              title: "Ma Position"
+              });
       $scope.hide($ionicLoading);
     })
 
 
   }
 
-    $scope.show = function($ionicLoading) {
+  $scope.show = function($ionicLoading) {
     $ionicLoading.show({
       content: 'Getting current location...',
       showBackdrop: false
