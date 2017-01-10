@@ -3,12 +3,38 @@
  */
 
 angular.module('eldoragoApp')
-  .controller('StatCtrl',  function ($scope, $location, $timeout, $q, $log) {
+  .controller('StatCtrl',  function ($scope, $location, $timeout, $http, $q, $log) {
+
+    $scope.markerList = [
+      {
+        name:"Musé jean charles",
+        id: 0,
+        latitude: 43.55651037504757,
+        longitude: 6.062621846795082
+
+      },
+      {
+        name: "Statue de louis 16",
+        id: "1",
+        latitude: 43.897892391257976,
+        longitude: 4.678344503045082
+      },
+
+      {
+        name: "Resto U",
+        id: "2",
+        latitude: 43.45859799999999,
+        longitude: 5.249702999999954
+
+      }
+    ];
 
     /*$scope.isDisabled = true;
     $scope.simulateQuery = false;
     $scope.isDisabled    = false;
     $scope.querySearch   = querySearch;*/
+
+    $scope.poiList;
 
 
     $scope.map = {};
@@ -40,47 +66,61 @@ angular.module('eldoragoApp')
         }
       };
 
+
+      $http.get("https://eldorago.herokuapp.com/api/pois").then(function(resp) {
+
+
+        $scope.markerList = resp.data;
+
+        // foreach marker on markerList BDD
+        for (var i = 0; i < $scope.markerList.length; i++) {
+          //rename _id en id
+          $scope.markerList[i].id = $scope.markerList[i]._id;
+          // adding marker on the map
+          $scope.map.markers.push($scope.markerList[i]);
+        }
+
+        console.log($scope.map.markers);
+        // $scope.$apply();
+
+      /*console.log($scope.map.markers);
+
+      console.log("previous");
+      console.log($scope.markerList);*/
+      /*$timeout(function() {
+
+        for (var i = 0; i < 3; i++) {
+          //$scope.markerList[i].id = $scope.markerList[i].id;
+          $scope.map.markers.push($scope.poiList[i]);
+          console.log($scope.poiList[i]);
+          //console.log($scope.map.markers);
+          $scope.$apply();
+        }
+        //console.log("Done");
+      }, 0);*/
+    });
+
+
+
       //var self = this;
       $scope.data = [{name: "Musé jean Paul", pers: 50, time: 20}, {name: "Statue jean louis", pers: 10, time: 24}, {name: "Frank Provot", pers: 30, time: 5} /*,*/];
       //self.tableParams = new NgTableParams({}, { dataset: data});
       $scope.displayedCollection = $scope.data;
       $scope.rowCollection = $scope.data;
 
-      $scope.markerList = [
-        {
-          name:"Musé jean charles",
-          id: 0,
-            latitude: 43.55651037504757,
-            longitude: 6.062621846795082
 
-        },
-        {
-          name: "Statue de louis 16",
-          id: "1",
-            latitude: 43.897892391257976,
-            longitude: 4.678344503045082
-        },
 
-        {
-          name: "Resto U",
-          id: "2",
-            latitude: 43.45859799999999,
-            longitude: 5.249702999999954
-
-        }
-      ];
-
-      $timeout(function() {
+      /*$timeout(function() {
 
         for (var i = 0; i < 3; i++) {
           //$scope.markerList[i].id = $scope.markerList[i].id;
           $scope.map.markers.push($scope.markerList[i]);
-          console.log($scope.markerList[i]);
-          console.log($scope.map.markers);
+          console.log($scope.poiList[i]);
+          //console.log($scope.map.markers);
           $scope.$apply();
         }
       //console.log("Done");
-      }, 0);
+      }, 0);*/
     };
 
 
