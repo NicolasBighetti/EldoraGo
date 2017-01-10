@@ -1,6 +1,7 @@
 angular.module('eldoragoApp')
   .controller('CotListCtrl', function($scope, $http) {
 
+    /** Loading **/
     $scope.init = function() {
       $scope.getCotList();
     }

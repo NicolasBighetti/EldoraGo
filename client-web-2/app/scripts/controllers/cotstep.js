@@ -32,6 +32,7 @@ angular.module('eldoragoApp')
           $scope.isStart = false;
           $scope.$apply();
 
+          $scope.initiateCot();
           // $scope.stepList = [];
         }
       })
@@ -47,7 +48,6 @@ angular.module('eldoragoApp')
         requiredElement.setAttribute("style", "width:500px");
         requiredElement.setAttribute("style", "height:300px");
 
-        console.log("I WAITED U ASS");
 
       }, 2000);
 
@@ -283,6 +283,20 @@ angular.module('eldoragoApp')
       });
 
 
+    }
+
+    $scope.initiateCot = function() {
+      var newCot = {
+        name: "Ajoutez un nom",
+        desc: "Ajoutez une description"
+      }
+
+      $http.post("https://eldorago.herokuapp.com/api/cots", newCot).then(function(resp) {
+        console.log("Cot initiated");
+        $scope.cotToCreate = resp.data;
+      }, function(error) {
+        alert(error);
+      });
     }
 
     $scope.associateQuestPoi = function(quest) {

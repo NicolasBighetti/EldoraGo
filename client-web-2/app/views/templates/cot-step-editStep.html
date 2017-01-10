@@ -28,9 +28,9 @@
               <!-- Durée estimée -->
               <div class="row">
                 <div class="form-group">
-                  <div class="col-xs-12">
+                  <div class="col-xs-8">
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                      <input type="text" class="form-control" value="13:14">
+                      <input type="text" class="form-control" placeholder="Temps estimé">
                       <span class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                       </span>
@@ -41,7 +41,7 @@
               </div>
               <!-- Image URL -->
               <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-8">
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" placeholder="Image URL" type="text">
@@ -58,12 +58,15 @@
               <!-- Temps limité -->
               <div class="row">
                 <div class="form-group">
-                  <div class="col-xs-1">
-                    <input type="checkbox" ng-model="disabletimelimit" />
+                  <div class="col-xs-4">
+                    <label class="switch">
+                      <input type="checkbox" ng-model="disabletimelimit" />
+                      <div class="slider round"></div>
+                    </label>
                   </div>
-                  <div class="col-xs-10">
+                  <div class="col-xs-8">
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                      <input type="text" class="form-control" value="13:14" ng-disabled="!disabletimelimit">
+                      <input type="text" class="form-control" placeholder="Temps limité" ng-disabled="!disabletimelimit">
                       <span class="input-group-addon" ng-disabled="!disabledatelimit">
                             <i class="fa fa-clock-o"></i>
                       </span>
@@ -77,15 +80,18 @@
               <!-- Date limite -->
               <div class="row">
                 <div class="form-group">
-                  <div class="col-xs-1">
-                    <input type="checkbox" ng-model="disabledatelimit" />
+                  <div class="col-xs-4">
+                    <label class="switch">
+                      <input type="checkbox" ng-model="disabledatelimit" />
+                      <div class="slider round"></div>
+                    </label>
                   </div>
-                  <div class="col-xs-10">
+                  <div class="col-xs-8">
                     <div class="form-group">
                       <div class='input-group date' id="datetimepicker3">
-                        <input type="text" class="form-control" data-bind="value: $data.visitdate" ng-disabled="!disabledatelimit" />
+                        <input type="text" class="form-control" placeholder="Date limite" data-bind="value: $data.visitdate" ng-disabled="!disabledatelimit" />
                         <span class="input-group-addon">
-            <i class="fa fa-calendar-o"></i>
+                          <i class="fa fa-calendar-o"></i>
                         </span>
                       </div>
                     </div>
@@ -98,7 +104,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" form="editform" value="Submit" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
+        <button type="submit" form="editform" value="Submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i></button>
       </div>
     </div>
 

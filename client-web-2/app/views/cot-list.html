@@ -8,12 +8,22 @@
         <div class="col-xs-10 col-xs-offset-1">
 
           <h2 class="" >Liste des COTs</h2>
-          <div class="list-group" ng-repeat="cot in listCots">
-            <a href="" class="list-group-item">{{cot.name}}</a>
-            <span ng-click="removeCot(cot._id)" class="label label-danger">
-              <i class="fa fa-times"></i>
-            </span>
+          <div ng-repeat="cot in listCots">
+            <div class="well well-sm">
+              <div class="row">
+              <div class="col-xs-10">
+                {{cot.name}}
+              </div>
+              <div class="col-xs-2">
+                <span ng-click="removeCot(cot._id)" class="label label-danger">
+                  <i class="fa fa-trash"></i>
+                </span>
+              </div>
+              </div>
+
+            </div>
           </div>
+
         </div>
 
         </div>
