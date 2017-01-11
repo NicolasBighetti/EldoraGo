@@ -135,6 +135,11 @@ angular.module('eldoragoApp')
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       $scope.showGraph = true;
+
+      if(item == null){
+        $scope.showGraph = false;
+      }
+
     }
 
     /**
@@ -260,8 +265,8 @@ angular.module('eldoragoApp')
 
       Highcharts.chart('min-container-chart', {
         chart: {
-          height: 200,
-          width: 330,
+          /*height: 200,
+          width: 330,*/
           type: 'column'
         },
 
@@ -333,8 +338,8 @@ angular.module('eldoragoApp')
 
       Highcharts.chart('min-container-chart2', {
         chart: {
-          height: 200,
-          width: 330,
+          /*height: 200,
+          width: 330,*/
           plotBackgroundColor: null,
           plotBorderWidth: null,
           plotShadow: false,
