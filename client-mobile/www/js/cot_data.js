@@ -5,6 +5,9 @@ angular.module('starter.cot-datas', [])
   var state = new Map();
 
   return {
+    getState: function(){
+      return state;
+    },
     setIdCot: function(idCot){
       return state.set("idCot", idCot);
     },
@@ -68,6 +71,8 @@ angular.module('starter.cot-datas', [])
     })
   },
   joinTeam: function($http, $scope, name){
+    if(state.get("idJoueur"))
+      return;
     var teamPromise = this.getTeams($http, name);
     teamPromise.then(function(result){
       console.log("resultat test " + (result.data.length == 0))
@@ -116,6 +121,15 @@ angular.module('starter.cot-datas', [])
       console.log('Réponse get teams');
       console.log(data);
       return data;
+    })
+  },
+  getPlayerNameByID: function($http, id){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/players/' + id
+    }
+    return $http(req).then(function(result){
+      return result;
     })
   }
 };

@@ -1,9 +1,9 @@
-<ion-view view-title="Historique">
+<ion-view view-title="Historique" ng-init="getEvents()">
 <ion-content>
 
 <timeline>
 
-    <timeline-event ng-repeat="event in events" side="right">
+    <timeline-event ng-repeat="event in events | filter:timestamp" ng-if="$index > 0" side="right">
       <timeline-badge class="{{colors(event.type)}}">
         <i class="{{icons(event.type)}}"></i>
       </timeline-badge>
@@ -15,6 +15,7 @@
       </timeline-panel>
     </timeline-event>
     <button ng-click="addEvent()">Add New Event</button>
+    <button ng-click="getEvents()"> Get timeline </button>
   </timeline>
 </ion-content>
 </ion-view>

@@ -53,22 +53,47 @@ $scope.remove = function(chat) {
   $scope.showTabBar = false;
 })
 
-.controller('HistoriqueCtrl', function($scope, Historique, $ionicScrollDelegate){
+.controller('HistoriqueCtrl', function($http, $scope, Historique, $ionicScrollDelegate, CotData){
+  
+
+  $scope.addEvent = function() {
+    
+    Historique.postEvent($http, "poi", new Date().getDate(), "12/12/2017", CotData);
+    $ionicScrollDelegate.scrollBottom();
+
+  }
+
+  $scope.getEvents = function(){
+    $scope.events = [{}];
+    var eventsPromise = Historique.getEvents($http);
+    eventsPromise.then(function(result){
+      var eventsRaw = result.data;
+
+      var index = 0;
+      for(var event in eventsRaw){  
+          var joueurPromise = CotData.getPlayerNameByID($http, eventsRaw[event].player);
+          joueurPromise.then(function(name){
+            $scope.events.push({ 
+            joueur: name.data.name,
+            type: eventsRaw[index].action,
+            timestamp: new Date(eventsRaw[index].date)
+      })
+            $ionicScrollDelegate.scrollBottom();
+            index++;
+          })   
+           
+    }
+
+    })
+    
+
+  }
+
   $scope.events = Historique.all();
   $scope.descriptions = Historique.desc;
   $scope.icons = Historique.icon;
   $scope.colors = Historique.color;
   $ionicScrollDelegate.scrollBottom();
-
-  $scope.addEvent = function() {
-    $scope.events.push({
-      joueur: 'Jean-Michel Retard',
-      type: 'poi',
-      timestamp: '10/11/12'
-    })
-    $ionicScrollDelegate.scrollBottom();
-
-  }
 })
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
@@ -92,11 +117,8 @@ $scope.remove = function(chat) {
   }
 
   $scope.init = function(){
-
-    console.log("init pre loading");
     $scope.show($ionicLoading);
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-      console.log("init in loading");
       mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       var map = new google.maps.Map(document.getElementById("map"), mapOptions);
