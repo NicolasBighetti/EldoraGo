@@ -22,19 +22,19 @@ $scope.remove = function(chat) {
 .controller('TeamviewCtrl', function($scope, $http, CotData){
 
   if($scope.choice === undefined)
-        $scope.activeQuest = "Default Quest";
+    $scope.activeQuest = "Default Quest";
   else
-        $scope.activeQuest = $scope.choice.name;
+    $scope.activeQuest = $scope.choice.name;
 
 
   $scope.playSolo = function(name){
     console.log("Soloing")
     $scope.playerName = name;
     var playerAnswer = CotData.addPlayer($http, $scope.playerName);
-        playerAnswer.then(function(result){
+    playerAnswer.then(function(result){
       $scope.playerData = result.data;
       CotData.setIdJoueur($scope.playerData._id);
-})
+    })
   }
 
   $scope.listTeam = function(){
@@ -72,63 +72,131 @@ $scope.remove = function(chat) {
 
 })
 
-.controller('EnigmeCtrl', function($scope, $http){
+.controller('EnigmeCtrl', function($scope, $http, $q, CotData){
+  $scope.stepsid = [];
+  $scope.questsid = [];
+  $scope.riddlesid = [];
+  $scope.riddlesList = [];
 
-})
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
 
-.controller('HomeCtrl', function($scope){
-  console.log('banane');
-  $scope.showTabBar = false;
-})
-
-.controller('HistoriqueCtrl', function($http, $scope, Historique, $ionicScrollDelegate, CotData){
-  
-
-  $scope.addEvent = function() {
-    
-    Historique.postEvent($http, "poi", new Date().getDate(), "12/12/2017", CotData);
-    $ionicScrollDelegate.scrollBottom();
-
+  $scope.dispQuest = function(){
+    console.log($scope.riddlesList);
   }
 
-  $scope.getEvents = function(){
-    $scope.events = [{}];
-    var eventsPromise = Historique.getEvents($http);
-    eventsPromise.then(function(result){
-      var eventsRaw = result.data;
+  $scope.getSteps = function(){
+    var stepPromise = [];
+    for(var s in CotData.getState().get("cot").steps){
+      var curstep = CotData.getState().get("cot").steps[s];
+        //$scope.stepsid.push(result.data.steps[s]);
+        console.dir(s+" step id " + curstep);
+         stepPromise.push(CotData.getStepsFromID($http,curstep));
+    }
+    $q.all(stepPromise).then((values) => {
+      console.log(values);
+            console.log('got steps');
+
+      CotData.getState().get("cot").stepsO = [];
+      for(var q in values){
+        console.log("YOLO");
+        
+      CotData.getState().get("cot").stepsO.push(values[q].data);
+      $scope.questsid.push(values[q].data);
+        $scope.getQuests(q);
+      }
+    });
+  }
+
+  $scope.getQuests = function(q){
+            console.log("YOLO22");
+
+  var stepObj = CotData.getState().get("cot").stepsO[q];
+  var questPromise = [];
+            console.log(stepObj.quests);
+    for(var s in stepObj.quests){
+        //$scope.stepsid.push(result.data.steps[s]);
+        console.dir(stepObj.name+" quest id " + stepObj.quests[s]);
+         questPromise.push(CotData.getQuestFromID($http,stepObj.quests[s]));
+    }
+    $q.all(questPromise).then((values) => {
+              CotData.getState().get("cot").stepsO[q].questsO = [];
+                console.log('Step '+values); 
+      for(var v in values){
+        console.log('Values V : '+values[v].data.name);
+        CotData.getState().get("cot").stepsO[q].questsO.push(values[v].data);
+        $scope.getRiddle(q, v);
+      }
+      
+
+    });
+  }
+
+  $scope.getRiddle = function(q, v){
+      var questObj = CotData.getState().get("cot").stepsO[q].questsO[v];
+      var riddlePromise = CotData.getRiddleFromID($http, questObj.riddle);
+      riddlePromise.then(function(result){
+        CotData.getState().get("cot").stepsO[q].questsO[v].riddleO = result.data;
+        console.log("Result : ")
+        console.dir(CotData.getState().get("cot"));
+      $scope.cotData = CotData.getState().get("cot");
+
+      })
+  }
+
+})
+    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+      $scope.chat = Chats.get($stateParams.chatId);
+    })
+
+    .controller('HomeCtrl', function($scope){
+      console.log('banane');
+      $scope.showTabBar = false;
+    })
+
+    .controller('HistoriqueCtrl', function($http, $scope, Historique, $ionicScrollDelegate, CotData){
+
+
+      $scope.addEvent = function() {
+
+        Historique.postEvent($http, "poi", new Date().getDate(), "12/12/2017", CotData);
+        $ionicScrollDelegate.scrollBottom();
+
+      }
+
+      $scope.getEvents = function(){
+        $scope.events = [{}];
+        var eventsPromise = Historique.getEvents($http);
+        eventsPromise.then(function(result){
+          var eventsRaw = result.data;
       //get liste joueur
 
       //
       var index = 0;
       for(var event in eventsRaw){  
-          var joueurPromise = CotData.getPlayerNameByID($http, eventsRaw[event].player);
-          joueurPromise.then(function(name){
-            $scope.events.push({ 
+        var joueurPromise = CotData.getPlayerNameByID($http, eventsRaw[event].player);
+        joueurPromise.then(function(name){
+          $scope.events.push({ 
             joueur: name.data.name,
             type: eventsRaw[index].action,
             timestamp: eventsRaw[index].date
-      })
-            $ionicScrollDelegate.scrollBottom();
-            index++;
-          })   
-           
-    }
+          })
+          $ionicScrollDelegate.scrollBottom();
+          index++;
+        })   
+
+      }
 
     })
-    
 
-  }
 
-  $scope.events = Historique.all();
-  $scope.descriptions = Historique.desc;
-  $scope.icons = Historique.icon;
-  $scope.colors = Historique.color;
-  $ionicScrollDelegate.scrollBottom();
-})
+      }
+
+      $scope.events = Historique.all();
+      $scope.descriptions = Historique.desc;
+      $scope.icons = Historique.icon;
+      $scope.colors = Historique.color;
+      $ionicScrollDelegate.scrollBottom();
+    })
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
 
@@ -199,7 +267,7 @@ $scope.remove = function(chat) {
   $scope.view = "templates/tabs.html";
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
-
+  CotData.setCot($scope.choice);
 
 
   $scope.init = function(){
@@ -224,10 +292,10 @@ $scope.remove = function(chat) {
         }
       }*/
       var marker = new google.maps.Marker({
-              position: mapOptions.center,
-              map: map,
-              title: "Ma Position"
-              });
+        position: mapOptions.center,
+        map: map,
+        title: "Ma Position"
+      });
       $scope.hide($ionicLoading);
     })
 

@@ -1,5 +1,26 @@
-<ion-view title="enigmeview" ng-controller="EnigmeCtrl" >
-    <ion-content>
-    
-    </ion-content>
+<ion-view title="enigmeview" ng-controller="EnigmeCtrl" ng-init="getSteps()">
+<ion-content>
+<h1> {{cotData.name}} </h1>
+<p> {{cotData.desc}}</p>
+
+<div name="step" ng-repeat="st in cotData.stepsO">
+	<h3>{{st.name}}</h3>
+	<p>{{st.desc}}</p>
+	<div name="quest" ng-repeat="quest in st.questsO">
+		<h5>{{quest.name}}</h5>
+		<p>{{quest.desc}}</p> 
+		<div name="riddle">
+			<h6>{{quest.riddleO.name}}</h6>
+			<p>{{quest.riddleO.desc}}</p>
+			<p>{{quest.riddleO.hint}}</p>
+			<p>{{quest.riddleO.answer}}</p>
+
+
+
+		</div>
+	</div>
+</div>
+<button ng-click="refreshScope()" >Jouer en solo!</button>
+<br/>
+</ion-content>
 </ion-view>

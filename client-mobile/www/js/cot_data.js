@@ -11,6 +11,9 @@ angular.module('starter.cot-datas', [])
     setIdCot: function(idCot){
       return state.set("idCot", idCot);
     },
+    setCot: function(cot){
+      return state.set("cot", cot);
+    },
     setIdJoueur: function(idJoueur){
       console.log(idJoueur);
       return state.set("idJoueur", idJoueur);
@@ -133,6 +136,42 @@ angular.module('starter.cot-datas', [])
     var req = {
       method: 'GET',
       url: 'https://eldorago.herokuapp.com/api/players/' + id
+    }
+    return $http(req).then(function(result){
+      return result;
+    })
+  },
+  getCotSteps: function($http, id){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/cots/'+id
+    }
+    return $http(req).then(function(result){
+      return result;
+    })
+  },
+  getStepsFromID: function($http, id){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/steps/'+id
+    }
+    return $http(req).then(function(result){
+      return result;
+    })
+  },
+  getQuestFromID: function($http, id){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/quests/'+id
+    }
+    return $http(req).then(function(result){
+      return result;
+    })
+  },
+  getRiddleFromID: function($http, id){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/riddles/'+id
     }
     return $http(req).then(function(result){
       return result;
