@@ -22,6 +22,9 @@ angular
     'ngTouch',
     'ui.bootstrap',
     'smart-table',
+    'ngMaterial',
+    'ngMessages',
+    'material.svgAssetsCache',
     'uiGmapgoogle-maps'
     // 'ui.router'
   ])
