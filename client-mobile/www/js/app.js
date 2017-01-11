@@ -112,7 +112,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     url:'/enigme',
     views: {
       'tab-enigme':{
-        templateUrl: 'view/timeline/tab-enigme.html',
+        templateUrl: 'templates/tab-enigme.html',
         controller: 'EnigmeCtrl'
       }
     }
