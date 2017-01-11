@@ -241,6 +241,117 @@ angular.module('eldoragoApp')
           }
         }]
       });
-    }
+
+    };
+
+
+    $scope.startMinGraph = function () {
+
+      Highcharts.chart('min-container-chart', {
+        chart: {
+          height: 200,
+          width: 330,
+          type: 'column'
+        },
+        title: {
+          text: 'Temps par énigme',
+          y: 185 //  this to move y-coordinate of title to desired location
+        },
+        xAxis: {
+          type: 'étapes',
+          labels: {
+            rotation: -45,
+            style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Temps moyen en minutes'
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        tooltip: {
+          pointFormat: 'temps: <b>{point.y:.1f} minutes</b>'
+        },
+        series: [{
+          name: 'Population',
+          data: [
+            ['énigme 1', 8],
+            ['énigme 2', 7],
+            ['énigme 3', 6],
+            ['énigme 4', 14],
+            ['énigme 5', 7]
+
+          ],
+          dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        }]
+      });
+
+
+
+      Highcharts.chart('min-container-chart2', {
+        chart: {
+          height: 200,
+          width: 330,
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: 'Taux de réussite'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Validé',
+          colorByPoint: true,
+          data: [{
+            name: 'Validé',
+            y: 60
+          }, {
+            name: 'Passée',
+            y: 40,
+            sliced: true,
+            selected: true
+          }]
+        }]
+      });
+
+    };
+
+
+
 
   });
