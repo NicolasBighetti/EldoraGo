@@ -6,7 +6,9 @@ angular.module('eldoragoApp')
   .controller('StatCtrl',  function ($scope, $location, $timeout, $http, $q, $log) {
 
     $scope.map = {};
+    $scope.showGraph = false;
     $scope.listName = [];
+    $scope.listCOTName = [];
 
     $scope.init = function(){
 
@@ -58,9 +60,27 @@ angular.module('eldoragoApp')
 
         }
 
+        //Getting the cot
+
+        $http.get("https://eldorago.herokuapp.com/api/cots").then(function(resp) {
+
+          $scope.cots = resp.data;
+
+          // foreach marker on markerList BDD
+          for (var i = 0; i < $scope.cots.length; i++) {
+
+            var o = {
+              value: $scope.cots[i].name,
+              display: $scope.cots[i].name
+            };
+
+            $scope.listCOTName.push(o);
+
+          }
 
 
-        console.log($scope.listName);
+          //console.log($scope.listCOTName);
+        })
 
     });
 
@@ -70,6 +90,7 @@ angular.module('eldoragoApp')
     };
 
 
+    /************** Search *********/
     var self = this;
     self.simulateQuery = false;
 
@@ -98,8 +119,10 @@ angular.module('eldoragoApp')
      * remote dataservice call.
      */
     function querySearch (query) {
+
       var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
         deferred;
+
       if (self.simulateQuery) {
         deferred = $q.defer();
         $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
@@ -109,41 +132,39 @@ angular.module('eldoragoApp')
       }
     }
 
-    function searchTextChange(text) {
-      $log.info('Text changed to ' + text);
-    }
-
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
+      $scope.showGraph = true;
     }
 
     /**
      * Create filter function for a query string
      */
     function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
+      //var lowercaseQuery = angular.lowercase(query);
 
       return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
+        console.log("valeur de state.value : " + state.value);
+        console.log("valeur de query : " + query);
+        console.log("indexOf : " + state.value.indexOf(query) + " pour " + state.value);
+        return (state.value.indexOf(query) === 0);
       };
 
     }
 
+    function searchTextChange(text) {
+      $log.info('Text changed to ' + text);
+    }
+
 
     function newState(state) {
-      alert("Sorry! You'll need to create a Constitution for " + state + " first!");
+      alert("Désolé, aucune COT trouvée");
     }
 
     function loadAll() {
-      /*var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';*/
 
-      return allStates = $scope.listName;
+      allStates = $scope.listCOTName;
+      return allStates;
 
       /*return allStates.split(/, +/g).map( function (state) {
         return {
@@ -151,6 +172,75 @@ angular.module('eldoragoApp')
           display: state
         };
       });*/
+    }
+
+
+
+
+    /************** CHARTS *********/
+    $scope.startGraph = function () {
+
+      Highcharts.chart('container-chart', {
+        chart: {
+          height: 300,
+          type: 'column'
+        },
+        title: {
+          text: 'Temps moyen passé sur chaque étape',
+          y: 280 //  this to move y-coordinate of title to desired location
+        },
+        xAxis: {
+          type: 'étapes',
+          labels: {
+            rotation: -45,
+            style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Temps moyen en minutes'
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        tooltip: {
+          pointFormat: 'temps: <b>{point.y:.1f} minutes</b>'
+        },
+        series: [{
+          name: 'Population',
+          data: [
+            ['étape 1', 23.7],
+            ['étape 2', 16.1],
+            ['étape 3', 14.2],
+            ['étape 4', 14.0],
+            ['étape 5', 12.5],
+            ['étape 6', 12.1],
+            ['étape 7', 11.8],
+            ['étape 8', 11.7],
+            ['étape 9', 11.1],
+            ['étape 10', 11.1],
+            ['étape 11', 10.5]
+
+          ],
+          dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+              fontSize: '13px',
+              fontFamily: 'Verdana, sans-serif'
+            }
+          }
+        }]
+      });
     }
 
   });
