@@ -178,6 +178,8 @@ angular.module('eldoragoApp')
 
 
     /************** CHARTS *********/
+
+
     $scope.startGraph = function () {
 
       Highcharts.chart('container-chart', {
@@ -185,6 +187,26 @@ angular.module('eldoragoApp')
           height: 300,
           type: 'column'
         },
+
+        events: {
+          click: function(event) {
+
+          }
+        },
+
+        plotOptions: {
+          series: {
+            cursor: 'pointer',
+            point: {
+              events: {
+                click: function () {
+                  startMinGraph();
+                }
+              }
+            }
+          }
+        },
+
         title: {
           text: 'Temps moyen passé sur chaque étape',
           y: 280 //  this to move y-coordinate of title to desired location
@@ -226,26 +248,15 @@ angular.module('eldoragoApp')
             ['étape 10', 11.1],
             ['étape 11', 10.5]
 
-          ],
-          dataLabels: {
-            enabled: true,
-            rotation: -90,
-            color: '#FFFFFF',
-            align: 'right',
-            format: '{point.y:.1f}', // one decimal
-            y: 10, // 10 pixels down from the top
-            style: {
-              fontSize: '13px',
-              fontFamily: 'Verdana, sans-serif'
-            }
-          }
+          ]
+
         }]
       });
 
     };
 
 
-    $scope.startMinGraph = function () {
+    function startMinGraph() {
 
       Highcharts.chart('min-container-chart', {
         chart: {
@@ -253,9 +264,32 @@ angular.module('eldoragoApp')
           width: 330,
           type: 'column'
         },
+
+        events: {
+          click: function(event) {
+            alert (
+              'x: '+ Highcharts.dateFormat('%Y-%m-%d', event.xAxis[0].value) +', ' +
+              'y: '+ event.yAxis[0].value
+            );
+          }
+        },
+
+        plotOptions: {
+          series: {
+            cursor: 'pointer',
+            point: {
+              events: {
+                click: function () {
+                  startMinGraph2();
+                }
+              }
+            }
+          }
+        },
+
         title: {
-          text: 'Temps par énigme',
-          y: 185 //  this to move y-coordinate of title to desired location
+          text: 'Temps par énigme'
+          //y: 185 //  this to move y-coordinate of title to desired location
         },
         xAxis: {
           type: 'étapes',
@@ -288,23 +322,14 @@ angular.module('eldoragoApp')
             ['énigme 4', 14],
             ['énigme 5', 7]
 
-          ],
-          dataLabels: {
-            enabled: true,
-            rotation: -90,
-            color: '#FFFFFF',
-            align: 'right',
-            format: '{point.y:.1f}', // one decimal
-            y: 10, // 10 pixels down from the top
-            style: {
-              fontSize: '13px',
-              fontFamily: 'Verdana, sans-serif'
-            }
-          }
+          ]
+
         }]
       });
+    };
 
 
+    function startMinGraph2() {
 
       Highcharts.chart('min-container-chart2', {
         chart: {
@@ -349,7 +374,8 @@ angular.module('eldoragoApp')
         }]
       });
 
-    };
+    }
+
 
 
 
