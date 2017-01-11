@@ -73,7 +73,7 @@ angular.module('starter.cot-datas', [])
   joinTeam: function($http, $scope, name){
     if(state.get("idJoueur"))
       return;
-    var teamPromise = this.getTeams($http, name);
+    var teamPromise = this.getTeams($http);
     teamPromise.then(function(result){
       console.log("resultat test " + (result.data.length == 0))
         for(var team in result.data){
@@ -112,7 +112,7 @@ angular.module('starter.cot-datas', [])
         }
     });
   },
-  getTeams: function($http, name){
+  getTeams: function($http){
     var req = {
       method: 'GET',
       url: 'https://eldorago.herokuapp.com/api/teams'

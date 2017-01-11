@@ -21,7 +21,17 @@ $scope.remove = function(chat) {
 
 .controller('TeamviewCtrl', function($scope, $http, CotData){
 
-  $scope.activeQuest = $scope.choice.name;
+  if($scope.choice === undefined)
+        $scope.activeQuest = "Default Quest";
+  else
+        $scope.activeQuest = $scope.choice.name;
+
+  $scope.listTeam = function(){
+    var teamPromise = CotData.getTeams($http);
+    teamPromise.then(function(result){
+      $scope.teamList = result.data;
+    })
+  }
 
   $scope.join = function(name, team){
     console.log("init player " + name);
@@ -68,7 +78,9 @@ $scope.remove = function(chat) {
     var eventsPromise = Historique.getEvents($http);
     eventsPromise.then(function(result){
       var eventsRaw = result.data;
+      //get liste joueur
 
+      //
       var index = 0;
       for(var event in eventsRaw){  
           var joueurPromise = CotData.getPlayerNameByID($http, eventsRaw[event].player);
@@ -76,7 +88,7 @@ $scope.remove = function(chat) {
             $scope.events.push({ 
             joueur: name.data.name,
             type: eventsRaw[index].action,
-            timestamp: new Date(eventsRaw[index].date)
+            timestamp: eventsRaw[index].date
       })
             $ionicScrollDelegate.scrollBottom();
             index++;
