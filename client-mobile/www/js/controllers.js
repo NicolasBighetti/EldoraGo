@@ -26,6 +26,17 @@ $scope.remove = function(chat) {
   else
         $scope.activeQuest = $scope.choice.name;
 
+
+  $scope.playSolo = function(name){
+    console.log("Soloing")
+    $scope.playerName = name;
+    var playerAnswer = CotData.addPlayer($http, $scope.playerName);
+        playerAnswer.then(function(result){
+      $scope.playerData = result.data;
+      CotData.setIdJoueur($scope.playerData._id);
+})
+  }
+
   $scope.listTeam = function(){
     var teamPromise = CotData.getTeams($http);
     teamPromise.then(function(result){
