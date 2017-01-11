@@ -383,7 +383,7 @@ angular.module('eldoragoApp')
       console.log($scope.cotSelected);
       // $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
       $http({
-        url: 'https://eldorago.herokuapp.com/api/cots/'+$scope.cotSelected._id,
+        url: DB_PATH+"cots/"+$scope.cotSelected._id,
         dataType: 'json',
         method: 'PUT',
         data: $scope.cotSelected
