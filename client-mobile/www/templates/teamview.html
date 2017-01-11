@@ -3,12 +3,12 @@
         {{activeQuest}} 
         <br/>
         <input type="text" name="nom" ng-model="myname">
-        <select ng-model="myteam">
+        <select class="form-control" ng-model="myteam">
                <option ng-repeat="x in teamList" > {{x.name}} </option>
         </select>
-                <button ng-click="join(myname, myteam)" >Rejoindre une équipe!</button>
+                <button class="btn btn-default" ng-click="join(myname, myteam)" >Rejoindre une équipe!</button>
                 <br/>
-                <button ng-click="playSolo(myname)" >Jouer en solo!</button>
+                <button class="btn btn-primary" ng-click="playSolo(myname)" >Jouer en solo!</button>
                 <br/>
         {{playerData.name}}<br/>
         {{teamData.name}}
