@@ -108,6 +108,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     }
   })
 
+  .state('tab.enigme', {
+    url:'/enigme',
+    views: {
+      'tab-enigme':{
+        templateUrl: 'view/timeline/tab-enigme.html',
+        controller: 'EnigmeCtrl'
+      }
+    }
+  })
+
   .state('tab.map', {
     url: '/map',
     //cache: false,

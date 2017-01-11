@@ -61,6 +61,10 @@ $scope.remove = function(chat) {
 
 })
 
+.controller('EnigmeCtrl', function($scope, $http){
+
+})
+
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
