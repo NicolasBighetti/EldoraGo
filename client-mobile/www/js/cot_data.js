@@ -70,14 +70,19 @@ angular.module('starter.cot-datas', [])
       return data;
     })
   },
-  joinTeam: function($http, $scope, name){
-    if(state.get("idJoueur"))
+  joinTeam: function($http, name){
+    if(!state.get("idJoueur"))
       return;
     var teamPromise = this.getTeams($http);
-    teamPromise.then(function(result){
+    return teamPromise.then(function(result){
       console.log("resultat test " + (result.data.length == 0))
+      var found = false;
         for(var team in result.data){
-          if(result.data[team].name == name){
+          console.log(":" + result.data[team].name + ":" + name + ":")
+
+          if(result.data[team].name === name){
+            found = true;
+            console.log("TROUVEOUESDUGFOIRSDUZEOIR")
             result.data[team].players.push(state.get("idJoueur"));
             var req = {
               method: 'PUT',
@@ -87,12 +92,11 @@ angular.module('starter.cot-datas', [])
               }
             }
             return $http(req).then(function(result){
-              console.log("reponse PUT team");
-              console.log(result);
-                $scope.teamData = result.data;
+                return result;
             })
           }
-          else{
+        }
+          if(!found){
               var req = {
           method: 'POST',
           url: 'https://eldorago.herokuapp.com/api/teams',
@@ -103,14 +107,16 @@ angular.module('starter.cot-datas', [])
             ]
           }
         }
+        console.log("Id joueur : ");
+            console.log(state.get("idJoueur"));
+
         return $http(req).then(function(result){
-            console.log("Result POST TEAM");
-            console.log(result);
-            $scope.teamData = result.data;
+            return result;
         })
           }
-        }
+        
     });
+
   },
   getTeams: function($http){
     var req = {

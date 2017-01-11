@@ -30,11 +30,14 @@ $scope.remove = function(chat) {
     var teamPromise = CotData.getTeams($http);
     teamPromise.then(function(result){
       $scope.teamList = result.data;
+      console.log("List team");
+      console.log($scope.teamList);
     })
   }
 
   $scope.join = function(name, team){
     console.log("init player " + name);
+    console.log("init team " + team);
     if(name == "")
       $scope.playerName = 'Mamadou' + Math.floor((Math.random() * 1000) + 1);
     else
@@ -44,12 +47,16 @@ $scope.remove = function(chat) {
     playerAnswer.then(function(result){
       $scope.playerData = result.data;
       CotData.setIdJoueur($scope.playerData._id);
+
+      var teamAnswer = CotData.joinTeam($http, team.trim());
+      teamAnswer.then(function(result){
+        $scope.teamData = result.data;
+        console.log(result.data);
+        CotData.setIdTeam($scope.teamData._id);
+      })
+
     })
-    var teamAnswer = CotData.joinTeam($http, $scope, team);
-    /*teamAnswer.then(function(result){
-      $scope.teamData = result.data;
-      CotData.setIdTeam($scope.teamData._id);
-    })*/
+    
   }
 
 })
