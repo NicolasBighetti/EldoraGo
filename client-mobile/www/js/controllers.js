@@ -67,12 +67,12 @@ $scope.remove = function(chat) {
       })
 
     })
-    
+
   }
 
 })
 
-.controller('EnigmeCtrl', function($scope, $http, $q, CotData){
+.controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $timeout, CotData){
   $scope.stepsid = [];
   $scope.questsid = [];
   $scope.riddlesid = [];
@@ -99,7 +99,7 @@ $scope.remove = function(chat) {
       CotData.getState().get("cot").stepsO = [];
       for(var q in values){
         console.log("YOLO");
-        
+
       CotData.getState().get("cot").stepsO.push(values[q].data);
       $scope.questsid.push(values[q].data);
         $scope.getQuests(q);
@@ -120,13 +120,13 @@ $scope.remove = function(chat) {
     }
     $q.all(questPromise).then((values) => {
               CotData.getState().get("cot").stepsO[q].questsO = [];
-                console.log('Step '+values); 
+                console.log('Step '+values);
       for(var v in values){
         console.log('Values V : '+values[v].data.name);
         CotData.getState().get("cot").stepsO[q].questsO.push(values[v].data);
         $scope.getRiddle(q, v);
       }
-      
+
 
     });
   }
@@ -142,6 +142,28 @@ $scope.remove = function(chat) {
 
       })
   }
+
+  // Triggered on a button click, or some other target
+  $scope.showOptions = function() {
+
+    // Show the action sheet
+    var hideSheet = $ionicActionSheet.show({
+      buttons: [
+        { text: 'Se désinscrire' },
+        { text: 'Demander de l\'aide'},
+        { text: 'Accéder à l\'indice'}
+      ],
+      destructiveText: 'Delete',
+      titleText: 'Options',
+      cancelText: 'Cancel',
+      cancel: function() {
+           // add cancel code..
+         },
+      buttonClicked: function(index) {
+        return true;
+      }
+    });
+  };
 
 })
     .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -172,17 +194,17 @@ $scope.remove = function(chat) {
 
       //
       var index = 0;
-      for(var event in eventsRaw){  
+      for(var event in eventsRaw){
         var joueurPromise = CotData.getPlayerNameByID($http, eventsRaw[event].player);
         joueurPromise.then(function(name){
-          $scope.events.push({ 
+          $scope.events.push({
             joueur: name.data.name,
             type: eventsRaw[index].action,
             timestamp: eventsRaw[index].date
           })
           $ionicScrollDelegate.scrollBottom();
           index++;
-        })   
+        })
 
       }
 
@@ -251,7 +273,7 @@ $scope.remove = function(chat) {
 
    })
   }
-  
+
 
 
 
@@ -285,7 +307,7 @@ $scope.remove = function(chat) {
         for(var quests in CotData.step($http,$scope.choice.steps[])){
           for(var poi in CotData.quest($http,steps[quests].)){
             for(var data in CotData.poi($http,poi)){
-              
+
             }
 
           }
@@ -328,7 +350,7 @@ $scope.remove = function(chat) {
         break;
       }
     }
-    
+
   };
 
   var cotPromise = CotData.cots($http);
@@ -352,5 +374,4 @@ var mapOptions = {
 
 };
 
-var options = {timeout: 10000, enableHighAccuracy: true}; 
-
+var options = {timeout: 10000, enableHighAccuracy: true};
