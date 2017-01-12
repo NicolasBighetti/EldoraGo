@@ -17,11 +17,14 @@ var TimelineSchema = new Schema({
   },
   date_s: {
     type: String,
-    default: 'Today'
+    default: 'Today',
+    required: 'Please fill date'
   },
   action: {
     type: String,
-    default: 'quest'
+    default: 'quest',
+    required: 'Please fill action'
+
   },
   poi: {
     type: Schema.ObjectId,
@@ -34,10 +37,12 @@ var TimelineSchema = new Schema({
   team: {
     type: Schema.ObjectId,
     ref: 'Team'
+    //required: 'Please fill action'
   },
   player: {
     type: Schema.ObjectId,
-    ref: 'Player'
+    ref: 'Player',
+    required: 'Please fill action'
   }
 });
 

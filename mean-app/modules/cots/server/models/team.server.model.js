@@ -15,7 +15,7 @@ var TeamSchema = new Schema({
   name: {
     type: String,
     default: '',
-    required: 'Please fill Cot name',
+    required: 'Please fill team name',
     trim: true
   },
   players: {

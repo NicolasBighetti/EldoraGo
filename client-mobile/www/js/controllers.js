@@ -200,18 +200,21 @@ $scope.remove = function(chat) {
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
 
+  var map;
+
   $scope.checkIn = function(){
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
       console.log(map);
 
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+      //var latLng = new google.maps.LatLng(0.0, 0.0);
 
       var marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        title: 'Hello World!'
+        title: 'Hello World!',
+        icon: pinSymbol("#FFF")
       });
 
 
@@ -223,7 +226,7 @@ $scope.remove = function(chat) {
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
       mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
       var marker = new google.maps.Marker({
         position: mapOptions.center,
@@ -252,6 +255,16 @@ $scope.remove = function(chat) {
    })
   }
   
+  function pinSymbol(color) {
+    return {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 2,
+        scale: 1,
+   };
+}
 
 
 
