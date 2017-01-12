@@ -251,6 +251,7 @@ $scope.remove = function(chat) {
     randomizePosition();
     clearMarkers();
     showMarkers();
+    setInterval(this.refreshMarker, 1000);
   }
 
   function randomizePosition(){
