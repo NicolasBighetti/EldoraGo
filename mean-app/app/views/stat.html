@@ -1,6 +1,6 @@
 <div class="container-fluid overflow" ng-controller="StatCtrl as ctrl">
 
-    <div class="row stat-main"  ng-if="!showGraph" ng-init="init()">
+    <div class="row full-screen"  ng-if="!showGraph" ng-init="init()">
 
         <div class="search-bar">
 
@@ -23,7 +23,7 @@
         </div>
 
         <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
-            <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" events="marker.events"></ui-gmap-marker>
+            <ui-gmap-markers models="markerList" coords="'self'" icon="'icon'"></ui-gmap-markers>
         </ui-gmap-google-map>
 
     </div>
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div class="row stat-sub" ng-if="!showGraph">
+    <!--<div class="row stat-sub" ng-if="!showGraph">
         <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 
             <thead>
@@ -97,7 +97,7 @@
             </tfoot>
         </table>
 
-    </div>
+    </div>-->
 
     <div class="row stat-sub2" ng-if="showGraph">
         <div class="col-xs-6 min-stat1 center-block" id="min-container-chart"></div>
