@@ -5,8 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
-
+angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services', 'angular-timeline', 'starter.historique', 'starter.cot-datas'])
 
 
 .run(function($ionicPlatform) {
@@ -95,6 +94,47 @@ var app = angular.module('starter', ['ionic', 'starter.controllers', 'starter.se
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
+      }
+    }
+  })
+
+  .state('tab.historique', {
+    url:'/historique',
+    views: {
+      'tab-historique':{
+        templateUrl: 'view/timeline/historique-view.html',
+        controller: 'HistoriqueCtrl'
+      }
+    }
+  })
+
+  .state('tab.enigme', {
+    url:'/enigme',
+    views: {
+      'tab-enigme':{
+        templateUrl: 'templates/tab-enigme.html',
+        controller: 'EnigmeCtrl'
+      }
+    }
+  })
+
+  .state('tab.map', {
+    url: '/map',
+    //cache: false,
+    views: {
+      'tab-map':{
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
+  
+  .state('tab.team',{
+    url: '/team',
+    views: {
+      'tab-team':{
+        templateUrl: 'templates/teamview.html',
+        controller: 'TeamviewCtrl'
       }
     }
   })

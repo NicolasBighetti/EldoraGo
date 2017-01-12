@@ -1,4 +1,13 @@
 {
   "name": "EldoraGo",
-  "app_id": "19faad2f"
+  "app_id": "19faad2f",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
+  ]
 }
