@@ -12,10 +12,15 @@ module.exports = function(app) {
     .get(timelines.list)
     .post(timelines.create);
 
+  app.route('/api/timelinesByPlayer/:playerId').all(timelinesPolicy.isAllowed)
+    .get(timelines.listByPlayer);
+
   app.route('/api/timelines/:timelineId').all(timelinesPolicy.isAllowed)
     .get(timelines.read)
     .put(timelines.update)
     .delete(timelines.delete);
+
+
 
   // Finish by binding the Timeline middleware
   app.param('timelineId', timelines.timelineByID);
