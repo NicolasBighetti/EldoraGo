@@ -31,9 +31,9 @@ module.exports = {
   favicon: 'app/favicon.ico',
   uploads: {
     profileUpload: {
-      dest: './app/images/uploads/', // Profile upload destination path
+      dest: './uploads/', // Profile upload destination path
       limits: {
-        fileSize: 1*1024*1024 // Max file size in bytes (1 MB)
+        fileSize: 2*1024*1024 // Max file size in bytes (2 MB)
       }
     }
   }

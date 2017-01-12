@@ -1,7 +1,7 @@
 'use strict';
 
-var DB_PATH="";
-var DB_PATH= "https://eldorago.herokuapp.com/api/";
+var DB_PATH="api/";
+//var DB_PATH= "https://eldorago.herokuapp.com/api/";
 /**
  * @ngdoc overview
  * @name clientYo2App
@@ -25,7 +25,8 @@ angular
     'ngMaterial',
     'ngMessages',
     'material.svgAssetsCache',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'angularFileUpload'
     // 'ui.router'
   ])
   .config(
@@ -38,16 +39,16 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/home.html',
+        templateUrl: 'views/home.html'
         // controller: 'HomeCtrl',
       })
       .when('/cot', {
         templateUrl: 'views/cot.html',
-         controller: 'CotStepCtrl',
+         controller: 'CotStepCtrl'
       })
       .when('/cot-list', {
         templateUrl: 'views/cot-list.html',
-         controller: 'CotListCtrl',
+         controller: 'CotListCtrl'
       })
       .when('/enigma-form', {
         templateUrl: 'views/enigma-form.html',
@@ -55,7 +56,7 @@ angular
       })
       .when('/poi-list', {
         templateUrl: 'views/poi-list.html',
-        controller: 'PoiListCtrl',
+        controller: 'PoiListCtrl'
       })
       .when('/stat', {
         templateUrl: 'views/stat.html',
