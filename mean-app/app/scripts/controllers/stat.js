@@ -10,6 +10,8 @@ angular.module('eldoragoApp')
     $scope.listName = [];
     $scope.listCOTName = [];
 
+    $scope.models = [];
+
     $scope.init = function(){
 
       $scope.active = true;
@@ -33,8 +35,27 @@ angular.module('eldoragoApp')
           show: false,
           closeClick: function () {
             this.show = false;
-          },
-          options: {} // define when map is ready
+          }
+          /*options: {
+            //icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+           }*/ // define when map is ready
+        }
+      };
+
+      $scope.map.options = {
+        cluster: {
+          minimumClusterSize : 10,
+          zoomOnClick: true,
+          styles: [{
+            url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+            width:60,
+            height:60,
+            textColor: 'white',
+            textSize: 14,
+            fontFamily: 'Open Sans'
+          }],
+          averageCenter: true,
+          clusterClass: 'cluster-icon'
         }
       };
 
@@ -47,9 +68,14 @@ angular.module('eldoragoApp')
         for (var i = 0; i < $scope.markerList.length; i++) {
           //rename _id en id
           $scope.markerList[i].id = $scope.markerList[i]._id;
+          $scope.markerList[i].latitude = $scope.markerList[i].coords.latitude;
+          $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
+          $scope.markerList[i].icon = 'http://www.googlemapsmarkers.com/v1/009900/';
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
           //Adding name to listName
+
+          console.log($scope.map.markers);
 
           var o = {
             value: $scope.markerList[i].name,

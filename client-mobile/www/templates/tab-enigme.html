@@ -1,45 +1,66 @@
 <ion-view title="enigmeview" ng-controller="EnigmeCtrl" ng-init="getSteps()">
-<ion-content>
-<h1> {{cotData.name}}</h1>
-<h1><small>{{cotData.desc}}</small></h1>
+    <ion-content>
+        <div class="bar bar-header">
+            <h1 class="title">{{cotData.name}}</h1>
+        </div>
+        <h4><small>{{cotData.desc}}</small></h4>
 
-<div class="panel panel-default primary-flat" name="step" ng-repeat="st in cotData.stepsO">
+        <div class="list" name="step" ng-repeat="st in cotData.stepsO">
+            <a href="" data-toggle="collapse" data-target="#{{st._id}}" class="item">
+                <h3>{{st.name}}</h3>
+                <p>{{st.desc}}</p>
+            </a>
+            <div id="{{st._id}}" class="collapse">
+                <div name="quest" class="list card" ng-repeat="quest in st.questsO">
+                    <div class="item item-divider">
+                        <div class="row">
+                            <div class="col">
+                                <h2>{{quest.name}}</h2>
+                                <p>0 assigné(s)</p>
+                            </div>
+                            <div class="col col-10">
+                                <ion-checkbox ng-model="assigned"></ion-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item item-body">
+                        <p>{{quest.desc}}</p>
+                        <div name="riddle">
+                            <div class="row">
+                                <div class="col">
+                                    <h2>{{quest.riddleO.name}}</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    {{quest.riddleO.desc}}
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col">
+                                    <div class="sub-info">Indice : {{quest.riddleO.hint}}</div>
+                                </div>
+                            </div> -->
+                            <div ng-show="!assigned" ng-click="assigned = true">
+                              <button class="button button-full button-positive">S'inscrire</button>
+                            </div>
+                            <div ng-show="assigned" class="row">
+                                <div class="col">
+                                    <div class="list">
+                                        <label class="item item-input">
+                                      <input type="text" placeholder="{{quest.riddleO.answer}}">
+                                    </label>
+                                    </div>
+                                    <button ng-click="showOptions(quest.riddleO)" class="button button-full button-stable">Options</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-  <div data-toggle="collapse" data-target="#{{st._id}}" class="panel-heading">
-	<h3>{{st.name}}</h3>
-	<p>{{st.desc}}</p>
-  </div>
-  <div id="{{st._id}}" class="collapse" class="panel-body">
-	<div name="quest" ng-repeat="quest in st.questsO">
-		<h5>{{quest.name}}</h5>
-		<p>{{quest.desc}}</p> 
-	<div class="well well-sm">
-	<div name="riddle">
-		<div class="row">
-			<div class="col-xs-12">
-				<h6>{{quest.riddleO.name}}</h6>
-			</div>
-		</div>
-		<div class="row">
-			<br/>
-			<div class="col-xs-12">
-				{{quest.riddleO.desc}}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-8">
-				<div class="sub-info">Indice : {{quest.riddleO.hint}}</div>
-			</div>
-			<div class="col-xs-4">
-				<b>{{quest.riddleO.answer}}</b>
-			</div>
-		</div>
-	</div>
-	</div>
-	</div>
-  </div>
-</div>
-<button class="btn btn-primary" ng-click="refreshScope()" >Jouer en solo!</button>
-<br/>
-</ion-content>
+                </div>
+            </div>
+        </div>
+        <button class="button button-stable" ng-click="refreshScope()">Jouer en solo!</button>
+        <br/>
+    </ion-content>
 </ion-view>
