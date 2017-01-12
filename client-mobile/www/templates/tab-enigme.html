@@ -6,7 +6,6 @@
         <h4><small>{{cotData.desc}}</small></h4>
 
         <div class="list" name="step" ng-repeat="st in cotData.stepsO">
-
             <a href="" data-toggle="collapse" data-target="#{{st._id}}" class="item">
                 <h3>{{st.name}}</h3>
                 <p>{{st.desc}}</p>
@@ -23,7 +22,6 @@
                                 <ion-checkbox ng-model="assigned"></ion-checkbox>
                             </div>
                         </div>
-
                     </div>
                     <div class="item item-body">
                         <p>{{quest.desc}}</p>
@@ -53,7 +51,7 @@
                                       <input type="text" placeholder="{{quest.riddleO.answer}}">
                                     </label>
                                     </div>
-                                    <button ng-click="showOptions()" class="button button-full button-stable">Options</button>
+                                    <button ng-click="showOptions(quest.riddleO)" class="button button-full button-stable">Options</button>
                                 </div>
                             </div>
                         </div>

@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['starter.cot-datas'])
 
     })
 
-    .controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $timeout, CotData) {
+    .controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $ionicPopup, $timeout, CotData) {
         $scope.stepsid = [];
         $scope.questsid = [];
         $scope.riddlesid = [];
@@ -144,18 +144,18 @@ angular.module('starter.controllers', ['starter.cot-datas'])
         }
 
         // Triggered on a button click, or some other target
-        $scope.showOptions = function() {
-
+        $scope.showOptions = function(riddle) {
             // Show the action sheet
             var hideSheet = $ionicActionSheet.show({
-                buttons: [{
-                        text: 'Se désinscrire'
+                buttons: [
+                    {
+                        text: 'Accéder à l\'indice'
                     },
                     {
                         text: 'Demander de l\'aide'
                     },
                     {
-                        text: 'Accéder à l\'indice'
+                        text: 'Se désinscrire'
                     }
                 ],
                 // destructiveText: 'Delete',
@@ -165,8 +165,39 @@ angular.module('starter.controllers', ['starter.cot-datas'])
                     // add cancel code..
                 },
                 buttonClicked: function(index) {
+                  if (index == 0) {
+                    $scope.showHint("Indice", riddle.hint);
+                  } else if (index == 1) {
+                    $scope.showAlertHelp("Demande d'aide","Votre demande a été envoyée à vos équipiés")
+                  } else if (index == 2) {
+                    $scope.assigned = false;
+                  }
                     return true;
                 }
+            });
+        };
+
+        /** Pop Up alert for Hint **/
+        // An alert dialog
+        $scope.showHint = function(myTitle, myTemplate) {
+            var alertPopup = $ionicPopup.alert({
+                title: myTitle,
+                template: myTemplate
+            });
+
+            alertPopup.then(function(res) {
+              //
+            });
+        };
+
+        $scope.showAlertHelp = function(myTitle, myTemplate) {
+            var alertPopup = $ionicPopup.alert({
+                title: myTitle,
+                template: myTemplate
+            });
+
+            alertPopup.then(function(res) {
+                // quest.isHelp = true;
             });
         };
 
