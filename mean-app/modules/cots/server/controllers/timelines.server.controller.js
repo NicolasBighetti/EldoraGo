@@ -6,17 +6,19 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Timeline = mongoose.model('Timeline'),
+  Player = mongoose.model('Player'),
+  Team = mongoose.model('Team'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   _ = require('lodash');
 
 /**
  * Create a Timeline
  */
-exports.create = function(req, res) {
+exports.create = function (req, res) {
   var timeline = new Timeline(req.body);
   timeline.user = req.user;
 
-  timeline.save(function(err) {
+  timeline.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -30,7 +32,7 @@ exports.create = function(req, res) {
 /**
  * Show the current Timeline
  */
-exports.read = function(req, res) {
+exports.read = function (req, res) {
   // convert mongoose document to JSON
   var timeline = req.timeline ? req.timeline.toJSON() : {};
 
@@ -44,12 +46,12 @@ exports.read = function(req, res) {
 /**
  * Update a Timeline
  */
-exports.update = function(req, res) {
+exports.update = function (req, res) {
   var timeline = req.timeline;
 
   timeline = _.extend(timeline, req.body);
 
-  timeline.save(function(err) {
+  timeline.save(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -63,10 +65,10 @@ exports.update = function(req, res) {
 /**
  * Delete an Timeline
  */
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
   var timeline = req.timeline;
 
-  timeline.remove(function(err) {
+  timeline.remove(function (err) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -80,8 +82,8 @@ exports.delete = function(req, res) {
 /**
  * List of Timelines
  */
-exports.list = function(req, res) {
-  Timeline.find().sort('-created').populate('user', 'displayName').exec(function(err, timelines) {
+exports.list = function (req, res) {
+  Timeline.find().sort('-created').populate('user', 'displayName').exec(function (err, timelines) {
     if (err) {
       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
@@ -92,10 +94,55 @@ exports.list = function(req, res) {
   });
 };
 
+
+/**
+ * List of event with player in the same team
+ * 1 get team
+ * 2 get users in team
+ * 3 get events
+ */
+exports.listByPlayer = function (req, res, next, playerId) {
+
+  Player.findById(playerId).exec(function (err, playerO) {
+    var teamId = playerO.team;
+    if (err) {
+      return res.status(400).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+    else {
+      console.log('got player with team id'+teamId);
+      Team.findById(teamId).exec(function (err, team) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        }
+        else {
+          console.log('got team with players id'+team.players);
+
+          Timeline.find().where('player').in(team.players).sort('date').exec(function (err, events) {
+            if (err) {
+              return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+              });
+            } else {
+              res.jsonp(events);
+              next();
+            }
+          });
+        }
+      }
+      );
+    }
+
+  });
+};
+
 /**
  * Timeline middleware
  */
-exports.timelineByID = function(req, res, next, id) {
+exports.timelineByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({

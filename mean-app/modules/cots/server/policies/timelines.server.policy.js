@@ -20,6 +20,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/timelines/:timelineId',
       permissions: '*'
+    }, {
+      resources: '/api/timelinesByPlayer/:playerId',
+      permissions: ['*']
     }]
   }, {
     roles: ['user'],
@@ -29,15 +32,21 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/timelines/:timelineId',
       permissions: ['get']
+    }, {
+      resources: '/api/timelinesByPlayer/:playerId',
+      permissions: ['*']
     }]
   }, {
     roles: ['guest'],
     allows: [{
       resources: '/api/timelines',
-      permissions: ['get']
+      permissions: ['*']
     }, {
       resources: '/api/timelines/:timelineId',
-      permissions: ['get']
+      permissions: ['*']
+    }, {
+      resources: '/api/timelinesByPlayer/:playerId',
+      permissions: ['*']
     }]
   }]);
 };
