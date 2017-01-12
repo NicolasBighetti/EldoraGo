@@ -25,7 +25,7 @@ var CotSchema = new Schema({
     default: Date.now
   },
   date_end:{
-    type: Date,
+    type: Date
   },
   user: {
     type: Schema.ObjectId,
