@@ -1,16 +1,13 @@
-<div class="container-fluid" ng-controller="StatCtrl as ctrl" ng-init="init()">
+<div class="container-fluid overflow" ng-controller="StatCtrl as ctrl">
 
-    <div class="row stat-main"  ng-show="active">
+    <div class="row stat-main"  ng-if="!showGraph" ng-init="init()">
 
-        <!--<button ng-click="active = false">{{active}}</button>
-        <div>Maps</div>-->
+        <div class="search-bar">
 
-        <div class="search-bar row">
-         <input id="pac-input" class="controls text-center center-block" type="text" placeholder="Cherchez une chasse ou un POI">
+            <md-content id="pac-input" class="md-padding center-block">
+            <form ng-submit="$event.preventDefault()">
 
-            <!--<form ng-submit="$event.preventDefault()">
-
-                <md-autocomplete ng-disabled="ctrl.isDisabled" md-no-cache="ctrl.noCache" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="What is your favorite US state?">
+                <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une chasse">
                     <md-item-template>
                         <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
                     </md-item-template>
@@ -19,11 +16,9 @@
                         <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
                     </md-not-found>
                 </md-autocomplete>
-                <br>
 
-            </form>-->
-
-
+            </form>
+            </md-content>
 
         </div>
 
@@ -31,53 +26,83 @@
             <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" events="marker.events"></ui-gmap-marker>
         </ui-gmap-google-map>
 
-
-
-
     </div>
 
-    <div class="row stat-sub">
+    <div class="row stat-main"  ng-if="showGraph" ng-init="startGraph()">
+
+        <div class="search-bar">
+
+            <md-content id="pac-input" class="md-padding center-block">
+                <form ng-submit="$event.preventDefault()">
+
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une chasse">
+                        <md-item-template>
+                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No states matching "{{ctrl.searchText}}" were found.
+                            <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                        </md-not-found>
+                    </md-autocomplete>
+
+                </form>
+            </md-content>
+
+        </div>
+
+        <div id="container-chart">
+
+        </div>
+    </div>
+
+    <div class="row stat-sub" ng-if="!showGraph">
         <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
 
             <thead>
             <tr>
-                <th st-sort="name" class="text-center">Nom</th>
-                <th st-sort="name" class="text-center">Nombre de personnes</th>
-                <th st-sort="name" class="text-center">Temps moyen</th>
+                <th st-sort="name" class="text-center">
+                    <div class="stat-tab-title">Nom</div>
+                </th>
+                <th st-sort="name" class="text-center">
+                    <div class="stat-tab-title">Nombre de personnes</div>
+                </th>
+                <th st-sort="name" class="text-center">
+                    <div class="stat-tab-title">Temps moyen</div>
+                </th>
 
             </tr>
             </thead>
 
             <tbody>
             <tr ng-repeat="user in displayedCollection">
-                <!--<td title="'Nom'" filter="{ name: 'text'}" sortable="'name'">
-                    {{user.name}}</td>
-                <td title="'Nombre de personnes'" filter="{ pers: 'number'}" sortable="'age'">
-                    {{user.age}}</td>
-                <td title="'Temps moyen'" filter="{ time: 'number'}" sortable="'age'">
-                    {{user.age}}</td>
-            </tr>-->
 
-                <td class="text-center" >{{user.name}}</td>
-                <td class="text-center">{{user.people}}</td>
-                <td class="text-center">{{user.avg_time}}</td>
+                <td class="text-center" >
+                    <div class="stat-tab-line">{{user.name}}</div>
+                </td>
+                <td class="text-center">
+                    <div class="stat-tab-line">{{user.people}}</div>
+                </td>
+                <td class="text-center">
+                    <div class="stat-tab-line">{{user.avg_time}}</div>
+                </td>
             </tr>
             </tbody>
 
             <tfoot>
             <tr>
                 <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="4" st-displayed-pages="4"></div>
+                    <div st-pagination="" st-items-by-page="3" st-displayed-pages="6"></div>
                 </td>
             </tr>
             </tfoot>
         </table>
+
     </div>
 
-
-
-    <div ng-hide="active">
-        <div class="animate-switch">graph</div>
+    <div class="row stat-sub2" ng-if="showGraph">
+        <div class="col-xs-6 min-stat1 center-block" id="min-container-chart"></div>
+        <div class="col-xs-6 min-stat2 center-block" id="min-container-chart2"></div>
     </div>
+
 
 </div>

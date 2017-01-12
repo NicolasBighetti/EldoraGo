@@ -1,0 +1,17 @@
+<ion-view title="teamview" ng-controller="TeamviewCtrl" ng-init="listTeam()">
+    <ion-content>
+        {{activeQuest}} 
+        <br/>
+        <input type="text" name="nom" ng-model="myname">
+        <select class="form-control" ng-model="myteam">
+               <option ng-repeat="x in teamList" > {{x.name}} </option>
+        </select>
+                <button class="btn btn-default" ng-click="join(myname, myteam)" >Rejoindre une équipe!</button>
+                <br/>
+                <button class="btn btn-primary" ng-click="playSolo(myname)" >Jouer en solo!</button>
+                <br/>
+        {{playerData.name}}<br/>
+        {{teamData.name}}
+
+    </ion-content>
+</ion-view>

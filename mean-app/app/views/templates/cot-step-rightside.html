@@ -1,9 +1,20 @@
 <!-- LES QUESTS & détails POI -->
 <div class="row">
-  <div class="btn btn-default center-block" ng-model="textSwitch" ng-click="switchQuest()">{{textSwitch}}</div>
+  <div class="btn btn-default center-block" ng-click="switchQuest()">
+    <div ng-show="isQuest">
+      Voir la fiche descriptive de {{poiSelected.name}}
+    </div>
+    <div ng-show="!isQuest">
+      Voir la liste des Quêtes de {{stepSelected.name}}
+    </div>
+  </div>
   <br/>
 </div>
 <div ng-show="isQuest">
+  <div ng-show="!stepSelected">
+    <h5>Veuillez sélectionner une étape</h5>
+  </div>
+
   <div ng-show="stepSelected">
 
   <h5>Quêtes de l'étape {{stepSelected.name}}</h5>

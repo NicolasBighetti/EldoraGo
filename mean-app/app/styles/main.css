@@ -550,7 +550,7 @@ h1
   width: 100vw;
 }
 
-.stat-main{
+.stat-main #container-chart{
   width: 100%;
   height: 100%;
   position: relative;
@@ -564,6 +564,14 @@ h1
   height: 55vh;
   background-color: #2980b9;
 }
+
+.stat-sub2{
+  position: relative;
+  top: 2vh;
+  width: 100vw;
+  height: 20vh;
+}
+
 
 div.stat-main div.angular-google-map div.angular-google-map-container{
   position: absolute;
@@ -585,39 +593,41 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   top: 1vh;
 }
 
+.md-padding {
+  padding: 3px;
+}
+
 /*search bar*/
 #pac-input {
   position: relative;
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 40vw;
+  width: 45vw;
   min-width: 200px;
   max-width: 400px;
 }
 
-#pac-input:focus {
-  border-color: #4d90fe;
+.stat-tab-title{
+  height: auto;
+  overflow: auto;
+  font-size: 90%;
 }
 
-.pac-container {
-  font-family: Roboto;
+.stat-tab-line{
+  height: auto;
+  overflow: auto;
+  font-size: 80%;
 }
 
-#type-selector {
-  color: #fff;
-  background-color: #4d90fe;
-  padding: 5px 11px 0px 11px;
+/* Charts */
+.highcharts-title{
+  position: absolute;
+  top: 5vh;
 }
 
-#type-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
+
+/*******************************/
+/**********End Stat page********/
+/*******************************/
+
 
 /*** COT-LEFTSIDE ****/
 .list-group-item.active {
@@ -630,7 +640,3 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   background-color: #1abc9c;
   border-color: #ffffff;
 }
-
-/*******************************/
-/**********End Stat page********/
-/*******************************/
