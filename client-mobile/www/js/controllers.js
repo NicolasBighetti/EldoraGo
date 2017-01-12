@@ -200,13 +200,15 @@ $scope.remove = function(chat) {
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
 
+  var map;
+
   $scope.checkIn = function(){
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
       console.log(map);
 
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+      //var latLng = new google.maps.LatLng(0.0, 0.0);
 
       var marker = new google.maps.Marker({
         position: latLng,
@@ -223,7 +225,7 @@ $scope.remove = function(chat) {
     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
       mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
       var marker = new google.maps.Marker({
         position: mapOptions.center,
