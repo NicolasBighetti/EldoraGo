@@ -261,6 +261,7 @@ $scope.remove = function(chat) {
   var markers = [];
   var map;
 
+  $.notify("Chalumeau");
 
 
   function retrieveMarkers(){
