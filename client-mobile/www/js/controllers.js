@@ -73,10 +73,10 @@ $scope.remove = function(chat) {
 })
 
 .controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $ionicPopup, $timeout, CotData) {
-    $scope.stepsid = [];
-    $scope.questsid = [];
-    $scope.riddlesid = [];
-    $scope.riddlesList = [];
+  $scope.stepsid = [];
+  $scope.questsid = [];
+  $scope.riddlesid = [];
+  $scope.riddlesList = [];
 
 
 
@@ -147,66 +147,66 @@ $scope.remove = function(chat) {
         $scope.showOptions = function(riddle) {
             // Show the action sheet
             var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    {
-                        text: 'Accéder à l\'indice'
-                    },
-                    {
-                        text: 'Demander de l\'aide'
-                    },
-                    {
-                        text: 'Se désinscrire'
-                    }
-                ],
+              buttons: [
+              {
+                text: 'Accéder à l\'indice'
+              },
+              {
+                text: 'Demander de l\'aide'
+              },
+              {
+                text: 'Se désinscrire'
+              }
+              ],
 
                 // destructiveText: 'Delete',
                 titleText: 'Options',
                 cancelText: 'Cancel',
                 cancel: function() {
                     // add cancel code..
-                },
-                buttonClicked: function(index) {
-                  if (index == 0) {
-                    $scope.showHint("Indice", riddle.hint);
-                  } else if (index == 1) {
-                    $scope.showAlertHelp("Demande d'aide","Votre demande a été envoyée à vos équipiés")
-                  } else if (index == 2) {
-                    $scope.assigned = false;
-                  }
+                  },
+                  buttonClicked: function(index) {
+                    if (index == 0) {
+                      $scope.showHint("Indice", riddle.hint);
+                    } else if (index == 1) {
+                      $scope.showAlertHelp("Demande d'aide","Votre demande a été envoyée à vos équipiés")
+                    } else if (index == 2) {
+                      $scope.assigned = false;
+                    }
 
                     return true;
                   }
                 });
           };
 
-        /** Pop Up alert for Hint **/
+          /** Pop Up alert for Hint **/
         // An alert dialog
         $scope.showHint = function(myTitle, myTemplate) {
-            var alertPopup = $ionicPopup.alert({
-                title: myTitle,
-                template: myTemplate
-            });
+          var alertPopup = $ionicPopup.alert({
+            title: myTitle,
+            template: myTemplate
+          });
 
-            alertPopup.then(function(res) {
+          alertPopup.then(function(res) {
               //
             });
         };
 
         $scope.showAlertHelp = function(myTitle, myTemplate) {
-            var alertPopup = $ionicPopup.alert({
-                title: myTitle,
-                template: myTemplate
-            });
+          var alertPopup = $ionicPopup.alert({
+            title: myTitle,
+            template: myTemplate
+          });
 
-            alertPopup.then(function(res) {
+          alertPopup.then(function(res) {
                 // quest.isHelp = true;
-            });
+              });
         };
 
-    })
-    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-        $scope.chat = Chats.get($stateParams.chatId);
-    })
+      })
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
 .controller('HomeCtrl', function($scope) {
   console.log('banane');
   $scope.showTabBar = false;
@@ -257,44 +257,65 @@ $scope.remove = function(chat) {
   $ionicScrollDelegate.scrollBottom();
 })
 
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
+.controller('MapCtrl', function($scope, $state, $q, $http, CotData, $cordovaGeolocation, $ionicLoading) {
   var markers = [];
   var map;
 
+  $.notify("Chalumeau");
+
+
   function retrieveMarkers(){
-    for(var i = 0; i < 10; i++)
-      addMarker(new google.maps.LatLng(getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3)));
 
-    showMarkers();
-  }
 
-  function addMarker(latLng){
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-      icon: pinSymbol("#FFF")
-    });
+    var playerPromise = [];
+    var teamPromise = CotData.getTeamByID($http, CotData.getState().get("idTeam"));
+    teamPromise.then(function(result){
 
-    markers.push(marker);
-  }
+      for(var id in result.data.players){
+        playerPromise.push(CotData.getPlayerNameByID($http, result.data.players[id]));
+      }
 
-  $scope.refreshMarker = function(){
-    console.log("refreshing...");
-    randomizePosition();
-    clearMarkers();
-    showMarkers();
-    setInterval(this.refreshMarker, 1000);
-  }
+      $q.all(playerPromise).then((values) => {
+        for(var v in values)
+        {
+          addMarker(new google.maps.LatLng(values[v].data.coords.latitude, values[v].data.coords.longitude));
+        }
 
-  function randomizePosition(){
-    var latLng;
-    for(var m in markers){
-      console.log("Old position : "+ markers[m].position );
-      markers[m].position = new google.maps.LatLng(getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3));
-      console.log("New position : "+ markers[m].position );
+      })
 
+    })
+
+      showMarkers();
     }
-  }
+
+    function addMarker(latLng){
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: pinSymbol("#FFF")
+      });
+
+      markers.push(marker);
+    }
+
+    $scope.refreshMarker = function(){
+      console.log("refreshing...");
+      deleteMarkers();
+      retrieveMarkers();
+      clearMarkers();
+      showMarkers();
+      setInterval(this.refreshMarker, 1000);
+    }
+
+    function randomizePosition(){
+      var latLng;
+      for(var m in markers){
+        console.log("Old position : "+ markers[m].position );
+        markers[m].position = new google.maps.LatLng(getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3));
+        console.log("New position : "+ markers[m].position );
+
+      }
+    }
 
   // Sets the map on all markers in the array.
   function setMapOnAll(map) {

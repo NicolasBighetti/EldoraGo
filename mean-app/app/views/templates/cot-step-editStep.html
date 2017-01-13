@@ -30,7 +30,7 @@
                 <div class="form-group">
                   <div class="col-xs-8">
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                      <input type="text" class="form-control" placeholder="Temps estimé">
+                      <input type="text" class="form-control" ng-model="cotSelected.time_est" placeholder="Temps estimé">
                       <span class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                       </span>
@@ -44,10 +44,10 @@
                 <div class="col-xs-8">
                   <div class="form-group">
                     <div class="input-group">
-                      <input class="form-control" placeholder="Image URL" type="text">
+                      <input class="form-control" placeholder="Image URL" ng-model="cotSelected.cotImageURL" type="text"/>
                       <span class="input-group-addon">
-                          <i class="fa fa-upload"></i>
-                    </span>
+                        <i class="fa fa-upload"></i>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -60,19 +60,17 @@
                 <div class="form-group">
                   <div class="col-xs-4">
                     <label class="switch">
-                      <input type="checkbox" ng-model="disabletimelimit" />
+                      <input type="checkbox" ng-model="disabletimelimit"/>
                       <div class="slider round"></div>
                     </label>
                   </div>
                   <div class="col-xs-8">
                     <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                      <input type="text" class="form-control" placeholder="Temps limité" ng-disabled="!disabletimelimit">
+                      <input type="text" class="form-control" ng-model="cotSelected.limited_time" placeholder="Temps limité" ng-disabled="!disabletimelimit">
                       <span class="input-group-addon" ng-disabled="!disabledatelimit">
-                            <i class="fa fa-clock-o"></i>
+                        <i class="fa fa-clock-o"></i>
                       </span>
                     </div>
-
-
                     <!-- <input class="form-control" placeholder="Temps limite" type="text" ng-disabled="!disabletimelimit"> -->
                   </div>
                 </div>
@@ -89,7 +87,8 @@
                   <div class="col-xs-8">
                     <div class="form-group">
                       <div class='input-group date' id="datetimepicker3">
-                        <input type="text" class="form-control" placeholder="Date limite" data-bind="value: $data.visitdate" ng-disabled="!disabledatelimit" />
+                        <!-- <input type="text" class="form-control" ng-model="cotSelected.date_end" placeholder="Date limite" data-bind="value: $data.visitdate" ng-disabled="!disabledatelimit" /> -->
+                        <input type="text" class="form-control" ng-model="cotSelected.date_end" placeholder="Date limite" ng-disabled="!disabledatelimit" />
                         <span class="input-group-addon">
                           <i class="fa fa-calendar-o"></i>
                         </span>

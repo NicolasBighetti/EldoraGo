@@ -1,6 +1,6 @@
 'use strict';
 
-//var DB_PATH="api/";
+// var DB_PATH="api/";
 var DB_PATH= "https://eldorago.herokuapp.com/api/";
 /**
  * @ngdoc overview
