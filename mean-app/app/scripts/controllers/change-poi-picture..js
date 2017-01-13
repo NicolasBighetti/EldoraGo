@@ -1,14 +1,16 @@
 'use strict';
 
-angular.module('users').controller('ChangeProfilePictureController', ['$scope', '$timeout', '$window', 'Authentication', 'FileUploader',
-  function ($scope, $timeout, $window, Authentication, FileUploader) {
-    $scope.user = Authentication.user;
-    $scope.imageURL = $scope.user.profileImageURL;
+//angular.module('eldoragoApp').controller('ChangePoiPictureController', ['$scope', '$timeout', '$window', 'FileUploader',
+angular.module('eldoragoApp')
+  .controller('ChangePoiPictureController',
+  function ($scope, $timeout, $window, FileUploader) {
+    //$scope.user = Authentication.user;
+    $scope.imageURL = $scope.poi.image;
 
     // Create file uploader instance
     $scope.uploader = new FileUploader({
-      url: 'api/users/picture',
-      alias: 'newProfilePicture'
+      url: 'api/poi/picture',
+      alias: 'newPoiPicture'
     });
 
     // Set file uploader image filter
@@ -20,7 +22,7 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
       }
     });
 
-    // Called after the user selected a new picture file
+    // Called after the poi selected a new picture file
     $scope.uploader.onAfterAddingFile = function (fileItem) {
       if ($window.FileReader) {
         var fileReader = new FileReader();
@@ -34,19 +36,19 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
       }
     };
 
-    // Called after the user has successfully uploaded a new picture
+    // Called after the poi has successfully uploaded a new picture
     $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
       // Show success message
       $scope.success = true;
 
-      // Populate user object
-      $scope.user = Authentication.user = response;
+      // Populate poi object
+      $scope.poiSelected = response;
 
       // Clear upload buttons
       $scope.cancelUpload();
     };
 
-    // Called after the user has failed to uploaded a new picture
+    // Called after the poi has failed to uploaded a new picture
     $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {
       // Clear upload buttons
       $scope.cancelUpload();
@@ -55,10 +57,11 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
       $scope.error = response.message;
     };
 
-    // Change user profile picture
-    $scope.uploadProfilePicture = function () {
+    // Change poi profile picture
+    $scope.uploadPoiPicture = function () {
       // Clear messages
       $scope.success = $scope.error = null;
+
       // Start upload
       $scope.uploader.uploadAll();
     };
@@ -66,7 +69,7 @@ angular.module('users').controller('ChangeProfilePictureController', ['$scope', 
     // Cancel the upload process
     $scope.cancelUpload = function () {
       $scope.uploader.clearQueue();
-      $scope.imageURL = $scope.user.profileImageURL;
+      $scope.imageURL = $scope.poiSelected.image;
     };
   }
-]);
+);

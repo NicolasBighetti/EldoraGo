@@ -20,6 +20,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/pois/:poiId',
       permissions: '*'
+    }, {
+      resources: '/api/pois/picture/:poiId',
+      permissions: ['*']
     }]
   }, {
     roles: ['user'],
@@ -29,6 +32,9 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/pois/:poiId',
       permissions: ['*']
+    }, {
+      resources: '/api/pois/picture/:poiId',
+      permissions: ['*']
     }]
   }, {
     roles: ['guest'],
@@ -37,6 +43,9 @@ exports.invokeRolesPolicies = function () {
       permissions: ['*']
     }, {
       resources: '/api/pois/:poiId',
+      permissions: ['*']
+    }, {
+      resources: '/api/pois/picture/:poiId',
       permissions: ['*']
     }]
   }]);

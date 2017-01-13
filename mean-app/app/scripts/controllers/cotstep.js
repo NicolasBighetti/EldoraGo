@@ -166,6 +166,7 @@ angular.module('eldoragoApp')
       var cot = $scope.cotSelected;
       $http.get(DB_PATH+"cots/"+cot._id).then(function(resp) {
         $scope.cotSelected = resp.data;
+        console.log(resp.data);
       }, function(error) {
         alert(error);
       });
@@ -223,7 +224,21 @@ angular.module('eldoragoApp')
         } else {
           $scope.questList.push(quest);
         }
-      }
+      };
+
+      $scope.updateQuest = function(quest){
+        //var quest = $scope.questSelected;
+        console.log('updating quest');
+        console.dir(quest);
+        $http.put(DB_PATH+"quests/" + quest._id, quest).then(function (resp,err) {
+          if(err){
+            console.dir(err);
+          }else {
+            console.log('Quest updated');
+            console.dir(resp.data);
+          }
+        });
+      };
 
       // recupere les quêtes
       for (var i = 0; i < step.quests.length; i++) {
@@ -290,7 +305,7 @@ angular.module('eldoragoApp')
       var newQuest = {
         name: "Nom quete",
         desc: $scope.stepSelected.desc
-      }
+      };
       console.log("newQuest");
 
       $http.post(DB_PATH+"quests", newQuest).then(function(resp) {
@@ -380,6 +395,7 @@ angular.module('eldoragoApp')
     /** SUBMIT **/
     $scope.submitCot = function() {
       // sendBDD
+      console.log('Updating step');
       console.log($scope.cotSelected);
       // $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
       $http({

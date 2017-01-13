@@ -17,6 +17,8 @@ module.exports = function (app) {
     .put(pois.update)
     .delete(pois.delete);
 
+  app.route('/api/pois/picture/:poiId').all(poisPolicy.isAllowed).post(pois.changePoiPicture);
+
   // Finish by binding the Poi middleware
   app.param('poiId', pois.poiByID);
 };

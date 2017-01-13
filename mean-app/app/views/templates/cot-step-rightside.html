@@ -60,7 +60,7 @@
           <div class="btn btn-default" data-toggle="popover" title="{{quest.riddle_name}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
         </div>
         <div class="col-xs-5">
-          <input type="checkbox" ng-model="quest.id" ng-checked="quest.optionnelle"/> Optionnelle
+          <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest(quest)"/> Optionnelle
         </div>
       </div>
     </div>
