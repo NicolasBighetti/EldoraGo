@@ -335,6 +335,23 @@ angular.module('eldoragoApp')
       $scope.questSelected = quest;
     };
 
+    // Ajoute dans la liste temporaire le POI à mettre en valeur
+    $scope.addPoiList = function() {
+      var poi = $scope.poiSelected;
+      $scope.poiListId.push(poi._id);
+      $scope.poiList.push(poi);
+
+      poi.id = poi._id;
+      // rename latitude / longitude
+      poi.latitude = poi.coords.latitude;
+      poi.longitude = poi.coords.longitude;
+
+      poi.icon = 'http://www.googlemapsmarkers.com/v1/009900/';
+      // adding marker on the map
+      $scope.map.markers.push(poi);
+
+    }
+
     $scope.addQuest = function() {
       var step = $scope.stepSelected;
       var newQuest = {

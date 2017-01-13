@@ -15,10 +15,9 @@ LES ÉTAPES
 <button ng-click="addStep()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 
 <!-- POIS -->
+<br/>
+LES POIS <span ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
 <div ng-show="poiList.length > 0">
-  <br/>
-LES POIS
-{{poiListId}}
 <ul class="list-group">
 <!-- <ul class="list-group" ng-repeat="poi in poiList"> -->
   <li  ng-repeat="poi in poiList | orderBy:'_id'" class="list-group-item"> {{poi.name}}
