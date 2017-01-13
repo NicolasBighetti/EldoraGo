@@ -132,6 +132,16 @@ angular.module('starter.cot-datas', [])
       return data;
     })
   },
+  getTeamByID: function($http, id){
+    var req = {
+      method: 'GET',
+      url: 'https://eldorago.herokuapp.com/api/teams/'+id
+    }
+
+    return $http(req).then(function(data){
+      return data;
+    })
+  },
   getPlayerNameByID: function($http, id){
     var req = {
       method: 'GET',
