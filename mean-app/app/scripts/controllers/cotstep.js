@@ -140,7 +140,6 @@ angular.module('eldoragoApp')
 
     /** Get Marker de la BDD **/
     $scope.getMarkerList = function() {
-      console.log('getMarkerList');
       $http.get(DB_PATH+"pois").then(function(resp) {
         $scope.markerList = resp.data;
 
@@ -175,7 +174,6 @@ angular.module('eldoragoApp')
     }
 
     $scope.getPoiList = function(step) {
-      console.log("getPoiList");
       $scope.poiList = [];
       $scope.poiListId = [];
       for (var i = 0; i < step.quests.length; i++) {
@@ -195,7 +193,6 @@ angular.module('eldoragoApp')
         }).then(function(resp) {
           // si on a des quetes, apres avoir recup les pois on appelle getMarkerList
           $scope.getMarkerList();
-          console.log('end getPoiList');
         });
       }
 
@@ -338,17 +335,23 @@ angular.module('eldoragoApp')
     // Ajoute dans la liste temporaire le POI à mettre en valeur
     $scope.addPoiList = function() {
       var poi = $scope.poiSelected;
-      $scope.poiListId.push(poi._id);
-      $scope.poiList.push(poi);
 
-      poi.id = poi._id;
-      // rename latitude / longitude
-      poi.latitude = poi.coords.latitude;
-      poi.longitude = poi.coords.longitude;
+      // Si pas déjà dans la liste
+      if ($scope.poiListId.indexOf(poi._id) < 0) {
+        $scope.poiListId.push(poi._id);
+        $scope.poiList.push(poi);
 
-      poi.icon = 'http://www.googlemapsmarkers.com/v1/009900/';
-      // adding marker on the map
-      $scope.map.markers.push(poi);
+        poi.id = poi._id;
+        // rename latitude / longitude
+        poi.latitude = poi.coords.latitude;
+        poi.longitude = poi.coords.longitude;
+
+        poi.icon = 'http://www.googlemapsmarkers.com/v1/009900/';
+        // adding marker on the map
+        $scope.map.markers.push(poi);
+      } else {
+        console.log("POI déjà dans la liste");
+      }
 
     }
 
@@ -440,10 +443,15 @@ angular.module('eldoragoApp')
       $scope.stepSelected = step;
       $scope.getQuestList(step);
 
-      console.log('setActiveStep');
       $scope.getPoiList(step);
       // $scope.getMarkerList();
     }
+
+    $scope.setActivePoi = function(poi) {
+      $scope.poiSelected = poi;
+    }
+
+
 
     $scope.EnterPressed = function(keyEvent, lieu) {
 

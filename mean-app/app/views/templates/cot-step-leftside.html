@@ -1,7 +1,7 @@
 <!-- STEPS -->
 LES ÉTAPES
 <ul class="list-group">
-<!-- <ul class="list-group" ng-repeat="step in stepList"> -->
+  <!-- <ul class="list-group" ng-repeat="step in stepList"> -->
   <li ng-repeat="step in stepList | orderBy:'_id'" ng-class="{active : stepSelected === step}" ng-click="setActiveStep(step)" class="list-group-item"> {{step.name}}
     <!-- <span ng-click="RemoveStep(step._id)" class="badge">
       <i class="fa fa-times"></i>
@@ -15,20 +15,22 @@ LES ÉTAPES
 <button ng-click="addStep()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 
 <!-- POIS -->
-<br/>
-LES POIS <span ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
-<div ng-show="poiList.length > 0">
-<ul class="list-group">
-<!-- <ul class="list-group" ng-repeat="poi in poiList"> -->
-  <li  ng-repeat="poi in poiList | orderBy:'_id'" class="list-group-item"> {{poi.name}}
-    <!-- <span ng-click="RemoveStep(step._id)" class="badge">
+<div ng-show="stepSelected">
+  <br/> LES POIS
+  <br/>
+  <span ng-show="poiSelected" ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
+  <br/>
+  <ul class="list-group">
+    <!-- <ul class="list-group" ng-repeat="poi in poiList"> -->
+    <li ng-repeat="poi in poiList | orderBy:'_id'" ng-click="setActivePoi(poi)" class="list-group-item"> {{poi.name}}
+      <!-- <span ng-click="RemoveStep(step._id)" class="badge">
       <i class="fa fa-times"></i>
     </span> -->
-    <!-- <span ng-click="RemoveStep(step._id)" class="pull-right label label-danger">
+      <!-- <span ng-click="RemoveStep(step._id)" class="pull-right label label-danger">
       <i class="fa fa-trash"></i>
     </span> -->
-  </li>
-</ul>
+    </li>
+  </ul>
 </div>
 
 <!-- <div class="list-group" ng-repeat="step in stepList">
