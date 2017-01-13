@@ -7,8 +7,14 @@ angular.module('eldoragoApp')
 
     $scope.map = {};
     $scope.showGraph = false;
+    $scope.details = false;
     $scope.listName = [];
     $scope.listCOTName = [];
+    $scope.markerList = [];
+
+    $scope.show = function () {
+      $scope.showGraph = true;
+    };
 
     $scope.models = [];
 
@@ -41,24 +47,6 @@ angular.module('eldoragoApp')
            }*/ // define when map is ready
         }
       };
-
-      $scope.map.options = {
-        cluster: {
-          minimumClusterSize : 10,
-          zoomOnClick: true,
-          styles: [{
-            url: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-            width:60,
-            height:60,
-            textColor: 'white',
-            textSize: 14,
-            fontFamily: 'Open Sans'
-          }],
-          averageCenter: true,
-          clusterClass: 'cluster-icon'
-        }
-      };
-
 
       $http.get(DB_PATH+"pois").then(function(resp) {
 
@@ -160,10 +148,12 @@ angular.module('eldoragoApp')
 
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
-      $scope.showGraph = true;
+      //$scope.showGraph = true;
+      $scope.details = true;
 
       if(item == null){
         $scope.showGraph = false;
+        $scope.details = false;
       }
 
     }

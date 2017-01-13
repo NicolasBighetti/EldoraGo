@@ -11,10 +11,6 @@
                     <md-item-template>
                         <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
                     </md-item-template>
-                    <md-not-found>
-                        No states matching "{{ctrl.searchText}}" were found.
-                        <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
-                    </md-not-found>
                 </md-autocomplete>
 
             </form>
@@ -26,6 +22,25 @@
             <ui-gmap-markers models="markerList" coords="'self'" icon="'icon'"></ui-gmap-markers>
         </ui-gmap-google-map>
 
+
+        <div class="color-bar-container center-block" ng-if="details">
+
+            <div class="center">
+
+                    <div class="inline">Temps moyen par utilisateur</div>
+                    <div class="inline sub-text" ng-click="show()">(Accéder aux graphiques)</div>
+
+            </div>
+
+            <div class="color-row center-block">
+                <div class="col-sm-2 center-block">0 min</div>
+                <div class="col-sm-8 color-bar center-block">
+                    <div class="mark"></div>
+                </div>
+                <div class="col-sm-2 center-block">4 heures</div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row stat-main"  ng-if="showGraph" ng-init="startGraph()">
@@ -35,14 +50,10 @@
             <md-content id="pac-input" class="md-padding center-block">
                 <form ng-submit="$event.preventDefault()">
 
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une chasse">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une chasse ou un POI">
                         <md-item-template>
                             <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
                         </md-item-template>
-                        <md-not-found>
-                            No states matching "{{ctrl.searchText}}" were found.
-                            <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
-                        </md-not-found>
                     </md-autocomplete>
 
                 </form>

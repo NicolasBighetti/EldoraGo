@@ -623,6 +623,57 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   top: 5vh;
 }
 
+.sub-text{
+  position: relative;
+  left: auto;
+  font-size: 0.8em;
+  font-weight: lighter;
+  font-style: italic;
+  text-decoration: underline;
+  cursor: hand;
+}
+
+.center{
+  margin: auto 0;
+}
+
+.inline{
+  display: inline-block;
+}
+
+.color-bar-container{
+  position: relative;
+  bottom: 13vh;
+  width: 71vw;
+  height: 50px;
+  max-width: 900px;
+  background-color: white;
+}
+
+.color-row{
+  position: relative;
+  top: -5px;
+}
+
+.color-bar{
+  position: relative;
+  top: 8px;
+  height: 12px;
+  vertical-align: middle;
+  background-color: yellow;
+  background: -webkit-linear-gradient(-90deg, red, yellow); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(-90deg, red, yellow); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(-90deg, red, yellow); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(-90deg, red, yellow); /* Standard syntax */
+}
+
+.mark{
+  position: relative;
+  height: 12px;
+  width: 12px;
+  left: 60%;
+  background-color: #0c0c0c;
+}
 
 /*******************************/
 /**********End Stat page********/
