@@ -1,4 +1,4 @@
-<div ng-controller="FaqCtrl">
+<div ng-controller="FaqCtrl" ng-init="initFaq()">
 
 <div id="faq" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -9,7 +9,8 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">
           <ul class="nav nav-tabs">
-            <li class="active"><a>Enigmes</a></li>
+            <li ng-click="selectTypeQuest('riddle')" ng-class="{ active: isSelected('riddle')}" ><a>Enigmes</a></li>
+            <li ng-click="selectTypeQuest('photo')" ng-class="{ active: isSelected('photo')}"><a >Défi Photo</a></li>
             <li><a >Objets cachés</a></li>
             <li><a >Orientation</a></li>
           </ul>
@@ -24,16 +25,16 @@
               </div>
             </div> -->
             <div class="col-xs-3">
-              <img ng-click="selectTheme('culture')" src="images/beach.svg" class="img-responsive img-circle"/>
+              <img ng-click="selectTheme('Plage')" src="images/beach.svg" class="img-responsive img-circle"/>
             </div>
             <div class="col-xs-3">
-              <img ng-click="selectTheme('culture')" src="images/cityscape.svg" class="img-responsive img-circle"/>
+              <img ng-click="selectTheme('Ville')" src="images/cityscape.svg" class="img-responsive img-circle"/>
             </div>
             <div class="col-xs-3">
-              <img ng-click="selectTheme('culture')" src="images/departure.svg" class="img-responsive img-circle"/>
+              <img ng-click="selectTheme('Aeroport')" src="images/departure.svg" class="img-responsive img-circle"/>
             </div>
             <div class="col-xs-3">
-              <img ng-click="selectTheme('culture')" src="images/park.svg" class="img-responsive img-circle"/>
+              <img ng-click="selectTheme('Parc')" src="images/park.svg" class="img-responsive img-circle"/>
             </div>
           </div>
         </div>
