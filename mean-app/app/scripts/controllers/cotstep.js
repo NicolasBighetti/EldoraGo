@@ -2,10 +2,16 @@
 angular.module('eldoragoApp')
   .controller('CotStepCtrl', function($scope, $location, $timeout, $http, CotFactory) {
 
+
     /**  Loading **/
     $scope.init = function() {
+      $scope.markerList = [];
+      $scope.poiList = [];
+      $scope.poiListId = [];
+
       $scope.getRiddleList();
       $scope.getMarkerList();
+
       $scope.cotSelected = CotFactory.getCurrentCot();
       CotFactory.setCurrentCot(null);
 
@@ -43,9 +49,6 @@ angular.module('eldoragoApp')
       })
 
       setTimeout(function() {
-
-        //angular - google - map - container
-        //angular - google - map
 
         var elements = document.getElementsByClassName('angular-google-map');
         //var requiredElement = elements[0];
@@ -113,15 +116,6 @@ angular.module('eldoragoApp')
       });
     }
 
-    //Resets the steps _id to keep valid _ids
-    // function ResetStepsId()
-    // {
-    //   for (var i = 0; i < $scope.stepList.length; i++)
-    //   {
-    //       $scope.stepList[i]._id = i + 1;
-    //   }
-    // }//ResetStepsId()
-
     $scope.marker = {
       events: {
         click: function(marker, eventName, args) {
@@ -146,7 +140,7 @@ angular.module('eldoragoApp')
 
     /** Get Marker de la BDD **/
     $scope.getMarkerList = function() {
-
+      console.log('getMarkerList');
       $http.get(DB_PATH+"pois").then(function(resp) {
         $scope.markerList = resp.data;
 
@@ -154,6 +148,13 @@ angular.module('eldoragoApp')
         for (var i = 0; i < $scope.markerList.length; i++) {
           //rename _id en id
           $scope.markerList[i].id = $scope.markerList[i]._id;
+          // rename latitude / longitude
+          $scope.markerList[i].latitude = $scope.markerList[i].coords.latitude;
+          $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
+
+          if ($scope.poiListId.indexOf($scope.markerList[i]._id) >= 0) {
+            $scope.markerList[i].icon = 'http://www.googlemapsmarkers.com/v1/009900/';
+          }
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
         }
@@ -171,6 +172,39 @@ angular.module('eldoragoApp')
       }, function(error) {
         alert(error);
       });
+    }
+
+    $scope.getPoiList = function(step) {
+      console.log("getPoiList");
+      $scope.poiList = [];
+      $scope.poiListId = [];
+      for (var i = 0; i < step.quests.length; i++) {
+        $http.get(DB_PATH+"quests/"+step.quests[i]).then(function(resp) {
+          var poi_id = resp.data.poi;
+          if (poi_id != undefined) {
+            $http.get(DB_PATH+"pois/"+poi_id).then(function(resp) {
+              $scope.poiList.push(resp.data);
+              $scope.poiListId.push(resp.data._id);
+
+            }, function(error) {
+              alert(error);
+            });
+          }
+        }, function(error) {
+          alert(error);
+        }).then(function(resp) {
+          // si on a des quetes, apres avoir recup les pois on appelle getMarkerList
+          $scope.getMarkerList();
+          console.log('end getPoiList');
+        });
+      }
+
+      // si pas de quete on appelle getMarkerList
+      if (step.quests.length == 0) {
+        $scope.getMarkerList();
+        console.log('end getPoiList sans quetes');
+
+      }
     }
 
     $scope.getStepList = function() {
@@ -358,6 +392,11 @@ angular.module('eldoragoApp')
       }).then(function(resp) {
         console.log(quest + " associée à " + poi);
         $scope.getQuestList($scope.stepSelected);
+
+        console.log('associateQuestPoi');
+        $scope.getPoiList($scope.stepSelected);
+
+        // $scope.getMarkerList();
       }, function(error) {
         alert(error);
         console.dir(error);
@@ -380,9 +419,13 @@ angular.module('eldoragoApp')
     }
 
     /** LEFT SIDE **/
-    $scope.setActive = function(step) {
+    $scope.setActiveStep = function(step) {
       $scope.stepSelected = step;
       $scope.getQuestList(step);
+
+      console.log('setActiveStep');
+      $scope.getPoiList(step);
+      // $scope.getMarkerList();
     }
 
     $scope.EnterPressed = function(keyEvent, lieu) {
