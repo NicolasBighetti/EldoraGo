@@ -4,18 +4,41 @@ angular.module('eldoragoApp')
     /** Loading **/
     $scope.init = function() {
       $scope.getCotList();
-    }
+    };
 
     $scope.getCotList = function() {
       $http.get(DB_PATH+"cots").then(function(resp) {
         $scope.cotList = resp.data;
       });
-    }
-
+    };
+    (function () {
+      $scope.$watch(function () {
+        return CotFactory.getCurrentCot();
+      }, function (newVal, oldValue) {
+        console.log('CHANGED');
+        console.log(newVal);
+        $scope.cotSelected=CotFactory.getCurrentCot();
+      });
+    }());
     $scope.editCot = function(cot) {
+
+
       CotFactory.setCurrentCot(cot);
+
+      console.log('Edit cot');
+      $scope.cotSelected = CotFactory.getCurrentCot();
+/*      console.log(CotFactory.getCurrentCot());
+
+      console.log('Edit cot scope');
+      console.log($scope.cotSelected);
+
+      console.log('changed Edit cot scope');
+      console.log($scope.cotSelected);
+      console.log('changed Edit cot get');
+      console.log(CotFactory.getCurrentCot());*/
+
       $location.path("/cot");
-    }
+    };
 
     $scope.removeCot = function(id) {
       $http.delete(DB_PATH+"cots/" + id).then(function(resp) {

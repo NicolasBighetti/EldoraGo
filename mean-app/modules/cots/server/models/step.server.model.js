@@ -18,6 +18,9 @@ var StepSchema = new Schema({
     required: 'Please fill step name',
     trim: true
   },
+  pos: {
+    type: Number
+  },
   created: {
     type: Date,
     default: Date.now

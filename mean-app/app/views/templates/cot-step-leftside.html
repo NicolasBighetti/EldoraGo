@@ -1,10 +1,10 @@
-<ul class="list-group" ng-repeat="step in stepList | orderBy:'_id'">
+<ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
 <!-- <ul class="list-group" ng-repeat="step in stepList"> -->
-  <li ng-class="{active : stepSelected === step}" ng-click="setActive(step)" class="list-group-item"> {{step.name}}
+  <li ng-class="{active : stepSelected === step}" ng-click="setActive($index)" class="list-group-item"> {{step.name}}
     <!-- <span ng-click="RemoveStep(step._id)" class="badge">
       <i class="fa fa-times"></i>
     </span> -->
-    <span ng-click="RemoveStep(step._id)" class="pull-right label label-danger">
+    <span ng-click="RemoveStep($index)" class="pull-right label label-danger">
       <i class="fa fa-trash"></i>
     </span>
   </li>
@@ -13,6 +13,8 @@
 
 <button ng-click="addStep()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 
+<button ng-click="showFullCot()"> Show full Cot in console</button>
+<button ng-click="postCot()"> Validate and POST Cot gl hf</button>
 <!-- <div class="list-group" ng-repeat="step in stepList">
   <a href="" class="list-group-item">Step numero {{step._id}}</a>
   <button ng-click="RemoveStep(step._id)" class="btn btn-danger"> Supprimer</button>

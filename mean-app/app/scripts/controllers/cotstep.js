@@ -2,33 +2,79 @@
 angular.module('eldoragoApp')
   .controller('CotStepCtrl', function($scope, $location, $timeout, $http, CotFactory) {
 
+    (function () {
+      $scope.$watch(function () {
+        return CotFactory.getCurrentCot();
+      }, function (newVal, oldValue) {
+        console.log('CHANGED 2');
+        console.log(newVal);
+        $scope.cotSelected = CotFactory.getCurrentCot();
+      });
+    }());
+
+    console.log('Start CotStepCtrl');
+    console.log(CotFactory.getCurrentCot());
+    $scope.cotSelected = CotFactory.getCurrentCot();
+
     /**  Loading **/
-    $scope.init = function() {
+    $scope.init = function () {
+      console.log('init');
+
       $scope.getRiddleList();
       $scope.getMarkerList();
+      console.log(CotFactory.getCurrentCot());
+
       $scope.cotSelected = CotFactory.getCurrentCot();
-      CotFactory.setCurrentCot(null);
+
+      console.log(CotFactory.getCurrentCot());
 
       // si on vient de la page cot-list
-      if ($scope.cotSelected != null) {
+      if ($scope.cotSelected) {
+        //CotFactory.setCurrentCot($scope.cotSelected);
+        CotFactory.readCot();
         $scope.getStepList();
+        console.log('ops');
+        console.dir($scope.cotSelected);
       }
-    }
+      else {
+        CotFactory.createCot();
+        $scope.cotSelected = CotFactory.getCurrentCot();
+        console.log('ops 2');
+
+      }
+    };
+
+
+    //test functions
+    $scope.showFullCot = function () {
+      console.dir(CotFactory.getCurrentCot());
+      console.dir($scope.cotSelected);
+      $scope.cotSelected = CotFactory.getCurrentCot();
+    };
+    $scope.postCot = function () {
+      CotFactory.updateCot();
+      console.log('after U COT')
+    };
 
     /** Show **/
     $scope.isStart = true;
 
+    if (!CotFactory.getCurrentCot()) {
+      console.log('no c cot');
+      CotFactory.createCot();
+    }
+
     /** Form **/
-    $scope.questList = [];
+    $scope.questList = CotFactory.getCurrentCot().questsO;
 
     /** Start **/
-    $scope.TreatAdress = function(lien) {
+    $scope.TreatAdress = function (lien) {
 
       console.log("Le LIEN : " + lien);
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({
         "address": lien
-      }, function(results, status) {
+      }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
           var location = results[0].geometry.location;
           console.log("LOCATION in the Treat-Address (cotstep controller): " + location);
@@ -38,15 +84,16 @@ angular.module('eldoragoApp')
           $scope.$apply();
 
           $scope.initiateCot();
-          // $scope.stepList = [];
+          $scope.stepList = CotFactory.getCurrentCot().stepsO;
         }
-      })
+      });
 
-      setTimeout(function() {
+      setTimeout(function () {
 
         //angular - google - map - container
         //angular - google - map
 
+        //non utilisé ?
         var elements = document.getElementsByClassName('angular-google-map');
         //var requiredElement = elements[0];
         var requiredElement = document.getElementById('cot-step-map-div');
@@ -54,13 +101,12 @@ angular.module('eldoragoApp')
         requiredElement.setAttribute("style", "height:300px");
 
 
-      }, 2000);
+      }, 1000);
 
     };
 
 
-
-    $scope.updateLocation = function(newlat, newlon) {
+    $scope.updateLocation = function (newlat, newlon) {
       $scope.map.center.latitude = newlat;
       $scope.map.center.longitude = newlon;
       console.log("Updated location with : " + $scope.map.center.latitude + " / " + $scope.map.center.longitude);
@@ -68,6 +114,7 @@ angular.module('eldoragoApp')
       // $scope.map.center = new google.maps.LatLng(newlat, newlon);
     };
 
+    //valeurs en dur ?
     $scope.lat = 44;
     $scope.lon = 6;
 
@@ -79,7 +126,7 @@ angular.module('eldoragoApp')
       zoom: 10,
       markers: [],
       events: {
-        click: function(map, eventName, originalEventArgs) {
+        click: function (map, eventName, originalEventArgs) {
           var e = originalEventArgs[0];
           console.log(e);
           var lat = e.latLng.lat(),
@@ -89,28 +136,32 @@ angular.module('eldoragoApp')
       } //marker
     };
 
-    $scope.addStep = function(lat, lng) {
-      var cot = $scope.cotSelected;
+    $scope.addStep = function () {
+      var num = CotFactory.getCurrentCot().stepsO.length + 1;
+
       var newStep = {
-        name: "Nom step",
-        desc: "test"
+        name: 'Step ' + num,
+        desc: 'Step ' + num + ' description',
+        questsO: [],
+        quests: []
       };
+      CotFactory.getCurrentCot().stepsO.push(newStep);
 
-      $http.post(DB_PATH+"steps", newStep).then(function(resp) {
-        newStep = resp.data;
-        cot.steps.push(newStep._id);
+      /*      $http.post(DB_PATH+"steps", newStep).then(function(resp) {
+       newStep = resp.data;
+       cot.steps.push(newStep._id);
 
-        $http.put(DB_PATH+"cots/"+cot._id, {steps: cot.steps}).then(function(resp) {
-          $scope.getStepList();
-        }, function(error) {
-          alert(error);
-          console.dir(error);
-        });
-      }, function(error) {
-        alert(error);
-        console.dir(error);
-      });
-    }
+       $http.put(DB_PATH+"cots/"+cot._id, {steps: cot.steps}).then(function(resp) {
+       $scope.getStepList();
+       }, function(error) {
+       alert(error);
+       console.dir(error);
+       });
+       }, function(error) {
+       alert(error);
+       console.dir(error);
+       });*/
+    };
 
     //Resets the steps _id to keep valid _ids
     // function ResetStepsId()
@@ -123,7 +174,7 @@ angular.module('eldoragoApp')
 
     $scope.marker = {
       events: {
-        click: function(marker, eventName, args) {
+        click: function (marker, eventName, args) {
           //$('#interestMarker').modal('show');
           //$scope.open();
           //console.log(marker.position.lat() +" -- "+ marker.position.lng());
@@ -144,9 +195,9 @@ angular.module('eldoragoApp')
 
 
     /** Get Marker de la BDD **/
-    $scope.getMarkerList = function() {
+    $scope.getMarkerList = function () {
 
-      $http.get(DB_PATH+"pois").then(function(resp) {
+      $http.get(DB_PATH + "pois").then(function (resp) {
         $scope.markerList = resp.data;
 
         // foreach marker on markerList BDD
@@ -159,232 +210,250 @@ angular.module('eldoragoApp')
         // $scope.$apply();
 
       });
-    }
+    };
 
-    $scope.getCot = function() {
-      $scope.stepList = [];
+    //TODO change to factory
+    $scope.getCot = function () {
+
       var cot = $scope.cotSelected;
-      $http.get(DB_PATH+"cots/"+cot._id).then(function(resp) {
-        $scope.cotSelected = resp.data;
-        console.log(resp.data);
-      }, function(error) {
-        alert(error);
-      });
-    }
+      //CotFactory.setCurrentCot($scope.cotSelected);
+      console.log('GET cot');
+      CotFactory.readCot();
+      $scope.cotSelected = CotFactory.getCurrentCot();
+      /* $http.get(DB_PATH+"cots/"+cot._id).then(function(resp) {
+       $scope.stepList = CotFactory.getCurrentCot().stepsO;
 
-    $scope.getStepList = function() {
-      $scope.stepList = [];
-      var cot = $scope.cotSelected;
-      for (var i = 0; i < cot.steps.length; i++) {
-        $http.get(DB_PATH+"steps/"+cot.steps[i]).then(function(resp) {
-          $scope.stepList.push(resp.data);
-        }, function(error) {
-          alert(error);
-        });
-      }
-    }
+       }, function(error) {
+       alert(error);
+       });*/
 
-    $scope.getRiddleList = function() {
-      $http.get(DB_PATH+"riddles").then(function(resp) {
+    };
+
+    //TODO change to factory
+    $scope.getStepList = function () {
+      /*$scope.stepList = [];
+       var cot = $scope.cotSelected;
+       for (var i = 0; i < cot.steps.length; i++) {
+       $http.get(DB_PATH+"steps/"+cot.steps[i]).then(function(resp) {
+       $scope.stepList.push(resp.data);
+       }, function(error) {
+       alert(error);
+       });
+       }*/
+    };
+
+    $scope.getRiddleList = function () {
+      $http.get(DB_PATH + "riddles").then(function (resp) {
         $scope.riddleList = resp.data;
-      }, function(error) {
+      }, function (error) {
         alert(error);
       });
-    }
+    };
 
-    $scope.getQuestList = function(step) {
-      $scope.questList = [];
+    //TODO change to fact
+    /* $scope.getQuestList = function(step) {
+     $scope.questList = [];
 
-      // Convertit les riddles id en nom
-      var addRiddleName = function(quest){
-        if (quest.riddle != null) {
-          $http.get(DB_PATH+"riddles/" + quest.riddle).then(function(resp) {
-            quest.riddle_name = resp.data.name;
-            addPoiName(quest);
-          }, function(error) {
-            alert(error);
-            console.dir(error);
-          });
-        } else {
-          addPoiName(quest);
-        }
-      }
+     // Convertit les riddles id en nom
+     var addRiddleName = function(quest){
+     if (quest.riddle != null) {
+     $http.get(DB_PATH+"riddles/" + quest.riddle).then(function(resp) {
+     quest.riddle_name = resp.data.name;
+     addPoiName(quest);
+     }, function(error) {
+     alert(error);
+     console.dir(error);
+     });
+     } else {
+     addPoiName(quest);
+     }
+     };
 
-      // Convertit les pois id en nom
-      var addPoiName = function(quest) {
-        if (quest.poi != null) {
-          $http.get(DB_PATH+"pois/" + quest.poi).then(function(resp) {
-            quest.poi_name = resp.data.name;
-            $scope.questList.push(quest);
+     // Convertit les pois id en nom
+     var addPoiName = function(quest) {
+     /!* if (quest.poi != null) {
+     $http.get(DB_PATH+"pois/" + quest.poi).then(function(resp) {
+     quest.poi_name = resp.data.name;
+     $scope.questList.push(quest);
 
-          }, function(error) {
-            alert(error);
-            console.dir(error);
-          });
-        } else {
-          $scope.questList.push(quest);
-        }
-      };
+     }, function(error) {
+     alert(error);
+     console.dir(error);
+     });
+     } else {
+     $scope.questList.push(quest);
+     }*!/
+     };
 
-      $scope.updateQuest = function(quest){
-        //var quest = $scope.questSelected;
-        console.log('updating quest');
-        console.dir(quest);
-        $http.put(DB_PATH+"quests/" + quest._id, quest).then(function (resp,err) {
-          if(err){
-            console.dir(err);
-          }else {
-            console.log('Quest updated');
-            console.dir(resp.data);
-          }
-        });
-      };
+     $scope.updateQuest = function(quest){
+     /!* //var quest = $scope.questSelected;
+     console.log('updating quest');
+     console.dir(quest);
+     $http.put(DB_PATH+"quests/" + quest._id, quest).then(function (resp,err) {
+     if(err){
+     console.dir(err);
+     }else {
+     console.log('Quest updated');
+     console.dir(resp.data);
+     }
+     });*!/
+     };
 
-      // recupere les quêtes
-      for (var i = 0; i < step.quests.length; i++) {
-        $http.get(DB_PATH+"quests/" + step.quests[i]).then(function(resp) {
-          var quest = resp.data;
+     // recupere les quêtes
+     /!*for (var i = 0; i < step.quests.length; i++) {
+     $http.get(DB_PATH+"quests/" + step.quests[i]).then(function(resp) {
+     var quest = resp.data;
 
-          addRiddleName(quest);
+     addRiddleName(quest);
 
-        }, function(error) {
-          alert(error);
-          console.dir(error);
-        });
-      }
-    }
+     }, function(error) {
+     alert(error);
+     console.dir(error);
+     });
+     }*!/
+     };
+     */
 
-    $scope.convertRiddle = function(quest) {
-      $http.get(DB_PATH+"riddles/" + quest.riddle).then(function(resp) {
-        quest.riddle_name = resp.data;
-        // $scope.questList.push(quest);
-      }, function(error) {
-        alert(error);
-        console.dir(error);
-      });
-    }
+    /*    $scope.convertRiddle = function(quest) {
+     $http.get(DB_PATH+"riddles/" + quest.riddle).then(function(resp) {
+     quest.riddle_name = resp.data;
+     // $scope.questList.push(quest);
+     }, function(error) {
+     alert(error);
+     console.dir(error);
+     });
+     }*/
 
 
-    //Removes a step
-    $scope.RemoveStep = function(id) {
-      $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
-        console.log("deleted");
+    //TODO Fact Removes a step
+    $scope.RemoveStep = CotFactory.deleteStep;
+    /*$scope.RemoveStep = function(id) {
+     $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
+     console.log("deleted");
 
-        //remove
-        var index = $scope.cotSelected.steps.indexOf(id);
-        $scope.cotSelected.steps.splice(index, 1);
+     //remove
+     var index = $scope.cotSelected.steps.indexOf(id);
+     $scope.cotSelected.steps.splice(index, 1);
 
-        // refresh step
-        $scope.getStepList();
-      }, function(error) {
-        alert(error);
-      });
-      // $scope.stepList.splice(id - 1, 1);
-      // ResetStepsId();
-    }
+     // refresh step
+     $scope.getStepList();
+     }, function(error) {
+     alert(error);
+     });
+     // $scope.stepList.splice(id - 1, 1);
+     // ResetStepsId();
+     };*/
 
 
     /** STEP **/
     $scope.isQuest = true;
-    $scope.textSwitch = "Voir la fiche descriptive"
-    $scope.switchQuest = function() {
+    $scope.textSwitch = "Voir la fiche descriptive";
+    $scope.switchQuest = function () {
       $scope.isQuest = !$scope.isQuest;
       $scope.textSwitch = $scope.isQuest ? "Voir la fiche descriptive" : "Voir la liste des Quêtes";
     };
 
-    $scope.select = function(riddle) {
+    $scope.select = function (riddle) {
       $scope.riddleSelected = riddle;
     };
 
-    $scope.selectQuest = function(quest) {
+    $scope.selectQuest = function (quest) {
       $scope.questSelected = quest;
     };
 
-    $scope.addQuest = function() {
+    $scope.addQuest = function () {
       var step = $scope.stepSelected;
-      var newQuest = {
-        name: "Nom quete",
-        desc: $scope.stepSelected.desc
-      };
-      console.log("newQuest");
 
-      $http.post(DB_PATH+"quests", newQuest).then(function(resp) {
-        console.log("Quête créée");
-        newQuest = resp.data;
-        // On ajoute l'id de la nouvelle quete à la step concernée
-        step.quests.push(newQuest._id);
+      CotFactory.createQuest($scope.stepSelected);
+      $scope.cotSelected = CotFactory.getCurrentCot();
+      /*var newQuest = {
+       name: "Nom quete",
+       desc: ""
+       };
+       console.log("newQuest");
 
-        $http.put(DB_PATH+"steps/" + step._id, {
-          quests: step.quests
-        }).then(function(resp) {
-          console.log("ajout de l'id de la nouvelle quete dans ");
-          console.log(step);
-          $scope.getQuestList(step);
-        }, function(error) {
-          alert(error);
-          console.dir(error);
-        });
+       $http.post(DB_PATH+"quests", newQuest).then(function(resp) {
+       console.log("Quête créée");
+       newQuest = resp.data;
+       // On ajoute l'id de la nouvelle quete à la step concernée
+       step.quests.push(newQuest._id);
 
-      }, function(error) {
-        alert(error);
-        console.dir(error);
-      });
+       $http.put(DB_PATH+"steps/" + step._id, {
+       quests: step.quests
+       }).then(function(resp) {
+       console.log("ajout de l'id de la nouvelle quete dans ");
+       console.log(step);
+       $scope.getQuestList(step);
+       }, function(error) {
+       alert(error);
+       console.dir(error);
+       });
 
+       }, function(error) {
+       alert(error);
+       console.dir(error);
+       });
+       */
 
     }
 
-    $scope.initiateCot = function() {
-      var newCot = {
-        name: "Ajoutez un nom",
-        desc: "Ajoutez une description"
-      }
 
-      $http.post(DB_PATH+"cots", newCot).then(function(resp) {
-        console.log("Cot initiated");
-        $scope.cotSelected = resp.data;
-        CotFactory.setCurrentCot(resp.data);
+    //TODO : fact
+    /*$scope.initiateCot = CotFactory.createCot(); function() {
+     var newCot = {
+     name: "Ajoutez un nom",
+     desc: "Ajoutez une description"
+     }
 
-        $scope.getStepList();
-      }, function(error) {
-        alert(error);
-      });
-    }
+     $http.post(DB_PATH+"cots", newCot).then(function(resp) {
+     console.log("Cot initiated");
+     $scope.cotSelected = resp.data;
+     CotFactory.setCurrentCot(resp.data);
 
-    $scope.associateQuestPoi = function(quest) {
-      var poi = $scope.poiSelected;
-      $http.put(DB_PATH+"quests/" + quest._id, {
-        poi: poi._id
-      }).then(function(resp) {
-        console.log(quest + " associée à " + poi);
-        $scope.getQuestList($scope.stepSelected);
-      }, function(error) {
-        alert(error);
-        console.dir(error);
-      });
-    }
+     $scope.getStepList();
+     }, function(error) {
+     alert(error);
+     });
+     }*/
 
-    $scope.associateQuestRiddle = function() {
+    $scope.associateQuestPoi = function (quest) {
+      //var poi = $scope.poiSelected;
+      quest.poi = $scope.poiSelected;
+      /*$http.put(DB_PATH+"quests/" + quest._id, {
+       poi: poi._id
+       }).then(function(resp) {
+       console.log(quest + " associée à " + poi);
+       $scope.getQuestList($scope.stepSelected);
+       }, function(error) {
+       alert(error);
+       console.dir(error);
+       });*/
+    };
+
+    $scope.associateQuestRiddle = function () {
       var quest = $scope.questSelected;
-      var riddle = $scope.riddleSelected;
-      $http.put(DB_PATH+"quests/" + quest._id, {
-        riddle: riddle._id
-      }).then(function(resp) {
-        console.log("riddle associée à quest");
-        $('#faq').modal('hide');
-        $scope.getQuestList($scope.stepSelected);
-      }, function(error) {
-        alert(error);
-        console.dir(error);
-      });
-    }
+      $scope.questSelected.riddleO = $scope.riddleSelected;
+      $scope.questSelected.riddle = $scope.riddleSelected._id;
+      //var riddle = $scope.riddleSelected;
+      /*$http.put(DB_PATH+"quests/" + quest._id, {
+       riddle: riddle._id
+       }).then(function(resp) {
+       console.log("riddle associée à quest");
+       $('#faq').modal('hide');
+       $scope.getQuestList($scope.stepSelected);
+       }, function(error) {
+       alert(error);
+       console.dir(error);
+       });*/
+    };
 
     /** LEFT SIDE **/
-    $scope.setActive = function(step) {
+    $scope.setActive = function (step) {
       $scope.stepSelected = step;
-      $scope.getQuestList(step);
-    }
+      //$scope.getQuestList(step);
+    };
 
-    $scope.EnterPressed = function(keyEvent, lieu) {
+    $scope.EnterPressed = function (keyEvent, lieu) {
 
       if (keyEvent.which === 13) {
         $scope.TreatAdress(lieu);
@@ -393,9 +462,14 @@ angular.module('eldoragoApp')
     }
 
     /** SUBMIT **/
-    $scope.submitCot = function() {
+    $scope.submitCot = function () {
+      CotFactory.setCurrentCot($scope.cotSelected);
+      CotFactory.updateCot();
+      $('#editStep').modal('hide');
+    }; //function() {
+
       // sendBDD
-      console.log('Updating step');
+      /*console.log('Updating step');
       console.log($scope.cotSelected);
       // $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
       $http({
@@ -415,10 +489,10 @@ angular.module('eldoragoApp')
         alert(error.data.message);
       });
 
-      console.log("COT sauvegardée");
-    }
+      console.log("COT sauvegardée");*/
+   // };
 
-    /** BDD **/
+/*    /!** BDD **!/
     $scope.listEnigma = [{
       id: "riddle1",
       name: "Enigme 1",
@@ -456,7 +530,7 @@ angular.module('eldoragoApp')
       name: "Enigme 6",
       desc: "Uh! Uh! Uh!",
       qtype: "Enigme"
-    }];
+    }];*/
 
     //   $scope.listQuests = [{
     //     id: "quete1",
