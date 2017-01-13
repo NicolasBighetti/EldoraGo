@@ -91,8 +91,9 @@ angular.module('eldoragoApp')
 
     $scope.addStep = function(lat, lng) {
       var cot = $scope.cotSelected;
+      var nameStep = "Etape "+randomName();
       var newStep = {
-        name: "Nom step",
+        name: nameStep,
         desc: "test"
       };
 
@@ -265,23 +266,23 @@ angular.module('eldoragoApp')
     }
 
 
-    //Removes a step
-    $scope.RemoveStep = function(id) {
-      $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
-        console.log("deleted");
-
-        //remove
-        var index = $scope.cotSelected.steps.indexOf(id);
-        $scope.cotSelected.steps.splice(index, 1);
-
-        // refresh step
-        $scope.getStepList();
-      }, function(error) {
-        alert(error);
-      });
-      // $scope.stepList.splice(id - 1, 1);
-      // ResetStepsId();
-    }
+    // //Removes a step
+    // $scope.RemoveStep = function(id) {
+    //   $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
+    //     console.log("deleted");
+    //
+    //     //remove
+    //     // var index = $scope.cotSelected.steps.indexOf(id);
+    //     // $scope.cotSelected.steps.splice(index, 1);
+    //
+    //     // refresh step
+    //     $scope.getStepList();
+    //   }, function(error) {
+    //     alert(error);
+    //   });
+    //   // $scope.stepList.splice(id - 1, 1);
+    //   // ResetStepsId();
+    // }
 
 
     /** STEP **/
@@ -303,7 +304,7 @@ angular.module('eldoragoApp')
     $scope.addQuest = function() {
       var step = $scope.stepSelected;
       var newQuest = {
-        name: "Nom quete",
+        name: "Quête "+randomName(),
         desc: $scope.stepSelected.desc
       };
       console.log("newQuest");
@@ -418,80 +419,76 @@ angular.module('eldoragoApp')
       console.log("COT sauvegardée");
     }
 
-    /** BDD **/
-    $scope.listEnigma = [{
-      id: "riddle1",
-      name: "Enigme 1",
-      desc: "4 plus 4 ?",
-      keywords: [],
-      hint: "C'est une addition",
-      answer: "8",
-      qtype: "Enigme"
-    }, {
-      id: "riddle2",
-      name: "Enigme 2",
-      desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
-      keywords: [],
-      hint: "",
-      answer: "Coca-cola",
-      qtype: "Enigme"
-    }, {
-      id: "riddle3",
-      name: "Enigme avec un nom",
-      desc: "Oh! Oh! Oh!",
-      keywords: [],
-      hint: "Tu vas trouver!",
-      answer: "héhéhé",
-      qtype: "Enigme"
-    }, {
-      id: "riddle4",
-      name: "Enigme 4",
-      desc: "Ah! Ah! Ah!",
-      qtype: "Enigme"
-    }, {
-      name: "Enigme 5",
-      desc: "Ih! Ih! Ih!",
-      qtype: "Enigme"
-    }, {
-      name: "Enigme 6",
-      desc: "Uh! Uh! Uh!",
-      qtype: "Enigme"
-    }];
 
-    //   $scope.listQuests = [{
-    //     id: "quete1",
-    //     name: "Quete 1",
-    //     id_riddle: "riddle1",
-    //     desc: "4 plus 4 ?",
-    //     qtype: "Enigme"
-    //   }, {
-    //     id: "quete2",
-    //     id_riddle: "riddle2",
-    //     name: "Quete 2",
-    //     desc: "J'ai 2 pieds, 6 jambes, 8 bras, 2 têtes et un oeil, qui suis-je ?",
-    //     qtype: "Enigme"
-    //   }, {
-    //     id: "quete3",
-    //     id_riddle: "riddle3",
-    //     name: "Quete avec un nom",
-    //     desc: "Oh! Oh! Oh!",
-    //     qtype: "Enigme"
-    //   }
-    //   //, {
-    //   //   id: "quete4",
-    //   //   id_riddle: "riddle4",
-    //   //   name: "Quete 4",
-    //   //   desc: "Ah! Ah! Ah!",
-    //   //   qtype: "Enigme"
-    //   // }, {
-    //   //   name: "Quete 5",
-    //   //   desc: "Ih! Ih! Ih!",
-    //   //   qtype: "Enigme"
-    //   // }, {
-    //   //   name: "Quete 6",
-    //   //   desc: "Uh! Uh! Uh!",
-    //   //   qtype: "Enigme"
-    //   // }
-    // ];
+    /** Random name steps and quests **/
+    var randomName = function() {
+      var nouns = ["ninja", "chair", "pancake", "statue", "unicorn", "rainbows", "laser", "senor", "bunny", "captain", "nibblets", "cupcake", "carrot", "gnomes", "glitter", "potato", "salad", "toejam", "curtains", "beets", "toilet", "exorcism", "stick figures", "mermaid eggs", "sea barnacles", "dragons", "jellybeans", "snakes", "dolls", "bushes", "cookies", "apples", "ice cream", "ukulele", "kazoo", "banjo", "opera singer", "circus", "trampoline", "carousel", "carnival", "locomotive", "hot air balloon", "praying mantis", "animator", "artisan", "artist", "colorist", "inker", "coppersmith", "director", "designer", "flatter", "stylist", "leadman", "limner", "make-up artist", "model", "musician", "penciller", "producer", "scenographer", "set decorator", "silversmith", "teacher", "auto mechanic", "beader", "bobbing"];
+        var i = Math.floor(Math.random() * nouns.length);
+        return nouns[i];
+    }
+
+
+    $scope.RemoveStep = function(id) {
+      // remove
+      var index = $scope.cotSelected.steps.indexOf(id);
+      $scope.cotSelected.steps.splice(index, 1);
+
+      // MAJ COT
+      $http.put(DB_PATH+"cots/"+$scope.cotSelected._id, {steps: $scope.cotSelected.steps}).then(function(resp) {
+      }, function(error) {
+        alert(error);
+        console.dir(error);
+      });
+
+      $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
+        console.log("cot " + id + " delete");
+        var removedStep = resp.data;
+
+
+        // refresh step
+        $scope.getStepList();
+
+
+        // delete en cascade -- quests
+        for (var j; j < removedStep.quests.length; j++) {
+
+          // delete quest
+          $http.delete(DB_PATH+"quests/" + removedStep.quests[i]).then(function(resp) {
+            console.log("quest " + removedStep.quests[i] + " delete");
+            // $scope.getAllQuestList();
+          }, function(error) {
+            alert(error);
+          });
+        }
+
+      }, function(error) {
+        alert(error);
+      });
+    }
+
+    $scope.removeQuest = function(id) {
+      var index = $scope.stepSelected.quests.indexOf(id);
+      $scope.stepSelected.quests.splice(index, 1);
+
+      // MAJ STEP
+      $http.put(DB_PATH+"steps/"+$scope.stepSelected._id, {quests: $scope.stepSelected.quests}).then(function(resp) {
+
+      }, function(error) {
+        alert(error);
+        console.dir(error);
+      });
+
+      // And delete quest
+      $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
+        console.log("quest " + id + " delete");
+        // refresh step
+        $scope.getQuestList($scope.stepSelected);
+
+        // $scope.getAllQuestList();
+      }, function(error) {
+        alert(error);
+      });
+
+    }
 
   });
