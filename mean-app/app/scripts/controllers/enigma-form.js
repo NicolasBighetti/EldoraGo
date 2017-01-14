@@ -1,6 +1,8 @@
 angular.module('eldoragoApp')
-  .controller('EnigmaFormCtrl', function($scope, $location, $timeout, $http) {
+  .controller('EnigmaFormCtrl', function ($scope, $location, $timeout, $http) {
 
+      
+      
     /** Loading **/
     $scope.riddleToCreate = {};
     $scope.createRiddle = function() {
@@ -12,6 +14,14 @@ angular.module('eldoragoApp')
         alert(error);
         console.dir(error);
       });
-    }
+    }//createRiddle()
+
+    $scope.photoToCreate = {};
+    $scope.createPhoto = function()
+    {
+        //Demander à flavian !!!!!
+        var newPhoto;
+        console.log("Défi photo créé  avec name =  " + $scope.photoToCreate.name +" , " + $scope.photoToCreate.target);
+    }//createPhoto()
 
   });
