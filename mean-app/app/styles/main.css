@@ -671,9 +671,39 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   position: relative;
   height: 12px;
   width: 12px;
-  left: 60%;
+
   background-color: #0c0c0c;
 }
+
+
+
+
+.autocompletedemoCustomTemplate .autocomplete-custom-template li {
+  border-bottom: 1px solid #ccc;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  white-space: normal; }
+
+.autocompletedemoCustomTemplate .autocomplete-custom-template li:last-child {
+  border-bottom-width: 0; }
+
+.autocompletedemoCustomTemplate .autocomplete-custom-template .item-title,
+.autocompletedemoCustomTemplate .autocomplete-custom-template .item-metadata {
+  display: block;
+  line-height: 2; }
+
+.autocompletedemoCustomTemplate .autocomplete-custom-template .item-title md-icon {
+  height: 18px;
+  width: 18px; }
+
+.item-metastat{
+  float: right;
+  font-style: italic;
+  font-weight: 100;
+  font-size: 80%;
+}
+
 
 /*******************************/
 /**********End Stat page********/
