@@ -1,3 +1,5 @@
+<div ng-controller="FaqCtrl" ng-init="initFaq()">
+
 <div id="faq" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
 
@@ -7,39 +9,67 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">
           <ul class="nav nav-tabs">
-            <li class="active"><a>Enigmes</a></li>
+            <li ng-click="selectTypeQuest('riddle')" ng-class="{ active: isSelected('riddle')}" ><a>Enigmes</a></li>
+            <li ng-click="selectTypeQuest('photo')" ng-class="{ active: isSelected('photo')}"><a >Défi Photo</a></li>
             <li><a >Objets cachés</a></li>
             <li><a >Orientation</a></li>
           </ul>
         </h4>
       </div>
       <div class="modal-body">
-        <div class="row">
-          <!-- <div class="col-xs-8">{{questSelected._id}}, {{riddleSelected._id}}</div> -->
-          <div class="col-xs-4 col-xs-offset-8">
-            <p class="input-group">
-              <input ng-model="searchQuest" class="form-control" placeholder="Recherche" name="srch-term" type="text" />
-              <div ng-show="search" class="input-group-btn">
-                <a class="btn btn-default btn-social" ng-click="search=''"><i class="text-danger fa fa-times"></i></a>
+        <div ng-show="!themeSelected">
+          <div class="row">
+            <!-- <div ng-repeat="theme in themeList">
+              <div class="col-xs-3">
+                <img ng-click="selectTheme(theme.name)" src="theme.img" class="img-responsive img-circle"/>
               </div>
-            </p>
+            </div> -->
+            <div class="col-xs-3">
+              <img ng-click="selectTheme('Plage')" src="images/beach.svg" class="img-responsive img-circle"/>
+            </div>
+            <div class="col-xs-3">
+              <img ng-click="selectTheme('Ville')" src="images/cityscape.svg" class="img-responsive img-circle"/>
+            </div>
+            <div class="col-xs-3">
+              <img ng-click="selectTheme('Aeroport')" src="images/departure.svg" class="img-responsive img-circle"/>
+            </div>
+            <div class="col-xs-3">
+              <img ng-click="selectTheme('Parc')" src="images/park.svg" class="img-responsive img-circle"/>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-4" id="leftQuest">
-            <ul>
-              <li ng-repeat="riddle in riddleList | filter : searchQuest">
-                <a href="" ng-click="select(riddle)">{{riddle.name}}</a>
-              </li>
-            </ul>
+        <div ng-show="themeSelected">
+          <h4>Thème : {{themeSelected}}
+            <button ng-click="removeTheme()" class="btn btn-default pull-right">Changer de thème</button>
+          </h4>
+          <div class="row">
+            <!-- <div class="col-xs-8">{{questSelected._id}}, {{riddleSelected._id}}</div> -->
+            <div class="col-xs-3 col-xs-offset-9">
+              <p class="input-group">
+                <input ng-model="searchQuest" class="form-control" placeholder="Recherche" name="srch-term" type="text" />
+                <!-- <div ng-show="search" class="input-group-btn">
+                  <a class="btn btn-default btn-social" ng-click="search=''"><i class="text-danger fa fa-times"></i></a>
+                </div> -->
+              </p>
+            </div>
           </div>
-          <div ng-show="riddleSelected" class="col-xs-7">
-            <h5>{{riddleSelected.name}}</h5>
-            <p>{{riddleSelected.desc}}</p>
+          <div class="row">
+            <div class="col-xs-4" id="leftQuest">
+              <ul>
+                <li ng-repeat="riddle in riddleList | filter : searchQuest">
+                <!-- <li ng-repeat="riddle in riddleList | filter : searchQuest : riddle.theme == themeSelected"> -->
+                  <a href="" ng-click="select(riddle)">{{riddle.name}}</a>
+                </li>
+              </ul>
+            </div>
+            <div ng-show="riddleSelected" class="col-xs-7">
+              <h5>{{riddleSelected.name}}</h5>
+              <p>{{riddleSelected.desc}}</p>
 
-            <p class="pull-right">Réponse : {{riddleSelected.answer}} <br/> <small>Indice : {{riddleSelected.hint}}</small></p>
+              <p class="pull-right">Réponse : {{riddleSelected.answer}} <br/> <small>Indice : {{riddleSelected.hint}}</small></p>
+            </div>
+
           </div>
-
         </div>
 
       </div>
@@ -51,4 +81,5 @@
     </div>
 
   </div>
+</div>
 </div>

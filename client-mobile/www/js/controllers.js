@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['starter.cot-datas'])
+angular.module('starter.controllers', ['starter.cot-datas', 'starter.notifications'])
 
 .controller('DashCtrl', function($scope) {})
 
@@ -28,7 +28,6 @@ $scope.remove = function(chat) {
 
 
   $scope.playSolo = function(name) {
-    console.log("Soloing")
     $scope.playerName = name;
     var playerAnswer = CotData.addPlayer($http, $scope.playerName);
     playerAnswer.then(function(result) {
@@ -41,14 +40,11 @@ $scope.remove = function(chat) {
     var teamPromise = CotData.getTeams($http);
     teamPromise.then(function(result) {
       $scope.teamList = result.data;
-      console.log("List team");
-      console.log($scope.teamList);
+
     })
   }
 
   $scope.join = function(name, team) {
-    console.log("init player " + name);
-    console.log("init team " + team);
     if (name == "")
       $scope.playerName = 'Mamadou' + Math.floor((Math.random() * 1000) + 1);
     else
@@ -62,7 +58,6 @@ $scope.remove = function(chat) {
       var teamAnswer = CotData.joinTeam($http, team.trim());
       teamAnswer.then(function(result) {
         $scope.teamData = result.data;
-        console.log(result.data);
         CotData.setIdTeam($scope.teamData._id);
       })
 
@@ -73,32 +68,22 @@ $scope.remove = function(chat) {
 })
 
 .controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $ionicPopup, $timeout, CotData) {
-    $scope.stepsid = [];
-    $scope.questsid = [];
-    $scope.riddlesid = [];
-    $scope.riddlesList = [];
-
-
-
-  $scope.dispQuest = function() {
-    console.log($scope.riddlesList);
-  }
+  $scope.stepsid = [];
+  $scope.questsid = [];
+  $scope.riddlesid = [];
+  $scope.riddlesList = [];
 
   $scope.getSteps = function() {
     var stepPromise = [];
     for (var s in CotData.getState().get("cot").steps) {
       var curstep = CotData.getState().get("cot").steps[s];
                 //$scope.stepsid.push(result.data.steps[s]);
-                console.dir(s + " step id " + curstep);
                 stepPromise.push(CotData.getStepsFromID($http, curstep));
               }
               $q.all(stepPromise).then((values) => {
-                console.log(values);
-                console.log('got steps');
 
                 CotData.getState().get("cot").stepsO = [];
                 for (var q in values) {
-                  console.log("YOLO");
 
                   CotData.getState().get("cot").stepsO.push(values[q].data);
                   $scope.questsid.push(values[q].data);
@@ -108,21 +93,16 @@ $scope.remove = function(chat) {
             }
 
             $scope.getQuests = function(q) {
-              console.log("YOLO22");
 
               var stepObj = CotData.getState().get("cot").stepsO[q];
               var questPromise = [];
-              console.log(stepObj.quests);
               for (var s in stepObj.quests) {
                 //$scope.stepsid.push(result.data.steps[s]);
-                console.dir(stepObj.name + " quest id " + stepObj.quests[s]);
                 questPromise.push(CotData.getQuestFromID($http, stepObj.quests[s]));
               }
               $q.all(questPromise).then((values) => {
                 CotData.getState().get("cot").stepsO[q].questsO = [];
-                console.log('Step ' + values);
                 for (var v in values) {
-                  console.log('Values V : ' + values[v].data.name);
                   CotData.getState().get("cot").stepsO[q].questsO.push(values[v].data);
                   $scope.getRiddle(q, v);
                 }
@@ -136,8 +116,6 @@ $scope.remove = function(chat) {
               var riddlePromise = CotData.getRiddleFromID($http, questObj.riddle);
               riddlePromise.then(function(result) {
                 CotData.getState().get("cot").stepsO[q].questsO[v].riddleO = result.data;
-                console.log("Result : ")
-                console.dir(CotData.getState().get("cot"));
                 $scope.cotData = CotData.getState().get("cot");
 
               })
@@ -147,74 +125,73 @@ $scope.remove = function(chat) {
         $scope.showOptions = function(riddle) {
             // Show the action sheet
             var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    {
-                        text: 'Accéder à l\'indice'
-                    },
-                    {
-                        text: 'Demander de l\'aide'
-                    },
-                    {
-                        text: 'Se désinscrire'
-                    }
-                ],
+              buttons: [
+              {
+                text: 'Accéder à l\'indice'
+              },
+              {
+                text: 'Demander de l\'aide'
+              },
+              {
+                text: 'Se désinscrire'
+              }
+              ],
 
                 // destructiveText: 'Delete',
                 titleText: 'Options',
                 cancelText: 'Cancel',
                 cancel: function() {
                     // add cancel code..
-                },
-                buttonClicked: function(index) {
-                  if (index == 0) {
-                    $scope.showHint("Indice", riddle.hint);
-                  } else if (index == 1) {
-                    $scope.showAlertHelp("Demande d'aide","Votre demande a été envoyée à vos équipiés")
-                  } else if (index == 2) {
-                    $scope.assigned = false;
-                  }
+                  },
+                  buttonClicked: function(index) {
+                    if (index == 0) {
+                      $scope.showHint("Indice", riddle.hint);
+                    } else if (index == 1) {
+                      $scope.showAlertHelp("Demande d'aide","Votre demande a été envoyée à vos équipiés")
+                    } else if (index == 2) {
+                      $scope.assigned = false;
+                    }
 
                     return true;
                   }
                 });
           };
 
-        /** Pop Up alert for Hint **/
+          /** Pop Up alert for Hint **/
         // An alert dialog
         $scope.showHint = function(myTitle, myTemplate) {
-            var alertPopup = $ionicPopup.alert({
-                title: myTitle,
-                template: myTemplate
-            });
+          var alertPopup = $ionicPopup.alert({
+            title: myTitle,
+            template: myTemplate
+          });
 
-            alertPopup.then(function(res) {
+          alertPopup.then(function(res) {
               //
             });
         };
 
         $scope.showAlertHelp = function(myTitle, myTemplate) {
-            var alertPopup = $ionicPopup.alert({
-                title: myTitle,
-                template: myTemplate
-            });
+          var alertPopup = $ionicPopup.alert({
+            title: myTitle,
+            template: myTemplate
+          });
 
-            alertPopup.then(function(res) {
+          alertPopup.then(function(res) {
                 // quest.isHelp = true;
-            });
+              });
         };
 
-    })
-    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-        $scope.chat = Chats.get($stateParams.chatId);
-    })
+      })
+.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+  $scope.chat = Chats.get($stateParams.chatId);
+})
 .controller('HomeCtrl', function($scope) {
-  console.log('banane');
   $scope.showTabBar = false;
 })
 
-.controller('HistoriqueCtrl', function($http, $scope, Historique, $ionicScrollDelegate, CotData) {
+.controller('HistoriqueCtrl', function($http, $scope, Historique, Notifications, $ionicScrollDelegate, CotData) {
 
-
+    Notifications.startNotifications();
   $scope.addEvent = function() {
 
     Historique.postEvent($http, "poi", new Date().getDate(), "12/12/2017", CotData);
@@ -223,6 +200,7 @@ $scope.remove = function(chat) {
   }
 
   $scope.getEvents = function() {
+    Notifications.pushNotification("Je suis une alerte", Notifications.getKinds().warn);
     $scope.events = [{}];
     var eventsPromise = Historique.getEvents($http);
     eventsPromise.then(function(result) {
@@ -257,44 +235,61 @@ $scope.remove = function(chat) {
   $ionicScrollDelegate.scrollBottom();
 })
 
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicLoading) {
+.controller('MapCtrl', function($scope, $state, $q, $http, CotData, $cordovaGeolocation, $ionicLoading, Notifications) {
   var markers = [];
   var map;
 
+  
+
   function retrieveMarkers(){
-    for(var i = 0; i < 10; i++)
-      addMarker(new google.maps.LatLng(getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3)));
 
-    showMarkers();
-  }
 
-  function addMarker(latLng){
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-      icon: pinSymbol("#FFF")
-    });
+    var playerPromise = [];
+    var teamPromise = CotData.getTeamByID($http, CotData.getState().get("idTeam"));
+    teamPromise.then(function(result){
 
-    markers.push(marker);
-  }
+      for(var id in result.data.players){
+        playerPromise.push(CotData.getPlayerNameByID($http, result.data.players[id]));
+      }
 
-  $scope.refreshMarker = function(){
-    console.log("refreshing...");
-    randomizePosition();
-    clearMarkers();
-    showMarkers();
-    setInterval(this.refreshMarker, 1000);
-  }
+      $q.all(playerPromise).then((values) => {
+        for(var v in values)
+        {
+          addMarker(new google.maps.LatLng(values[v].data.coords.latitude, values[v].data.coords.longitude));
+        }
 
-  function randomizePosition(){
-    var latLng;
-    for(var m in markers){
-      console.log("Old position : "+ markers[m].position );
-      markers[m].position = new google.maps.LatLng(getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3));
-      console.log("New position : "+ markers[m].position );
+      })
 
+    })
+
+      showMarkers();
     }
-  }
+
+    function addMarker(latLng){
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: pinSymbol("#FFF")
+      });
+
+      markers.push(marker);
+    }
+
+    $scope.refreshMarker = function(){
+      deleteMarkers();
+      retrieveMarkers();
+      clearMarkers();
+      showMarkers();
+      setInterval(this.refreshMarker, 1000);
+    }
+
+    function randomizePosition(){
+      var latLng;
+      for(var m in markers){
+        markers[m].position = new google.maps.LatLng(getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3));
+
+      }
+    }
 
   // Sets the map on all markers in the array.
   function setMapOnAll(map) {
@@ -350,7 +345,6 @@ $scope.show = function($ionicLoading) {
 
 $scope.hide = function($ionicLoading){
   $ionicLoading.hide().then(function(){
-   console.log("The loading indicator is now hidden");
 
  })
 }
@@ -380,12 +374,17 @@ function getRandomInRange(from, to, fixed) {
   };
 })
 
-.controller("HomeCtrl", function($scope, $http, $rootScope, $cordovaGeolocation, $ionicLoading, CotData) {
+.controller("HomeCtrl", function($scope, $http, $rootScope, $cordovaGeolocation, $ionicLoading, CotData, Notifications) {
   $scope.view = "templates/tabs.html";
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
   CotData.setCot($scope.choice);
 
+  Notifications.startNotifications();
+  Notifications.pushNotification("Je suis du JQuery");
+  Notifications.pushNotification("Je suis du JQuery 2");
+  Notifications.pushNotification("Je suis du JQuery 3");
+  Notifications.pushNotification("Je suis du JQuery 4");
 
   $scope.init = function() {
     $scope.show($ionicLoading);
@@ -394,20 +393,6 @@ function getRandomInRange(from, to, fixed) {
       mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       var map = new google.maps.Map(document.getElementById("map-preview"), mapOptions);
-                /*
-                for(var steps in $scope.choice.steps)
-                {
-                  console.log('step');
-                  console.log(steps);
-                  for(var quests in CotData.step($http,$scope.choice.steps[])){
-                    for(var poi in CotData.quest($http,steps[quests].)){
-                      for(var data in CotData.poi($http,poi)){
-
-                      }
-
-                    }
-                  }
-                }*/
                 var marker = new google.maps.Marker({
                   position: mapOptions.center,
                   map: map,
@@ -429,8 +414,7 @@ function getRandomInRange(from, to, fixed) {
 
   $scope.hide = function($ionicLoading) {
     $ionicLoading.hide().then(function() {
-      console.log("The loading indicator is now hidden");
-
+      
     })
   }
 
@@ -450,7 +434,6 @@ function getRandomInRange(from, to, fixed) {
   var cotPromise = CotData.cots($http);
   cotPromise.then(function(result) {
     $scope.cot = result;
-    console.log($scope.cot);
   });
 
 

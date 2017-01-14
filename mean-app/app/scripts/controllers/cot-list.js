@@ -49,21 +49,22 @@ angular.module('eldoragoApp')
 
         // delete en cascade -- steps
         for (var i; i < removedCot.steps.length; i++) {
-          $http.delete(DB_PATH+"steps/" + removedCot.steps[i]).then(function(resp) {
-            console.log("step " + id + " delete");
-            var removedStep = resp.data;
-
-            // delete en cascade -- quests
-            for (var j; j < removedStep.quests.length; j++) {
-              $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
-                console.log("quest " + id + " delete");
-              }, function(error) {
-                alert(error);
-              });
-            }
-          }, function(error) {
-            alert(error);
-          });
+          $scope.removeStep(removedCot.steps[i]);
+          // $http.delete(DB_PATH+"steps/" + removedCot.steps[i]).then(function(resp) {
+          //   console.log("step " + id + " delete");
+          //   var removedStep = resp.data;
+          //
+          //   // delete en cascade -- quests
+          //   for (var j; j < removedStep.quests.length; j++) {
+          //     $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
+          //       console.log("quest " + id + " delete");
+          //     }, function(error) {
+          //       alert(error);
+          //     });
+          //   }
+          // }, function(error) {
+          //   alert(error);
+          // });
         }
 
         $scope.getCotList();
@@ -75,7 +76,12 @@ angular.module('eldoragoApp')
     $scope.removeStep = function(id) {
       $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
         console.log("cot " + id + " delete");
-        $scope.getAllStepList();
+        var removedStep = resp.data;
+        // delete en cascade -- quests
+          for (var j; j < removedStep.quests.length; j++) {
+            $scope.removeQuest(removedStep.quests[i]);
+          }
+
       }, function(error) {
         alert(error);
       });
@@ -85,7 +91,7 @@ angular.module('eldoragoApp')
       $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
         console.log("quest " + id + " delete");
 
-        $scope.getAllQuestList();
+        // $scope.getAllQuestList();
       }, function(error) {
         alert(error);
       });
