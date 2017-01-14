@@ -27,6 +27,9 @@ var CotSchema = new Schema({
   date_end:{
     type: Date
   },
+  limited_time:{
+    type: Number
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

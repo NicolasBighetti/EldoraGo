@@ -29,6 +29,9 @@ var RiddleSchema = new Schema({
     default: [],
     trim: true
   },
+  theme: {
+    type: [String]
+  },
   hint: {
     type: String,
     default: '',

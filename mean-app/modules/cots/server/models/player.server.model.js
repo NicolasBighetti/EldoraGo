@@ -24,7 +24,17 @@ var PlayerSchema = new Schema({
     required: 'Please fill User name',
     trim: true
   },
+  coords: {
+    longitude:{
+      type: Number,
+      default: 0
 
+    },
+    latitude:{
+      type: Number,
+      default: 0
+    }
+  },
  /* user: {
     type: Schema.ObjectId,
     ref: 'User'

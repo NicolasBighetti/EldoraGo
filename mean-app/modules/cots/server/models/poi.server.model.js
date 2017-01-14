@@ -28,14 +28,38 @@ var PoiSchema = new Schema({
     longitude:{
       type: Number,
       default: 0,
-      required: 'Please fill Poi longitude',
+      required: 'Please fill Poi longitude'
     },
     latitude:{
       type: Number,
       default: 0,
-      required: 'Please fill Poi latitude',
+      required: 'Please fill Poi latitude'
     }
   },
+  icone:{
+    type: String,
+    default: './images/default-marker.jpg'
+  },
+  fillcolor:{
+    type: String,
+    default: '009900'
+  },
+  strokecolor:{
+    type: String,
+    default: '000000'
+  },
+  labelcolor:{
+    type: String,
+    default: '000000'
+  },
+  label:{
+    type: String,
+    default: ''
+  },
+  typep:{
+    type: String
+  },
+
   image:{
     type: String,
     default: './images/default.jpg'
