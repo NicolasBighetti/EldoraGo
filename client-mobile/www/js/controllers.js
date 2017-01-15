@@ -191,7 +191,6 @@ $scope.remove = function(chat) {
 
 .controller('HistoriqueCtrl', function($http, $scope, Historique, Notifications, $ionicScrollDelegate, CotData) {
 
-    Notifications.startNotifications();
   $scope.addEvent = function() {
 
     Historique.postEvent($http, "poi", new Date().getDate(), "12/12/2017", CotData);
@@ -200,7 +199,6 @@ $scope.remove = function(chat) {
   }
 
   $scope.getEvents = function() {
-    Notifications.pushNotification("Je suis une alerte", Notifications.getKinds().warn);
     $scope.events = [{}];
     var eventsPromise = Historique.getEvents($http);
     eventsPromise.then(function(result) {
@@ -379,12 +377,6 @@ function getRandomInRange(from, to, fixed) {
   $scope.showtheview = false;
   $scope.choice = $rootScope.choice;
   CotData.setCot($scope.choice);
-
-  Notifications.startNotifications();
-  Notifications.pushNotification("Je suis du JQuery");
-  Notifications.pushNotification("Je suis du JQuery 2");
-  Notifications.pushNotification("Je suis du JQuery 3");
-  Notifications.pushNotification("Je suis du JQuery 4");
 
   $scope.init = function() {
     $scope.show($ionicLoading);

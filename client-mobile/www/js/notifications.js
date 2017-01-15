@@ -4,7 +4,9 @@ angular.module('starter.notifications', [])
 
 	var notificationsList = [];
 
-	var notificationsRunning;
+	var notificationsRunning = false;
+
+	var pushIntervalID;
 
 	var notificationKind = {
 		success : "success",
@@ -14,23 +16,40 @@ angular.module('starter.notifications', [])
 	}
 
 	function notificationPush(){
-		if(notificationsList.length > 0){
-			console.log("notifyyyyyy");
-			console.log(notificationsList);
-			setInterval(notificationPush, 5000);
+
+		if(notificationsList.length > 0 && !notificationsRunning){
+
+			notificationsRunning = true;
+			pushIntervalID = setInterval(notificationPush, 5000);
+		}
+		if(notificationsRunning && notificationsList.length <= 0){
+
+			notificationsRunning = false;
+			clearInterval(pushIntervalID);
+		}
+		if(notificationsRunning){
 			var notif = notificationsList.shift();
 			$.notify(notif.label, notif.kind, { position:"top center" });
 		}
-		else
-			setInterval(notificationPush, 5000);
 	}
+
 
 	return {
 		pushNotification: function(label){
-			notificationsList.push({
-				label: label,
-				kind: "info"
-			})
+
+			if(notificationsList.length <= 0 && !notificationsRunning){
+
+				notificationsList.push({
+					label: label,
+					kind: "info"
+				})
+				notificationPush();
+			}
+			else
+				notificationsList.push({
+					label: label,
+					kind: "info"
+				})
 		},
 
 		pushNotificationKind: function(label, kind){
@@ -41,14 +60,7 @@ angular.module('starter.notifications', [])
 		},
 		getKinds: function(){
 			return notificationKind;
-		},
-		startNotifications: function(){
-			notificationsRunning = true;
-			notificationPush();
-		},
-		stopNotifications: function(){
-			notificationsRunning = false;
 		}
 
-}
+	}
 });
