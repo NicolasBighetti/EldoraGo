@@ -39,8 +39,6 @@ angular.module('starter.historique', ['starter.cot-datas'])
 				url: 'https://eldorago.herokuapp.com/api/timelines',				
 			}
 			return $http(req).then(function(result){
-				console.log("result get event");
-				console.log(result);
 				return result;
 			})
 		},
@@ -55,14 +53,10 @@ angular.module('starter.historique', ['starter.cot-datas'])
 				}
 			}
 
-				console.log(this.getRandomKeyWord());
-				console.log(this.getTodayDate());
-				console.log(CotData.getState().get("idJoueur"));
+
 
 			return $http(req).then(function(result){
-				console.log("Result post event");
 
-				console.log(result);
 			})
 		},
 		getTodayDate: function(){
