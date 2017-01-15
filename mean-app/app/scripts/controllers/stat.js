@@ -45,11 +45,15 @@ angular.module('eldoragoApp')
           closeClick: function () {
             this.show = false;
           }
-          /*options: {
-            //icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-           }*/ // define when map is ready
         }
       };
+
+      putMarkers();
+
+    };
+
+
+    function putMarkers(){
 
       $http.get(DB_PATH+"pois").then(function(resp) {
 
@@ -65,26 +69,24 @@ angular.module('eldoragoApp')
           $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
           if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef') {
             $scope.markerList[i].icon = $scope.markerList[i].icone;
-            $scope.markerList[i].label = $scope.markerList[i].icone;
+            //$scope.markerList[i].label = $scope.markerList[i].icone;
           }
-            //$scope.markerList[i].type = 'POI';
+
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
-          //Adding name to listName
 
-          //console.log($scope.map.markers);
 
           /*if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef'){
-            $scope.markerList[i].icone = "http://www.googlemapsmarkers.com/v1/ecea24/";
-            $scope.markerList[i].labelcolor = "12";
+           $scope.markerList[i].icone = "http://www.googlemapsmarkers.com/v1/ecea24/";
+           $scope.markerList[i].labelcolor = "12";
 
-            /*$http.put(DB_PATH+"pois/"+$scope.markerList[i].id, $scope.markerList[i]).then(function(resp) {
-              console.log(resp);
+           /*$http.put(DB_PATH+"pois/"+$scope.markerList[i].id, $scope.markerList[i]).then(function(resp) {
+           console.log(resp);
 
 
-            }, function(error) {
-              alert(error);
-            });*/
+           }, function(error) {
+           alert(error);
+           });*/
 
           //}
 
@@ -102,15 +104,12 @@ angular.module('eldoragoApp')
         }
 
         //Getting the cot
-
         $http.get(DB_PATH+"cots").then(function(resp) {
 
           $scope.cots = resp.data;
 
           // foreach marker on markerList BDD
           for (var i = 0; i < $scope.cots.length; i++) {
-
-            //$scope.markerList[i].type = 'COT';
 
             var o = {
               id: $scope.markerList[i].id,
@@ -123,11 +122,9 @@ angular.module('eldoragoApp')
 
           }
 
-
-          //console.log($scope.listCOTName);
         })
 
-    });
+      });
 
     };
 
@@ -184,6 +181,7 @@ angular.module('eldoragoApp')
         $scope.showGraph = false;
         $scope.PoiDetails = false;
         $scope.CotDetails = false;
+        putMarkers();
         return;
       }
 
@@ -454,9 +452,5 @@ angular.module('eldoragoApp')
       });
 
     }
-
-
-
-
 
   });
