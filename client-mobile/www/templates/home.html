@@ -1,17 +1,23 @@
 <ion-view title="select" ng-controller="HomeCtrl">
 
-    
-    <div class="bar bar-header bar-light">
-        <h1 class="title">Sélectionnez une quête</h1>
-    </div>
+    <ion-header-bar align-title="center">
+        <!-- <div class="bar bar-header bar-light"> -->
+        <h1 class="title">Sélectionnez une Chasse aux Trésors</h1>
+        <!-- </div> -->
+    </ion-header-bar>
 
-    <ion-content class="padding centered has-header" >
-
+    <ion-content class="padding centered has-header">
+        <div class="list list-inset">
+            <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input ng-model="searchCot.name" type="text" placeholder="Rechercher une COT">
+        </label>
+        </div>
         <!-- We list the available CoT -->
         <ion-list>
-            <ion-item ng-repeat="item in cot">
-
-                <a ng-click="setChoice(item._id)" ng-href="#/select" >{{item.name}}</a>
+            <ion-item ng-repeat="item in cot | filter : searchCot" >
+                <a ng-click="setChoice(item._id)" ng-href="#/select">{{item.name}}</a>
+                <div class="pull-right sub-info">{{item.time_avg}} min(s)</div>
             </ion-item>
         </ion-list>
 

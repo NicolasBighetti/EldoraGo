@@ -15,11 +15,19 @@ angular.module('eldoragoApp')
       $scope.cotSelected = CotFactory.getCurrentCot();
       CotFactory.setCurrentCot(null);
 
+      $scope.isFit = false;
+
       // si on vient de la page cot-list
+      // edition
       if ($scope.cotSelected != null) {
         $scope.getStepList();
+
+        // on centre sur les markers
+        $scope.isFit = true;
+
       }
     }
+
 
     /** Show **/
     $scope.isStart = true;
