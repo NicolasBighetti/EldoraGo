@@ -29,10 +29,11 @@ angular.module('starter.notifications', [])
 		}
 		if(notificationsRunning){
 			var notif = notificationsList.shift();
-			$.notify(notif.label, notif.kind, { position:"top center" });
+			$.notify(notif.label, { position:"top center",
+									className: notif.kind
+									});
 		}
 	}
-
 
 	return {
 		pushNotification: function(label){
