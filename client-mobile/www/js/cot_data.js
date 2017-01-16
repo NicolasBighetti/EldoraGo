@@ -20,6 +20,15 @@ angular.module('starter.cot-datas', [])
       setStartTime: function(){
         return state.set("startTime", moment());
     },
+    getElapsedTime: function(){
+      var now = moment();
+      var then = moment(state.get("startTime"));
+
+      var ms = moment(now,"DD/MM/YYYY HH:mm:ss").diff(moment(then,"DD/MM/YYYY HH:mm:ss"));
+      var d = moment.duration(ms);
+      var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+      return s
+    },
     setIdTeam: function(idTeam){
       return state.set("idTeam", idTeam);
     },
