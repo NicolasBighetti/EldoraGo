@@ -1,6 +1,6 @@
 <ion-view title="select" ng-controller="HomeCtrl">
 
-    
+
     <div class="bar bar-header bar-light">
         <h1 class="title">Sélectionnez une quête</h1>
     </div>
@@ -10,8 +10,7 @@
         <!-- We list the available CoT -->
         <ion-list>
             <ion-item ng-repeat="item in cot">
-
-                <a ng-click="setChoice(item._id)" ng-href="#/select" >{{item.name}}</a>
+                <a ng-click="setChoice(item._id)" ng-href="#/select" >{{item.name}}</a> <div class="pull-right sub-info">{{item.time_avg}} min(s)</div>
             </ion-item>
         </ion-list>
 
