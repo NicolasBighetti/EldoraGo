@@ -1,9 +1,16 @@
 <ion-view title="enigmeview" ng-controller="EnigmeCtrl" ng-init="getSteps()">
+  <ion-header-bar>
+    <!-- <div class="bar bar-header"> -->
+      <h1 class="title">{{cotData.name}}</h1>
+    <!-- </div> -->
+  </ion-header-bar>
     <ion-content>
-        <div class="bar bar-header">
-            <h1 class="title">{{cotData.name}}</h1>
+      <div class="card">
+        <div class="item item-text-wrap">
+          {{cotData.desc}}
         </div>
-        <h4><small>{{cotData.desc}}</small></h4>
+      </div>
+        <!-- <h4><small>{{cotData.desc}}</small></h4> -->
 
         <div class="list" name="step" ng-repeat="st in cotData.stepsO">
             <a href="" data-toggle="collapse" data-target="#{{st._id}}" class="item">

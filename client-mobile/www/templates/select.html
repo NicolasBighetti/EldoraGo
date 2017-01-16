@@ -1,18 +1,19 @@
 <ion-view title="select" ng-controller="HomeCtrl" ng-init="init()">
+  <ion-header-bar align-title="center">
+
+  <!-- <div class="bar bar-header bar-light"> -->
+      <h1 class="title">{{choice.name}}</h1>
+  <!-- </div> -->
+</ion-header-bar>
     <ion-content class="padding centered" scroll="false">
 
-        <div class="treasure-hunt-header">
-            <div class="treasure-hunt-title">{{choice.name}}</div>
-            <!--<div class="sub-info">durée estimée : {{choice.time_avg}}</div>
-        </div>
+        <!-- <div class="treasure-hunt-header"> -->
+            <!-- <div class="treasure-hunt-title">{{choice.name}}</div> -->
+            <div class="justified">{{choice.desc}}</div>
 
-        <div class="justified">{{choice.desc}}</div>
+            <div class="sub-info">durée estimée : {{choice.time_avg}} min(s)</div>
 
-        
-
-    
--->
-        </div>
+        <!-- </div> -->
         <div id="map-preview" data-tap-disabled="true" style="width: 100%;
         height: 100%;"></div>
     </ion-content>
