@@ -27,6 +27,7 @@
                             </div>
                             <div class="col col-10">
                               <i ng-show="quest.isHelp" class="icon ion-alert assertive"></i>
+                              <i ng-show="quest.isFinish" class="icon ion-checkmark balanced"></i>
                             </div>
                             <div class="col col-10">
                                 <ion-checkbox ng-model="quest.assigned"></ion-checkbox>
@@ -56,12 +57,34 @@
                             </div>
                             <div ng-show="quest.assigned" class="row">
                                 <div class="col">
-                                    <div class="list">
-                                        <label class="item item-input">
-                                      <input type="text" placeholder="{{quest.riddleO.answer}}">
-                                    </label>
+                                  <div class="list">
+                                      <div ng-show="!quest.isFinish">
+                                        <div class="item item-input-inset">
+                                          <label class="item-input-wrapper">
+                                            <input type="text" ng-model="quest.tryAnswer" placeholder="{{quest.riddleO.answer}}">
+                                          </label>
+                                          <button ng-click="checkAnswer(quest)" class="button button-positive button-small">
+                                            Envoyer
+                                          </button>
+                                          <i ng-show="quest.isFinish" class="icon ion-checkmark balanced"></i>
+
+                                      </div>
+                                      <button ng-click="showOptions(quest, quest.riddleO)" class="button button-full button-stable">Options</button>
+                                      </div>
+
+                                      <div ng-show="quest.isFinish">
+                                        <div class="item item-input-inset">
+                                          <label class="item-input-wrapper">
+                                            <input type="text" placeholder="{{quest.riddleO.answer}}" disabled/>
+                                          </label>
+                                          <i ng-show="quest.isFinish" class="icon ion-checkmark balanced"></i>
+                                        </div>
+                                      </div>
+
+                                      <!-- <label class="item item-input">
+                                        <input type="text" placeholder="{{quest.riddleO.answer}}">
+                                      </label> -->
                                     </div>
-                                    <button ng-click="showOptions(quest, quest.riddleO)" class="button button-full button-stable">Options</button>
                                 </div>
                             </div>
                         </div>

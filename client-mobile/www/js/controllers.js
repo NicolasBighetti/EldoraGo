@@ -121,6 +121,15 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
             })
         }
 
+        $scope.checkAnswer = function(quest) {
+          if (quest.riddleO.answer == quest.tryAnswer) {
+            console.log("quest.answer = "+quest.riddleO.answer);
+            console.log("quest.tryAnswer = "+quest.tryAnswer);
+            quest.isFinish = true;
+          }
+
+        }
+
         // Triggered on a button click, or some other target
         $scope.showOptions = function(quest, riddle) {
             // Show the action sheet
