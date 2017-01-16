@@ -17,6 +17,9 @@ angular.module('starter.cot-datas', [])
     setIdJoueur: function(idJoueur){
       return state.set("idJoueur", idJoueur);
     },
+      setStartTime: function(){
+        return state.set("startTime", moment());
+    },
     setIdTeam: function(idTeam){
       return state.set("idTeam", idTeam);
     },
