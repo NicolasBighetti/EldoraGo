@@ -5,16 +5,16 @@
       Voir la fiche descriptive de {{poiSelected.name}}
     </div>
     <div ng-show="!isQuest">
-      Voir la liste des Quêtes de {{stepSelected.name}}
+      Voir la liste des quêtes de {{cotSelected.stepsO[cotSelected.step_sel].name}}
     </div>
   </div>
   <br/>
 </div>
 <div ng-show="isQuest">
-  <div ng-show="stepSelected!=undefined">
+  <div ng-show="cotSelected.step_sel!=undefined">
 
-    <h5>Quêtes de l'étape {{cotSelected.stepsO[stepSelected].name}}</h5>
-    <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[stepSelected].questsO | orderBy:'_id'">
+    <h5>Quêtes de l'étape {{cotSelected.stepsO[cotSelected.step_sel].name}}</h5>
+    <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[cotSelected.step_sel].questsO | orderBy:'_id'">
       <!-- <span> -->
       <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
         {{quest.name}}
@@ -84,7 +84,7 @@
         <div class="row">
           <div class="col-xs-7">
             <div class="btn btn-default" data-toggle="popover" title="{{quest.name}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
-            <div ng-click="removeQuest(stepSelected,$index)" class="btn btn-danger"><i class="fa fa-trash"></i></div>
+            <div ng-click="removeQuest(cotSelected.step_sel,$index)" class="btn btn-danger"><i class="fa fa-trash"></i></div>
           </div>
           <div class="col-xs-5">
             <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest($index)" /> Optionnelle
@@ -98,31 +98,7 @@
 
 <div ng-show="!isQuest">
 
-  <div ng-show="poiSelected==undefined">
-    <h5>Veuillez sélectionner un point d'interêt sur la carte</h5>
-  </div>
 
-  <!-- Partie sur les quêtes -->
-  <div id="cot-step-questlist">
-    <!-- Liste des quêtes -->
-    <div class="cot-step-quest">
-      <!-- Un exemple d'une quête -->
-      <div class="row">
-        <div class="col-xs-6">
-          <p>{{poiSelected.name}}</p>
-          <!-- <p>Monument : La sculpture de Louis XIV</p> -->
-        </div>
-        <div class="col-xs-6">
-          <!-- <img src="../images/louis_xiv.jpg" class="img-responsive" alt="Cinque Terre"> -->
-          <img src="{{poiSelected.image}}" class="img-rounded img-responsive">
-        </div>
-        <div class="col-xs-12">
-          <p>{{poiSelected.desc}}</p>
-          <!-- <p>Cette statue équestre de Louis XIV est une statue équestre en bronze de Louis XIV située sur la place d'Armes devant le château de Versailles. Jusqu'en 2008-2009, elle se trouvait dans la cour d'Honneur.</p> -->
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>

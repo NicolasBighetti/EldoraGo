@@ -718,7 +718,7 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   display: block;
   line-height: 2; }
 
-.autocompletedemoCustomTemplate .autocomplete-custom-template .item-title md-icon {
+.autocompletedemoCustomTemplate .autocomplete-custom-template .item-title .md-icon {
   height: 18px;
   width: 18px; }
 
@@ -753,4 +753,18 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
 .label-default[href]:hover,
 .label-default[href]:focus {
   background-color: #16A085;
+}
+
+/* Info poi */
+.infopoi{
+  width: 15vw;
+  height: auto;
+}
+
+.goat{
+  width: 10vw;
+  height: auto;
+  float: right;
+  margin: 0 0 10px 10px;
+
 }

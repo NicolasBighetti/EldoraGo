@@ -38,6 +38,7 @@ angular
     ['uiGmapGoogleMapApiProvider', function (GoogleMapApiProviders) {
       GoogleMapApiProviders.configure({
         //china: true
+        libraries: 'weather,geometry,visualization'
       });
     }]
   )

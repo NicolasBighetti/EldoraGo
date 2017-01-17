@@ -1,8 +1,7 @@
 <!-- STEPS -->
 LES ÉTAPES
 <ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
-    <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item" data-toggle="collapse" data-target="#list-{{$index}}">
-   <!-- <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item">-->
+    <li ng-class="{active : cotSelected.step_sel === $index}" ng-click="setActive($index)" class="list-group-item" data-toggle="collapse" data-target="#list-{{$index}}">
         <span editable-text="step.name" e-form="stepname">  {{ step.name || "empty" }}</span>
         <span class="label label-default pull-right" ng-click="stepname.$show()" ng-hide="stepname.$visible">
             <i class="fa fa-pencil-square-o"></i>
