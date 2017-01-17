@@ -4,26 +4,35 @@ angular.module('eldoragoApp')
   .controller('FaqCtrl', function ($scope) {
 
     $scope.initFaq = function() {
-      $scope.typeQuestSelected = 'riddle';
+      $scope.typeQuestSelected = {};
+      $scope.themeSelected = {};
+      $scope.typeQuestSelected.rtype = 'riddle';
     }
 
     /** Boolean **/
     $scope.isSelected = function(type) {
-      return $scope.typeQuestSelected === type;
+      return $scope.typeQuestSelected.rtype === type;
     };
 
     /** Setter **/
     $scope.selectTheme = function(theme) {
-      $scope.themeSelected = theme;
+      $scope.themeSelected.theme = theme;
     }
 
     $scope.selectTypeQuest = function(type) {
-      $scope.typeQuestSelected = type;
+      $scope.typeQuestSelected.rtype = type;
+      $scope.unSelectRiddle();
     }
 
-    /** Remove **/
+    /** Remove ""Override""**/
     $scope.removeTheme = function() {
-      $scope.themeSelected = null;
+      $scope.themeSelected.theme = null;
+      $scope.unSelectRiddle();
     }
+
+    // $scope.select = function (riddle) {
+    //   $scope.riddleSelected = riddle;
+    // };
+
 
   });
