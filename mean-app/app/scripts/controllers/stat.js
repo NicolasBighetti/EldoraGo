@@ -3,7 +3,7 @@
  */
 
 angular.module('eldoragoApp')
-  .controller('StatCtrl', function ($scope, $location, $timeout, $http, $q, $log) {
+  .controller('StatCtrl', function ($scope, $location, $timeout, $http, $q, $log, CotFactory) {
 
     $scope.map = {};
     $scope.showGraph = false;
@@ -12,6 +12,12 @@ angular.module('eldoragoApp')
     $scope.listName = [];
     $scope.listCOTName = [];
     $scope.markerList = [];
+
+    //$scope.CotId = null;
+    $scope.stepIdList = [];
+    $scope.selectedStepID = null;
+    $scope.questList = [];
+    $scope.questListID = [];
 
     $scope.left = 0;
 
@@ -58,8 +64,6 @@ angular.module('eldoragoApp')
       $http.get(DB_PATH + "pois").then(function (resp) {
 
         $scope.markerList = resp.data;
-
-        console.log(resp.data);
 
         // foreach marker on markerList BDD
         for (var i = 0; i < $scope.markerList.length; i++) {
@@ -188,8 +192,6 @@ angular.module('eldoragoApp')
         return;
       }
 
-      console.log($scope.markerList);
-
       //Clear the markers currently present on the map execpt the one we selected
       for (j = 0; j < $scope.markerList.length - 1; j++) {
         if ($scope.markerList[j].id != item.id) {
@@ -198,12 +200,7 @@ angular.module('eldoragoApp')
         }
       }
 
-
-      console.log($scope.markerList);
-
       $scope.markerList.slice(0, 1);
-
-      console.log($scope.markerList);
 
       if (item.type == 'POI') {
         $scope.PoiDetails = true;
@@ -280,8 +277,8 @@ angular.module('eldoragoApp')
             cursor: 'pointer',
             point: {
               events: {
-                click: function () {
-                  startMinGraph();
+                click: function (e) {
+                  startMinGraph($scope.stepIdList[this.category]);
                 }
               }
             }
@@ -340,8 +337,9 @@ angular.module('eldoragoApp')
 
         var p2 = new Promise(function (resolve, reject) {
           $http.get(DB_PATH + "cots/" + $scope.selectedCot).then(function (resp) {
-            console.log(resp.data.steps);
-            console.log("p2 done");
+
+            $scope.stepIdList = resp.data.steps;
+
             resolve(resp);
           })
         });
@@ -355,7 +353,6 @@ angular.module('eldoragoApp')
               $http.get(DB_PATH + "steps/" + resp.data.steps[i]).then(function (resp1) {
                 //console.log(resp1);
                 data.push(resp1.data.avg_time);
-                console.log(data.length);
                 //data.push(resp1.data.avg_time);
                 resolve(resp1);
               });
@@ -363,101 +360,61 @@ angular.module('eldoragoApp')
           }
 
           Promise.all(promises).then(function(result){
-            console.log(data);
-
             chart1.series[0].setData(data, true);
           });
 
         });
     }
-  //});
-
-
-/*for (i=0; i< 3; i++){
- data.push(12);
- }*/
-
-//chart1.series[0].setData(dataContainer, true);
-
-
-//console.log(data);
-//console.log(chart1.series[0].data);
-
-//chart1.series.data = data;
 
 
 
 
-function startMinGraph() {
+function startMinGraph(stepId) {
 
-  /*Highcharts.chart('min-container-chart', {
-   chart: {
-   type: 'column'
-   },
+  var cot = {
+    _id: $scope.selectedCot,
+    stepsO: [],
+    pois: []
+  };
 
-   events: {
-   click: function(event) {
-   alert (
-   'x: '+ Highcharts.dateFormat('%Y-%m-%d', event.xAxis[0].value) +', ' +
-   'y: '+ event.yAxis[0].value
-   );
-   }
-   },
+  CotFactory.setCurrentCot(cot);
+  CotFactory.readCot().then(function (test) {
+    //console.log(CotFactory.getCurrentCot());
 
-   plotOptions: {
-   series: {
-   cursor: 'pointer',
-   point: {
-   events: {
-   click: function () {
-   startMinGraph2();
-   }
-   }
-   }
-   }
-   },
+    //We get all the steps
+    var questRes = CotFactory.getCurrentCot().stepsO;
 
-   title: {
-   text: 'Temps par quête'
-   //y: 185 //  this to move y-coordinate of title to desired location
-   },
-   xAxis: {
-   type: 'étapes',
-   labels: {
-   rotation: -45,
-   style: {
-   fontSize: '13px',
-   fontFamily: 'Verdana, sans-serif'
-   }
-   }
-   },
-   yAxis: {
-   min: 0,
-   title: {
-   text: 'Temps moyen en minutes'
-   }
-   },
-   legend: {
-   enabled: false
-   },
-   tooltip: {
-   pointFormat: 'temps: <b>{point.y:.1f} minutes</b>'
-   },
-   series: [{
-   name: 'Population',
-   data: [
-   ['énigme 1', 8],
-   ['énigme 2', 7],
-   ['énigme 3', 6],
-   ['énigme 4', 14],
-   ['énigme 5', 7]
+    $scope.questListID = questRes;
 
-   ]
+    //We pick the right step
+    for(var i = 0;  i < questRes.length; i++){
+      if (questRes[i]._id == stepId){
+        questRes = questRes[i].questsO;
+      }
+    }
 
-   }]
-   });*/
 
-  Highcharts.chart('container', {
+    //We create the object corresponding to the quests
+    for(var i = 0;  i < questRes.length; i++){
+
+      var o = {
+        id: questRes[i]._id,
+        real: questRes[i].avg_time,
+        expected: questRes[i].est_time,
+        number: i
+        
+      };
+
+      $scope.questList.push(o);
+    }
+
+    $scope.show4 = true;
+
+  });
+
+
+
+  var charts2 = Highcharts.chart('container', {
     data: {
       table: 'datatable'
     },
@@ -479,25 +436,29 @@ function startMinGraph() {
         point: {
           events: {
             click: function () {
-              startMinGraph2();
+              startMinGraph2($scope.questListID[this.category]);
+              console.log($scope.questListID[this.category]);
             }
           }
         }
       }
     },
-    tooltip: {
+    /*tooltip: {
       formatter: function () {
         return '<b>' + this.series.name + '</b><br/>' +
           this.point.y + ' ' + this.point.name.toLowerCase();
       }
-    }
+    }*/
   });
+
 
 
 };
 
 
-function startMinGraph2() {
+function startMinGraph2(questId) {
+
+  console.log(questId.questsO[0].success);
 
   Highcharts.chart('min-container-chart2', {
     chart: {
@@ -532,10 +493,10 @@ function startMinGraph2() {
       colorByPoint: true,
       data: [{
         name: 'Validé',
-        y: 60
+        y: questId.questsO[0].success
       }, {
         name: 'Passée',
-        y: 40,
+        y: 100 - questId.questsO[0].success,
         sliced: true,
         selected: true
       }]
