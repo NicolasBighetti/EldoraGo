@@ -45,6 +45,10 @@ angular.module('eldoragoApp')
       for (var i = 0; i < $scope.markerList.length; i++) {
         //rename _id en id
         $scope.markerList[i].id = $scope.markerList[i]._id;
+        // rename latitude / longitude
+        $scope.markerList[i].latitude = $scope.markerList[i].coords.latitude;
+        $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
+
         // adding marker on the map
         $scope.map.markers.push($scope.markerList[i]);
         // console.log($scope.markerList[i]);
@@ -88,7 +92,7 @@ angular.module('eldoragoApp')
     if($scope.poiSelected) {
       $scope.imageURL = $scope.poiSelected.image;
     }
-    
+
     // Create file uploader instance
     $scope.uploader = new FileUploader({
       url: 'api/pois/picture/',
@@ -129,7 +133,7 @@ angular.module('eldoragoApp')
       console.log('success');
       console.dir(response);
       console.dir(fileItem);
-      
+
       // Clear upload buttons
       $scope.cancelUpload();
     };
@@ -151,7 +155,7 @@ angular.module('eldoragoApp')
       console.log('uploading ...');
       console.dir($scope.uploader.getNotUploadedItems()[0]);
       console.log(' to ' +$scope.uploader.url);
-      
+
       // Start upload
       $scope.uploader.uploadAll();
     };
