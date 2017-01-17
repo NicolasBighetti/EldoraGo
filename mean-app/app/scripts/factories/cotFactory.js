@@ -305,7 +305,6 @@ angular.module('eldoragoApp')
       var h = Math.floor(time/60);
       var m = Math.floor(time%60);
       return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m);
-
     }
 
     function deleteCot() {
