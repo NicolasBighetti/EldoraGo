@@ -27,7 +27,10 @@
       console.log('init: object from fact :');
       console.log(CotFactory.getCurrentCot());
 
+      $scope.isFit = false;
+
       // si on vient de la page cot-list
+
       if (CotFactory.getCurrentCot()) {
         //charger la cot
         CotFactory.readCot().then(function (res) {
@@ -55,6 +58,7 @@
         console.log('after U COT')
       });
     };
+
 
     /** Show **/
     $scope.isStart = true;

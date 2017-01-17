@@ -15,8 +15,19 @@ angular.module('starter.cot-datas', [])
       return state.set("cot", cot);
     },
     setIdJoueur: function(idJoueur){
-      console.log(idJoueur);
       return state.set("idJoueur", idJoueur);
+    },
+      setStartTime: function(){
+        return state.set("startTime", moment());
+    },
+    getElapsedTime: function(){
+      var now = moment();
+      var then = moment(state.get("startTime"));
+
+      var ms = moment(now,"DD/MM/YYYY HH:mm:ss").diff(moment(then,"DD/MM/YYYY HH:mm:ss"));
+      var d = moment.duration(ms);
+      var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+      return s
     },
     setIdTeam: function(idTeam){
       return state.set("idTeam", idTeam);
@@ -24,8 +35,6 @@ angular.module('starter.cot-datas', [])
     cots: function($http){
       var cots;
       return $http.get('https://eldorago.herokuapp.com/api/cots').then(function (data) {
-       console.log('Cot get!');
-       console.log(data.data);
        return data.data;
      });
 
@@ -33,16 +42,14 @@ angular.module('starter.cot-datas', [])
     step: function($http, id){
      var step;
      return $http.get('https://eldorago.herokuapp.com/api/steps/'+id).then(function (data) {
-       console.log('Step get!');
-       console.log(data);
+
        return data.data;
      });
    },
    quest: function($http, id){
      var quest;
      return $http.get('https://eldorago.herokuapp.com/api/quests/'+id).then(function (data) {
-       console.log('Quests get!');
-       console.log(data);
+
        return data.data;
      });
 
@@ -50,8 +57,7 @@ angular.module('starter.cot-datas', [])
    poi: function($http, id){
      var poi;
      return $http.get('https://eldorago.herokuapp.com/api/pois/'+id).then(function (data) {
-      console.log('Poi get!')
-      console.log(data);
+
       return data.data;
     });
 
@@ -68,8 +74,7 @@ angular.module('starter.cot-datas', [])
       }
     }
     return $http(req).then(function(data){
-      console.log('Réponse nom');
-      console.log(data);
+
       return data;
     })
   },
@@ -78,14 +83,13 @@ angular.module('starter.cot-datas', [])
       return;
     var teamPromise = this.getTeams($http);
     return teamPromise.then(function(result){
-      console.log("resultat test " + (result.data.length == 0))
+
       var found = false;
         for(var team in result.data){
-          console.log(":" + result.data[team].name + ":" + name + ":")
 
           if(result.data[team].name === name){
             found = true;
-            console.log("TROUVEOUESDUGFOIRSDUZEOIR")
+
             result.data[team].players.push(state.get("idJoueur"));
             var req = {
               method: 'PUT',
@@ -110,8 +114,7 @@ angular.module('starter.cot-datas', [])
             ]
           }
         }
-        console.log("Id joueur : ");
-            console.log(state.get("idJoueur"));
+
 
         return $http(req).then(function(result){
             return result;
@@ -127,8 +130,7 @@ angular.module('starter.cot-datas', [])
       url: 'https://eldorago.herokuapp.com/api/teams'
     }
     return $http(req).then(function(data){
-      console.log('Réponse get teams');
-      console.log(data);
+
       return data;
     })
   },

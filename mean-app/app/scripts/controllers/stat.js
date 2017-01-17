@@ -7,10 +7,13 @@ angular.module('eldoragoApp')
 
     $scope.map = {};
     $scope.showGraph = false;
-    $scope.details = false;
+    $scope.PoiDetails = false;
+    $scope.CotDetails = false;
     $scope.listName = [];
     $scope.listCOTName = [];
     $scope.markerList = [];
+
+    $scope.left = 0;
 
     $scope.show = function () {
       $scope.showGraph = true;
@@ -42,15 +45,21 @@ angular.module('eldoragoApp')
           closeClick: function () {
             this.show = false;
           }
-          /*options: {
-            //icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-           }*/ // define when map is ready
         }
       };
+
+      putMarkers();
+
+    };
+
+
+    function putMarkers(){
 
       $http.get(DB_PATH+"pois").then(function(resp) {
 
         $scope.markerList = resp.data;
+
+        console.log(resp.data);
 
         // foreach marker on markerList BDD
         for (var i = 0; i < $scope.markerList.length; i++) {
@@ -58,24 +67,43 @@ angular.module('eldoragoApp')
           $scope.markerList[i].id = $scope.markerList[i]._id;
           $scope.markerList[i].latitude = $scope.markerList[i].coords.latitude;
           $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
-          $scope.markerList[i].icon = 'http://www.googlemapsmarkers.com/v1/009900/';
+          if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef') {
+            $scope.markerList[i].icon = $scope.markerList[i].icone;
+            //$scope.markerList[i].label = $scope.markerList[i].icone;
+          }
+
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
-          //Adding name to listName
 
-          console.log($scope.map.markers);
+
+          /*if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef'){
+           $scope.markerList[i].icone = "http://www.googlemapsmarkers.com/v1/ecea24/";
+           $scope.markerList[i].labelcolor = "12";
+
+           /*$http.put(DB_PATH+"pois/"+$scope.markerList[i].id, $scope.markerList[i]).then(function(resp) {
+           console.log(resp);
+
+
+           }, function(error) {
+           alert(error);
+           });*/
+
+          //}
+
 
           var o = {
+            id: $scope.markerList[i].id,
             value: $scope.markerList[i].name,
-            display: $scope.markerList[i].name
-        };
+            display: $scope.markerList[i].name,
+            left: $scope.markerList[i].labelcolor,
+            type: 'POI'
+          };
 
-          $scope.listName.push(o);
+          $scope.listCOTName.push(o);
 
         }
 
         //Getting the cot
-
         $http.get(DB_PATH+"cots").then(function(resp) {
 
           $scope.cots = resp.data;
@@ -84,22 +112,19 @@ angular.module('eldoragoApp')
           for (var i = 0; i < $scope.cots.length; i++) {
 
             var o = {
+              id: $scope.markerList[i].id,
               value: $scope.cots[i].name,
-              display: $scope.cots[i].name
+              display: $scope.cots[i].name,
+              type: 'COT'
             };
 
             $scope.listCOTName.push(o);
 
           }
 
-
-          //console.log($scope.listCOTName);
         })
 
-    });
-
-      $scope.displayedCollection = $scope.map.markers;
-      $scope.rowCollection = $scope.map.markers;
+      });
 
     };
 
@@ -120,7 +145,7 @@ angular.module('eldoragoApp')
 
     self.newState = newState;
 
-    console.log(self.states );
+    //console.log(self.states );
 
 
 
@@ -149,11 +174,42 @@ angular.module('eldoragoApp')
     function selectedItemChange(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
       //$scope.showGraph = true;
-      $scope.details = true;
+
+      var arrPos;
 
       if(item == null){
         $scope.showGraph = false;
-        $scope.details = false;
+        $scope.PoiDetails = false;
+        $scope.CotDetails = false;
+        putMarkers();
+        return;
+      }
+
+      console.log($scope.markerList);
+
+      //Clear the markers currently present on the map execpt the one we selected
+      for (j = 0; j < $scope.markerList.length - 1; j++){
+        if($scope.markerList[j].id != item.id){
+          arrPos= j;
+            delete $scope.markerList[j];
+        }
+      }
+
+
+      console.log($scope.markerList);
+
+      $scope.markerList.slice(0,1);
+
+      console.log($scope.markerList);
+
+      if(item.type == 'POI') {
+        $scope.PoiDetails = true;
+        console.log($scope.markerList[arrPos + 1].labelcolor);
+        $scope.left = $scope.markerList[arrPos + 1].labelcolor;
+        $scope.map.center.latitude = $scope.markerList[arrPos + 1].latitude;
+        $scope.map.center.longitude = $scope.markerList[arrPos + 1].longitude;
+      } else if (item.type == 'COT' ) {
+        $scope.CotDetails = true;
       }
 
     }
@@ -165,9 +221,9 @@ angular.module('eldoragoApp')
       //var lowercaseQuery = angular.lowercase(query);
 
       return function filterFn(state) {
-        console.log("valeur de state.value : " + state.value);
+        /*console.log("valeur de state.value : " + state.value);
         console.log("valeur de query : " + query);
-        console.log("indexOf : " + state.value.indexOf(query) + " pour " + state.value);
+        console.log("indexOf : " + state.value.indexOf(query) + " pour " + state.value);*/
         return (state.value.indexOf(query) === 0);
       };
 
@@ -396,9 +452,5 @@ angular.module('eldoragoApp')
       });
 
     }
-
-
-
-
 
   });

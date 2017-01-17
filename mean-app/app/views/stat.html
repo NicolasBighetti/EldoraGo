@@ -2,14 +2,19 @@
 
     <div class="row full-screen"  ng-if="!showGraph" ng-init="init()">
 
-        <div class="search-bar">
+        <div class="search-bar autocompletedemoCustomTemplate">
 
             <md-content id="pac-input" class="md-padding center-block">
             <form ng-submit="$event.preventDefault()">
 
-                <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une chasse">
+                <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une COT ou un POI" md-menu-class="autocomplete-custom-template">
                     <md-item-template>
-                        <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                        <span class="item-title">{{item.display}}</span>
+                        <span class="item-metadata">
+                            <span class="item-metastat">
+                                {{item.type}}
+                            </span>
+                        </span>
                     </md-item-template>
                 </md-autocomplete>
 
@@ -23,36 +28,50 @@
         </ui-gmap-google-map>
 
 
-        <div class="color-bar-container center-block" ng-if="details">
+        <div class="color-bar-container center-block" ng-if="PoiDetails">
 
-            <div class="center">
+            <div class="row">
 
-                    <div class="inline">Temps moyen par utilisateur</div>
-                    <div class="inline sub-text" ng-click="show()">(Accéder aux graphiques)</div>
+                <div class="text-center">Temps moyen par utilisateur</div>
 
             </div>
 
             <div class="color-row center-block">
                 <div class="col-sm-2 center-block">0 min</div>
                 <div class="col-sm-8 color-bar center-block">
-                    <div class="mark"></div>
+                    <div class="mark" ng-style="{'left': left}"></div>
                 </div>
                 <div class="col-sm-2 center-block">4 heures</div>
             </div>
+        </div>
+
+        <div class="color-bar-container center-block" ng-if="CotDetails">
+
+            <div class="center">
+
+                <div class="inline" ng-click="show()">Accéder aux graphiques</div>
+
+            </div>
+
         </div>
 
     </div>
 
     <div class="row stat-main"  ng-if="showGraph" ng-init="startGraph()">
 
-        <div class="search-bar">
+        <div class="search-bar autocompletedemoCustomTemplate">
 
             <md-content id="pac-input" class="md-padding center-block">
                 <form ng-submit="$event.preventDefault()">
 
-                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une chasse ou un POI">
+                    <md-autocomplete ng-disabled="ctrl.isDisabled" md-selected-item="ctrl.selectedItem" md-search-text-change="ctrl.searchTextChange(ctrl.searchText)" md-search-text="ctrl.searchText" md-selected-item-change="ctrl.selectedItemChange(item)" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.display" md-min-length="0" placeholder="Cherchez une COT ou un POI" md-menu-class="autocomplete-custom-template">
                         <md-item-template>
-                            <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                            <span class="item-title">{{item.display}}</span>
+                            <span class="item-metadata">
+                            <span class="item-metastat">
+                                {{item.type}}
+                            </span>
+                        </span>
                         </md-item-template>
                     </md-autocomplete>
 
@@ -65,50 +84,6 @@
 
         </div>
     </div>
-
-    <!--<div class="row stat-sub" ng-if="!showGraph">
-        <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
-
-            <thead>
-            <tr>
-                <th st-sort="name" class="text-center">
-                    <div class="stat-tab-title">Nom</div>
-                </th>
-                <th st-sort="name" class="text-center">
-                    <div class="stat-tab-title">Nombre de personnes</div>
-                </th>
-                <th st-sort="name" class="text-center">
-                    <div class="stat-tab-title">Temps moyen</div>
-                </th>
-
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr ng-repeat="user in displayedCollection">
-
-                <td class="text-center" >
-                    <div class="stat-tab-line">{{user.name}}</div>
-                </td>
-                <td class="text-center">
-                    <div class="stat-tab-line">{{user.people}}</div>
-                </td>
-                <td class="text-center">
-                    <div class="stat-tab-line">{{user.avg_time}}</div>
-                </td>
-            </tr>
-            </tbody>
-
-            <tfoot>
-            <tr>
-                <td colspan="5" class="text-center">
-                    <div st-pagination="" st-items-by-page="3" st-displayed-pages="6"></div>
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-
-    </div>-->
 
     <div class="row stat-sub2" ng-if="showGraph">
         <div class="col-xs-6 min-stat1 center-block" id="min-container-chart"></div>

@@ -1,17 +1,37 @@
 <ion-view title="select" ng-controller="HomeCtrl">
 
-    
-    <div class="bar bar-header bar-light">
-        <h1 class="title">Sélectionnez une quête</h1>
-    </div>
+    <ion-header-bar align-title="center">
+        <!-- <div class="bar bar-header bar-light"> -->
+        <h1 class="title">Sélectionnez une Chasse aux Trésors</h1>
+        <!-- </div> -->
+    </ion-header-bar>
 
-    <ion-content class="padding centered has-header" >
+    <ion-content class="padding centered has-header">
 
+        <div class="list list-inset">
+          <label class="item item-input item-select">
+            <!-- <label class="item item-input"> -->
+              <i class="icon ion-search placeholder-icon"></i>
+              <input ng-model="searchCot.name" type="text" placeholder="Rechercher une COT">
+            <!-- </label> -->
+
+            <select ng-model="searchTime.time_est">
+              <option ng-value=0 ng-selected="true">Toute durée</option>
+              <option ng-value=1>Moins de 45 mins</option>
+              <option ng-value=45>Entre 45 et 90 mins</option>
+              <option ng-value=90>Plus de 90 mins</option>
+            </select>
+          </label>
+          <!-- <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input ng-model="searchCot.name" type="text" placeholder="Rechercher une COT">
+          </label> -->
+        </div>
         <!-- We list the available CoT -->
         <ion-list>
-            <ion-item ng-repeat="item in cot">
-
-                <a ng-click="setChoice(item._id)" ng-href="#/select" >{{item.name}}</a>
+            <ion-item ng-repeat="item in cot | filter : searchCot | filter : greaterThan(searchTime.time_est, searchCot.time_est)">
+                <a ng-click="setChoice(item._id)" ng-href="#/select">{{item.name}}</a>
+                <div class="pull-right sub-info">{{item.time_avg}} min(s)</div>
             </ion-item>
         </ion-list>
 

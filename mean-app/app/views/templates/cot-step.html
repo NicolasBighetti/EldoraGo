@@ -1,18 +1,24 @@
 <div class="container-fluid">
   <div class="row" id="cot-step-row">
     <div class="col-xs-3" id="cot-step-steplist-div">
-
       <div ng-include src="'views/templates/cot-step-leftside.html'"></div>
     </div>
 
     <div class="col-xs-5" id="cot-step-map-div">
-
       <!-- <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
         <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id" events="marker.events"></ui-gmap-marker>
       </ui-gmap-google-map> -->
-      <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
-          <ui-gmap-markers models="markerList" coords="'self'"  icon="'icon'" events="marker.events"></ui-gmap-markers>
-      </ui-gmap-google-map>
+      <div ng-if="isFit">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+          <ui-gmap-markers models="markerList" coords="'self'" fit="'true'" icon="'icon'" events="marker.events"></ui-gmap-markers>
+        </ui-gmap-google-map>
+      </div>
+
+      <div ng-if="!isFit">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+          <ui-gmap-markers models="markerList" coords="'self'" icon="'icon'" events="marker.events"></ui-gmap-markers>
+        </ui-gmap-google-map>
+      </div>
 
     </div>
 

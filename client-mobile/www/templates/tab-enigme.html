@@ -1,9 +1,16 @@
 <ion-view title="enigmeview" ng-controller="EnigmeCtrl" ng-init="getSteps()">
+  <ion-header-bar>
+    <!-- <div class="bar bar-header"> -->
+      <h1 class="title">{{cotData.name}}</h1>
+    <!-- </div> -->
+  </ion-header-bar>
     <ion-content>
-        <div class="bar bar-header">
-            <h1 class="title">{{cotData.name}}</h1>
+      <div class="card">
+        <div class="item item-text-wrap">
+          {{cotData.desc}}
         </div>
-        <h4><small>{{cotData.desc}}</small></h4>
+      </div>
+        <!-- <h4><small>{{cotData.desc}}</small></h4> -->
 
         <div class="list" name="step" ng-repeat="st in cotData.stepsO">
             <a href="" data-toggle="collapse" data-target="#{{st._id}}" class="item">
@@ -11,15 +18,19 @@
                 <p>{{st.desc}}</p>
             </a>
             <div id="{{st._id}}" class="collapse">
-                <div name="quest" class="list card" ng-repeat="quest in st.questsO">
+                <div name="quest"  class="list card" ng-repeat="quest in st.questsO">
                     <div class="item item-divider">
                         <div class="row">
-                            <div class="col">
-                                <h2>{{quest.name}}</h2>
-                                <p>0 assigné(s)</p>
+                            <div class="col col-80">
+                              <h2>{{quest.name}}</h2>
+                              <p>0 assigné(s)</p>
                             </div>
                             <div class="col col-10">
-                                <ion-checkbox ng-model="assigned"></ion-checkbox>
+                              <i ng-show="quest.isHelp" class="icon ion-alert assertive"></i>
+                              <i ng-show="quest.isFinish" class="icon ion-checkmark balanced"></i>
+                            </div>
+                            <div class="col col-10">
+                                <ion-checkbox ng-model="quest.assigned"></ion-checkbox>
                             </div>
                         </div>
                     </div>
@@ -41,17 +52,39 @@
                                     <div class="sub-info">Indice : {{quest.riddleO.hint}}</div>
                                 </div>
                             </div> -->
-                            <div ng-show="!assigned" ng-click="assigned = true">
+                            <div ng-show="!quest.assigned" ng-click="quest.assigned = true">
                               <button class="button button-full button-positive">S'inscrire</button>
                             </div>
-                            <div ng-show="assigned" class="row">
+                            <div ng-show="quest.assigned" class="row">
                                 <div class="col">
-                                    <div class="list">
-                                        <label class="item item-input">
-                                      <input type="text" placeholder="{{quest.riddleO.answer}}">
-                                    </label>
+                                  <div class="list">
+                                      <div ng-show="!quest.isFinish">
+                                        <div class="item item-input-inset">
+                                          <label class="item-input-wrapper">
+                                            <input type="text" ng-model="quest.tryAnswer" placeholder="{{quest.riddleO.answer}}">
+                                          </label>
+                                          <button ng-click="checkAnswer(quest)" class="button button-positive button-small">
+                                            Envoyer
+                                          </button>
+                                          <i ng-show="quest.isFinish" class="icon ion-checkmark balanced"></i>
+
+                                      </div>
+                                      <button ng-click="showOptions(quest, quest.riddleO)" class="button button-full button-stable">Options</button>
+                                      </div>
+
+                                      <div ng-show="quest.isFinish">
+                                        <div class="item item-input-inset">
+                                          <label class="item-input-wrapper">
+                                            <input type="text" placeholder="{{quest.riddleO.answer}}" disabled/>
+                                          </label>
+                                          <i ng-show="quest.isFinish" class="icon ion-checkmark balanced"></i>
+                                        </div>
+                                      </div>
+
+                                      <!-- <label class="item item-input">
+                                        <input type="text" placeholder="{{quest.riddleO.answer}}">
+                                      </label> -->
                                     </div>
-                                    <button ng-click="showOptions(quest.riddleO)" class="button button-full button-stable">Options</button>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <button class="button button-stable" ng-click="refreshScope()">Jouer en solo!</button>
+        <!-- <button class="button button-stable" ng-click="refreshScope()">Jouer en solo!</button> -->
         <br/>
     </ion-content>
 </ion-view>
