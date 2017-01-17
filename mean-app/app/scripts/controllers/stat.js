@@ -440,6 +440,7 @@ function startMinGraph(stepId) {
             click: function () {
               $scope.startMinGraph2($scope.questListID[this.category]);
               console.log($scope.questListID[this.category]);
+              $scope.selectedStepID = $scope.questListID[this.category]._id;
             }
           }
         }
@@ -515,6 +516,27 @@ $scope.startMinGraph2 = function (questId) {
 }
 
 };
+
+
+ $scope.editQuest = function(){
+
+   console.log($scope.selectedStepID);
+
+
+   var cot = {
+     _id: $scope.selectedCot,
+     stepsO: [],
+     stepSelected: $scope.selectedStepID,
+     pois: []
+   };
+
+
+
+   CotFactory.setCurrentCot(cot);
+   $location.path('/cot');
+
+ }
+
 
 });
 
