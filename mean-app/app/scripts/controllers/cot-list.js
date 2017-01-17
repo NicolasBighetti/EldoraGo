@@ -33,44 +33,4 @@ angular.module('eldoragoApp')
             });
         });
     };
-     /*function(id) {
-      $http.delete(DB_PATH+"cots/" + id).then(function(resp) {
-        console.log("cot " + id + " delete");
-        var removedCot = resp.data;
-        console.log('removed cot');
-        console.dir(resp.data);
-
-        // delete en cascade -- steps
-        for (var i; i < removedCot.steps.length; i++) {
-          $scope.removeStep(removedCot.steps[i]);
-        }
-
-      }, function(error) {
-        console.error(error);
-      });
-    };
-
-    /!*$scope.removeStep = function(id) {
-     $http.delete(DB_PATH+"steps/" + id).then(function(resp) {
-     console.log("cot " + id + " delete");
-     var removedStep = resp.data;
-     // delete en cascade -- quests
-     for (var j; j < removedStep.quests.length; j++) {
-     $scope.removeQuest(removedStep.quests[i]);
-     }
-
-     }, function(error) {
-     alert(error);
-     });
-     };*!/
-*/
-/*    $scope.removeQuest = function(id) {
-      $http.delete(DB_PATH+"quests/" + id).then(function(resp) {
-        console.log("quest " + id + " delete");
-
-        // $scope.getAllQuestList();
-      }, function(error) {
-        alert(error);
-      });
-    }*/
   });

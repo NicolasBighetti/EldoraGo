@@ -21,17 +21,16 @@
     $scope.init = function () {
       console.log('init');
 
-
       $scope.getRiddleList();
       $scope.getMarkerList();
       console.log('init: object from fact :');
       console.log(CotFactory.getCurrentCot());
 
-      $scope.isFit = false;
 
       // si on vient de la page cot-list
-
       if (CotFactory.getCurrentCot()) {
+
+
         //charger la cot
         CotFactory.readCot().then(function (res) {
           console.log('Cot with objects and ids');
@@ -42,15 +41,13 @@
         });
 
         //$scope.getStepList();
-
       }
     };
 
 
     //test functions
     $scope.showFullCot = function () {
-      console.dir(CotFactory.getCurrentCot());
-      console.dir($scope.cotSelected);
+      
       $scope.cotSelected = CotFactory.getCurrentCot();
     };
     $scope.postCot = function () {
@@ -70,8 +67,11 @@
     /** Start **/
     $scope.TreatAdress = function (lien) {
 
+      $scope.init();
+
       console.log("Le LIEN : " + lien);
       var geocoder = new google.maps.Geocoder();
+      console.log('geoCode');
       geocoder.geocode({
         "address": lien
       }, function (results, status) {
@@ -82,35 +82,25 @@
           $scope.updateLocation(location.lat() + 0.25, location.lng() - 0.5);
           $scope.isStart = false;
 
+          window.setTimeout(function(){
+            console.log('print 0');
+            google.maps.event.trigger($scope.map, 'resize');
+          },100);
 
+          console.log('print');
         }
       });
 
       CotFactory.createCot().then(function () {
-        console.log('cot created');
 
         $scope.cotSelected = CotFactory.getCurrentCot();
-        console.log($scope.cotSelected);
-        var elements = document.getElementsByClassName('angular-google-map');
-        //var requiredElement = elements[0];
 
-        var requiredElement = document.getElementById('cot-step-map-div');
-        requiredElement.setAttribute("style", "width:500px");
-        requiredElement.setAttribute("style", "height:300px");
 
       },function (code) {
           console.error(code);
       });
 
-     /* setTimeout(function () {
 
-        //angular - google - map - container
-        //angular - google - map
-
-        //non utilisé ?
-
-
-      }, 1000);*/
 
     };
 
@@ -127,7 +117,11 @@
     $scope.lat = 44;
     $scope.lon = 6;
 
+
     $scope.map = {
+      showTraffic: true,
+      showBicycling: true,
+      showWeather: true,
       center: {
         latitude: $scope.lat,
         longitude: $scope.lon
@@ -144,6 +138,8 @@
 
       } //marker
     };
+
+
 
 
     $scope.addStep = function () {
@@ -165,7 +161,7 @@
       events: {
         click: function (marker, eventName, args) {
 
-          $('#interestMarker').modal('show');
+          //$('#interestMarker').modal('show');
           //$scope.open();
           //console.log(marker.position.lat() +" -- "+ marker.position.lng());
           console.log("Marker clicked ! ");
@@ -209,6 +205,7 @@
           $scope.map.markers.push($scope.markerList[i]);
         }
         // $scope.$apply();
+
 
       });
     };

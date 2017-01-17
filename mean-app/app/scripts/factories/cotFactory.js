@@ -47,7 +47,8 @@ angular.module('eldoragoApp')
       if (!currentCot.cot || !currentCot.cot._id) {
         console.error('Err no cot defined');
         console.dir(currentCot.cot);
-        return;
+        defer.resolve({});
+        return defer.promise;
       }
 
       var stepP = [];

@@ -47,7 +47,6 @@ var RiddleSchema = new Schema({
   answer: {
     type: String,
     default: '',
-    required: 'Please fill riddle answer',
     trim: true
   }
 

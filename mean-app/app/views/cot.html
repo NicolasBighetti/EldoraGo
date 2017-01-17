@@ -1,8 +1,10 @@
 <div ng-init="init()"></div>
-<div ng-show="!cotSelected">
+
+<div ng-if="!cotSelected">
   <div ng-include src="'views/templates/cot-start.html'"></div>
 </div>
-<div ng-show="cotSelected">
+
+<div ng-if="cotSelected">
   <div ng-include src="'views/templates/cot-step.html'"></div>
 </div>
 
