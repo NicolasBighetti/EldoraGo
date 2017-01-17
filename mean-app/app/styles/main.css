@@ -640,8 +640,26 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
     width: 100vw;
 }
 
-#min-container-chart, #min-container-chart2, #container{
+
+.min-stat2{
+  height: 35vh;
+}
+
+#min-container-chart2{
+  height: 100%;
+}
+
+#min-container-chart, #container{
     height: 35vh;
+}
+
+.modification{
+  position: relative;
+  z-index: 100;
+  top: -2vh;
+  background-color: green;
+  color: white;
+  cursor: hand;
 }
 
 #datatable{

@@ -19,6 +19,8 @@ angular.module('eldoragoApp')
     $scope.questList = [];
     $scope.questListID = [];
 
+    $scope.pieChart = false;
+
     $scope.left = 0;
 
     $scope.show = function () {
@@ -371,7 +373,7 @@ angular.module('eldoragoApp')
 
 function startMinGraph(stepId) {
 
-  var cot = {
+    var cot = {
     _id: $scope.selectedCot,
     stepsO: [],
     pois: []
@@ -408,9 +410,9 @@ function startMinGraph(stepId) {
       $scope.questList.push(o);
     }
 
-    $scope.show4 = true;
+  }).then(function () {
 
-  });
+
 
 
 
@@ -436,7 +438,7 @@ function startMinGraph(stepId) {
         point: {
           events: {
             click: function () {
-              startMinGraph2($scope.questListID[this.category]);
+              $scope.startMinGraph2($scope.questListID[this.category]);
               console.log($scope.questListID[this.category]);
             }
           }
@@ -451,12 +453,19 @@ function startMinGraph(stepId) {
     }*/
   });
 
+  });
 
 
-};
 
 
-function startMinGraph2(questId) {
+
+
+$scope.startMinGraph2 = function (questId) {
+
+
+  $scope.pieChart = true;
+  $scope.$apply();
+  console.log($scope.pieChart);
 
   console.log(questId.questsO[0].success);
 
@@ -505,5 +514,7 @@ function startMinGraph2(questId) {
 
 }
 
-})
-;
+};
+
+});
+
