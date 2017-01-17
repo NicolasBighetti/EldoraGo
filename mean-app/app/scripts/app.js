@@ -7,9 +7,11 @@ var DB_PATH="api/";
  * @name clientYo2App
  * @description
  * # clientYo2App
- *
+ * angular.module("xeditable", []);
  * Main module of the application.
  */
+
+
 angular
   .module('eldoragoApp', [
     'ngAnimate',
@@ -26,7 +28,8 @@ angular
     'ngMessages',
     'material.svgAssetsCache',
     'uiGmapgoogle-maps',
-    'angularFileUpload'
+    'angularFileUpload',
+    'xeditable'
     // 'ui.router'
   ])
   .config(

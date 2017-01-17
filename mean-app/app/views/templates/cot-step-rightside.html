@@ -17,7 +17,10 @@
 
   <h5>Quêtes de l'étape {{stepSelected.name}}</h5>
   <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[stepSelected].questsO | orderBy:'_id'">
-    <div class="panel-heading primary-flat">{{quest.name}}</div>
+    <div class="panel-heading primary-flat" editable-textarea="quest.name">{{quest.name}}</div>
+    <div class="panel-body" editable-textarea="quest.desc">
+      {{quest.desc}}
+    </div>
     <div class="panel-body">
 
       <div class="row" >
