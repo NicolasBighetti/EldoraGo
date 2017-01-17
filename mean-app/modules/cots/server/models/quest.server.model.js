@@ -44,6 +44,12 @@ var QuestSchema = new Schema({
   est_time: {
     type: Number,
     default: 0
+  },
+  success: {
+    type: Number,
+    default: 12,
+    required: 'Please specify the pourcent of success',
+    trim: true
   }
 });
 

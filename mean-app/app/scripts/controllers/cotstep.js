@@ -164,7 +164,7 @@
     $scope.marker = {
       events: {
         click: function (marker, eventName, args) {
-          
+
           $('#interestMarker').modal('show');
           //$scope.open();
           //console.log(marker.position.lat() +" -- "+ marker.position.lng());
@@ -257,7 +257,7 @@
     //TODO Fact Removes a step
     $scope.RemoveStep = CotFactory.deleteStep;
 
-    
+
     /** STEP **/
     $scope.isQuest = true;
     $scope.textSwitch = "Voir la fiche descriptive";
@@ -270,6 +270,12 @@
       $scope.riddleSelected = riddle;
     };
 
+    /** Remove **/
+    $scope.unSelectRiddle = function() {
+      $scope.riddleSelected = null;
+    }
+
+    /** Call in FaqCtrl when changing theme **/
     $scope.selectQuest = function (quest) {
       $scope.questSelected = quest;
     };
@@ -319,7 +325,7 @@
       $scope.cotSelected = CotFactory.getCurrentCot();
 
     };
-    
+
 
     //on set l'objet local
     $scope.associateQuestPoi = function (quest) {

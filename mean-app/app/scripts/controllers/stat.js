@@ -3,7 +3,7 @@
  */
 
 angular.module('eldoragoApp')
-  .controller('StatCtrl',  function ($scope, $location, $timeout, $http, $q, $log) {
+  .controller('StatCtrl', function ($scope, $location, $timeout, $http, $q, $log) {
 
     $scope.map = {};
     $scope.showGraph = false;
@@ -21,7 +21,7 @@ angular.module('eldoragoApp')
 
     $scope.models = [];
 
-    $scope.init = function(){
+    $scope.init = function () {
 
       $scope.active = true;
 
@@ -53,9 +53,9 @@ angular.module('eldoragoApp')
     };
 
 
-    function putMarkers(){
+    function putMarkers() {
 
-      $http.get(DB_PATH+"pois").then(function(resp) {
+      $http.get(DB_PATH + "pois").then(function (resp) {
 
         $scope.markerList = resp.data;
 
@@ -67,10 +67,12 @@ angular.module('eldoragoApp')
           $scope.markerList[i].id = $scope.markerList[i]._id;
           $scope.markerList[i].latitude = $scope.markerList[i].coords.latitude;
           $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
-          if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef') {
-            $scope.markerList[i].icon = $scope.markerList[i].icone;
-            //$scope.markerList[i].label = $scope.markerList[i].icone;
-          }
+
+          //TODO Rename icone en icon
+          /*if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef') {
+           $scope.markerList[i].icon = $scope.markerList[i].icone;
+           //$scope.markerList[i].label = $scope.markerList[i].icone;
+           }*/
 
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
@@ -104,7 +106,7 @@ angular.module('eldoragoApp')
         }
 
         //Getting the cot
-        $http.get(DB_PATH+"cots").then(function(resp) {
+        $http.get(DB_PATH + "cots").then(function (resp) {
 
           $scope.cots = resp.data;
 
@@ -112,7 +114,7 @@ angular.module('eldoragoApp')
           for (var i = 0; i < $scope.cots.length; i++) {
 
             var o = {
-              id: $scope.markerList[i].id,
+              id: $scope.cots[i]._id,
               value: $scope.cots[i].name,
               display: $scope.cots[i].name,
               type: 'COT'
@@ -134,19 +136,18 @@ angular.module('eldoragoApp')
     self.simulateQuery = false;
 
     self.simulateQuery = false;
-    self.isDisabled    = false;
+    self.isDisabled = false;
 
     // list of `state` value/display objects
     //self.states        = $scope.listName;
-    self.states        = loadAll();
-    self.querySearch   = querySearch;
+    self.states = loadAll();
+    self.querySearch = querySearch;
     self.selectedItemChange = selectedItemChange;
-    self.searchTextChange   = searchTextChange;
+    self.searchTextChange = searchTextChange;
 
     self.newState = newState;
 
     //console.log(self.states );
-
 
 
     // ******************************
@@ -157,14 +158,16 @@ angular.module('eldoragoApp')
      * Search for states... use $timeout to simulate
      * remote dataservice call.
      */
-    function querySearch (query) {
+    function querySearch(query) {
 
-      var results = query ? self.states.filter( createFilterFor(query) ) : self.states,
+      var results = query ? self.states.filter(createFilterFor(query)) : self.states,
         deferred;
 
       if (self.simulateQuery) {
         deferred = $q.defer();
-        $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+        $timeout(function () {
+          deferred.resolve(results);
+        }, Math.random() * 1000, false);
         return deferred.promise;
       } else {
         return results;
@@ -177,7 +180,7 @@ angular.module('eldoragoApp')
 
       var arrPos;
 
-      if(item == null){
+      if (item == null) {
         $scope.showGraph = false;
         $scope.PoiDetails = false;
         $scope.CotDetails = false;
@@ -188,28 +191,29 @@ angular.module('eldoragoApp')
       console.log($scope.markerList);
 
       //Clear the markers currently present on the map execpt the one we selected
-      for (j = 0; j < $scope.markerList.length - 1; j++){
-        if($scope.markerList[j].id != item.id){
-          arrPos= j;
-            delete $scope.markerList[j];
+      for (j = 0; j < $scope.markerList.length - 1; j++) {
+        if ($scope.markerList[j].id != item.id) {
+          arrPos = j;
+          delete $scope.markerList[j];
         }
       }
 
 
       console.log($scope.markerList);
 
-      $scope.markerList.slice(0,1);
+      $scope.markerList.slice(0, 1);
 
       console.log($scope.markerList);
 
-      if(item.type == 'POI') {
+      if (item.type == 'POI') {
         $scope.PoiDetails = true;
         console.log($scope.markerList[arrPos + 1].labelcolor);
         $scope.left = $scope.markerList[arrPos + 1].labelcolor;
         $scope.map.center.latitude = $scope.markerList[arrPos + 1].latitude;
         $scope.map.center.longitude = $scope.markerList[arrPos + 1].longitude;
-      } else if (item.type == 'COT' ) {
+      } else if (item.type == 'COT') {
         $scope.CotDetails = true;
+        $scope.selectedCot = item.id;
       }
 
     }
@@ -222,8 +226,8 @@ angular.module('eldoragoApp')
 
       return function filterFn(state) {
         /*console.log("valeur de state.value : " + state.value);
-        console.log("valeur de query : " + query);
-        console.log("indexOf : " + state.value.indexOf(query) + " pour " + state.value);*/
+         console.log("valeur de query : " + query);
+         console.log("indexOf : " + state.value.indexOf(query) + " pour " + state.value);*/
         return (state.value.indexOf(query) === 0);
       };
 
@@ -244,14 +248,12 @@ angular.module('eldoragoApp')
       return allStates;
 
       /*return allStates.split(/, +/g).map( function (state) {
-        return {
-          value: state.toLowerCase(),
-          display: state
-        };
-      });*/
+       return {
+       value: state.toLowerCase(),
+       display: state
+       };
+       });*/
     }
-
-
 
 
     /************** CHARTS *********/
@@ -259,14 +261,16 @@ angular.module('eldoragoApp')
 
     $scope.startGraph = function () {
 
-      Highcharts.chart('container-chart', {
+      var data = [];
+
+      var chart1 = Highcharts.chart('container-chart', {
         chart: {
-          height: 300,
+          /*height: 300,*/
           type: 'column'
         },
 
         events: {
-          click: function(event) {
+          click: function (event) {
 
           }
         },
@@ -286,7 +290,7 @@ angular.module('eldoragoApp')
 
         title: {
           text: 'Temps moyen passé sur chaque étape',
-          y: 280 //  this to move y-coordinate of title to desired location
+          //y: 280 //  this to move y-coordinate of title to desired location
         },
         xAxis: {
           type: 'étapes',
@@ -313,144 +317,232 @@ angular.module('eldoragoApp')
         series: [{
           name: 'Population',
           data: [
-            ['étape 1', 23.7],
-            ['étape 2', 16.1],
-            ['étape 3', 14.2],
-            ['étape 4', 14.0],
-            ['étape 5', 12.5],
-            ['étape 6', 12.1],
-            ['étape 7', 11.8],
-            ['étape 8', 11.7],
-            ['étape 9', 11.1],
-            ['étape 10', 11.1],
-            ['étape 11', 10.5]
+            /*['étape 1', 23.7],
+             ['étape 2', 16.1],
+             ['étape 3', 14.2],
+             ['étape 4', 14.0],
+             ['étape 5', 12.5],
+             ['étape 6', 12.1],
+             ['étape 7', 11.8],
+             ['étape 8', 11.7],
+             ['étape 9', 11.1],
+             ['étape 10', 11.1],
+             ['étape 11', 10.5]*/
 
           ]
 
         }]
       });
 
-    };
 
+      //Getting the cot
+        var promises = [];
 
-    function startMinGraph() {
+        var p2 = new Promise(function (resolve, reject) {
+          $http.get(DB_PATH + "cots/" + $scope.selectedCot).then(function (resp) {
+            console.log(resp.data.steps);
+            console.log("p2 done");
+            resolve(resp);
+          })
+        });
 
-      Highcharts.chart('min-container-chart', {
-        chart: {
-          /*height: 200,
-          width: 330,*/
-          type: 'column'
-        },
+        //promises.push();
+        p2.then(function (resp) {
+          //We get the duration of each step
+          for (var i = 0; i < resp.data.steps.length; ++i) {
 
-        events: {
-          click: function(event) {
-            alert (
-              'x: '+ Highcharts.dateFormat('%Y-%m-%d', event.xAxis[0].value) +', ' +
-              'y: '+ event.yAxis[0].value
-            );
+            promises.push(new Promise(function (resolve, reject) {
+              $http.get(DB_PATH + "steps/" + resp.data.steps[i]).then(function (resp1) {
+                //console.log(resp1);
+                data.push(resp1.data.avg_time);
+                console.log(data.length);
+                //data.push(resp1.data.avg_time);
+                resolve(resp1);
+              });
+            }));
           }
-        },
 
-        plotOptions: {
-          series: {
-            cursor: 'pointer',
-            point: {
-              events: {
-                click: function () {
-                  startMinGraph2();
-                }
-              }
-            }
-          }
-        },
+          Promise.all(promises).then(function(result){
+            console.log(data);
 
-        title: {
-          text: 'Temps par énigme'
-          //y: 185 //  this to move y-coordinate of title to desired location
-        },
-        xAxis: {
-          type: 'étapes',
-          labels: {
-            rotation: -45,
-            style: {
-              fontSize: '13px',
-              fontFamily: 'Verdana, sans-serif'
-            }
-          }
-        },
-        yAxis: {
-          min: 0,
-          title: {
-            text: 'Temps moyen en minutes'
-          }
-        },
-        legend: {
-          enabled: false
-        },
-        tooltip: {
-          pointFormat: 'temps: <b>{point.y:.1f} minutes</b>'
-        },
-        series: [{
-          name: 'Population',
-          data: [
-            ['énigme 1', 8],
-            ['énigme 2', 7],
-            ['énigme 3', 6],
-            ['énigme 4', 14],
-            ['énigme 5', 7]
+            chart1.series[0].setData(data, true);
+          });
 
-          ]
-
-        }]
-      });
-    };
-
-
-    function startMinGraph2() {
-
-      Highcharts.chart('min-container-chart2', {
-        chart: {
-          /*height: 200,
-          width: 330,*/
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: 'Taux de réussite'
-        },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Validé',
-          colorByPoint: true,
-          data: [{
-            name: 'Validé',
-            y: 60
-          }, {
-            name: 'Passée',
-            y: 40,
-            sliced: true,
-            selected: true
-          }]
-        }]
-      });
-
+        });
     }
+  //});
 
+
+/*for (i=0; i< 3; i++){
+ data.push(12);
+ }*/
+
+//chart1.series[0].setData(dataContainer, true);
+
+
+//console.log(data);
+//console.log(chart1.series[0].data);
+
+//chart1.series.data = data;
+
+
+
+
+function startMinGraph() {
+
+  /*Highcharts.chart('min-container-chart', {
+   chart: {
+   type: 'column'
+   },
+
+   events: {
+   click: function(event) {
+   alert (
+   'x: '+ Highcharts.dateFormat('%Y-%m-%d', event.xAxis[0].value) +', ' +
+   'y: '+ event.yAxis[0].value
+   );
+   }
+   },
+
+   plotOptions: {
+   series: {
+   cursor: 'pointer',
+   point: {
+   events: {
+   click: function () {
+   startMinGraph2();
+   }
+   }
+   }
+   }
+   },
+
+   title: {
+   text: 'Temps par quête'
+   //y: 185 //  this to move y-coordinate of title to desired location
+   },
+   xAxis: {
+   type: 'étapes',
+   labels: {
+   rotation: -45,
+   style: {
+   fontSize: '13px',
+   fontFamily: 'Verdana, sans-serif'
+   }
+   }
+   },
+   yAxis: {
+   min: 0,
+   title: {
+   text: 'Temps moyen en minutes'
+   }
+   },
+   legend: {
+   enabled: false
+   },
+   tooltip: {
+   pointFormat: 'temps: <b>{point.y:.1f} minutes</b>'
+   },
+   series: [{
+   name: 'Population',
+   data: [
+   ['énigme 1', 8],
+   ['énigme 2', 7],
+   ['énigme 3', 6],
+   ['énigme 4', 14],
+   ['énigme 5', 7]
+
+   ]
+
+   }]
+   });*/
+
+  Highcharts.chart('container', {
+    data: {
+      table: 'datatable'
+    },
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Temps moyen par quête'
+    },
+    yAxis: {
+      allowDecimals: false,
+      title: {
+        text: 'Units'
+      }
+    },
+    plotOptions: {
+      series: {
+        cursor: 'pointer',
+        point: {
+          events: {
+            click: function () {
+              startMinGraph2();
+            }
+          }
+        }
+      }
+    },
+    tooltip: {
+      formatter: function () {
+        return '<b>' + this.series.name + '</b><br/>' +
+          this.point.y + ' ' + this.point.name.toLowerCase();
+      }
+    }
   });
+
+
+};
+
+
+function startMinGraph2() {
+
+  Highcharts.chart('min-container-chart2', {
+    chart: {
+      /*height: 200,
+       width: 330,*/
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Taux de réussite'
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          style: {
+            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+          }
+        }
+      }
+    },
+    series: [{
+      name: 'Validé',
+      colorByPoint: true,
+      data: [{
+        name: 'Validé',
+        y: 60
+      }, {
+        name: 'Passée',
+        y: 40,
+        sliced: true,
+        selected: true
+      }]
+    }]
+  });
+
+}
+
+})
+;
