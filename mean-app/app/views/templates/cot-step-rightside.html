@@ -1,132 +1,87 @@
 <!-- LES QUESTS & détails POI -->
-<div class="row">
-  <div class="btn btn-default center-block" ng-click="switchQuest()">
-    <div ng-show="isQuest">
-      Voir la fiche descriptive de {{poiSelected.name}}
-    </div>
-    <div ng-show="!isQuest">
-      Voir la liste des Quêtes de {{stepSelected.name}}
-    </div>
-  </div>
-  <br/>
-</div>
-<div ng-show="isQuest">
-  <div ng-show="stepSelected!=undefined">
 
-    <h5>Quêtes de l'étape {{cotSelected.stepsO[stepSelected].name}}</h5>
-    <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[stepSelected].questsO | orderBy:'_id'">
-      <!-- <span> -->
-      <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
-        {{quest.name}}
+
+<div ng-show="cotSelected.step_sel!=undefined">
+
+    <h5>Quêtes de l'étape {{cotSelected.stepsO[cotSelected.step_sel].name}}</h5>
+    <div class="panel panel-default"
+         ng-repeat="quest in cotSelected.stepsO[cotSelected.step_sel].questsO | orderBy:'_id'">
+        <!-- <span> -->
+
+        <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
+            {{quest.name}}
         <span class="label label-default pull-right" ng-click="questname.$show()" ng-hide="questname.$visible">
-              <i class="fa fa-pencil-square-o"></i>
-            </span>
-      </div>
-      <!-- </span> -->
-      <!-- <div> -->
-      <!-- <div class="panel-body" editable-textarea="quest.desc" e-form="questdesc">
-          {{quest.desc}}
-          <button class="btn btn-default" ng-click="questdesc.$show()" ng-hide="questdesc.$visible">
-            <i class="fa fa-pencil-square-o"></i>
-          </button>
-        </div> -->
-      <!-- </div> -->
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-10">
-
-            <div class="well well-sm" editable-textarea="quest.desc" e-form="questdesc">
-              {{quest.desc}}
+          <i class="fa fa-pencil-square-o"></i>
+        </span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-10">
+                    <div class="well well-sm" editable-textarea="quest.desc" e-form="questdesc">
+                        {{quest.desc}}
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-default pull-right" ng-click="questdesc.$show()"
+                            ng-hide="questdesc.$visible">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                </div>
             </div>
-          </div>
-          <div class="col-xs-2">
 
-            <button class="btn btn-default pull-right" ng-click="questdesc.$show()" ng-hide="questdesc.$visible">
-            <i class="fa fa-pencil-square-o"></i>
-          </button>
-          </div>
-        </div>
-
-
-        <div class="row">
-          <div class="col-xs-10">
-            <div class="well well-sm">
-              <div ng-show="quest.riddleO">
-                {{quest.riddleO.name}}
-              </div>
-              <div ng-show="!quest.riddleO">
-                Choisir un jeu
-              </div>
+            <div class="row">
+                <div class="col-xs-10">
+                    <div class="well well-sm">
+                        <div ng-show="quest.riddleO">
+                            {{quest.riddleO.name}}
+                        </div>
+                        <div ng-show="!quest.riddleO">
+                            Choisir un jeu
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <button ng-click="selectQuest($index)" type="button" class="btn btn-primary btn-lg"
+                            data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
+                </div>
             </div>
-          </div>
-          <div class="col-xs-2">
-            <button ng-click="selectQuest($index)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-8">
-            <div class="well well-sm">
-              <div ng-show="quest.poi">
-                {{quest.poiO.name}}
-              </div>
-              <div ng-show="!quest.poi">
-                Associer un POI
-              </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="well well-sm">
+                        <div ng-show="quest.poi">
+                            {{quest.poiO.name}}
+                        </div>
+                        <div ng-show="!quest.poi">
+                            Associer un POI
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <!-- associe quete / poi -->
+                    <button ng-click="associateQuestPoi($index)" type="button" class="btn btn-info btn-lg">
+                        Associer <i class="fa fa-university"></i>
+                    </button>
+                </div>
             </div>
-          </div>
-          <div class="col-xs-4">
-            <!-- associe quete / poi -->
-            <button ng-click="associateQuestPoi($index)" type="button" class="btn btn-info btn-lg">
-              Associer <i class="fa fa-university"></i>
-            </button>
-          </div>
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="btn btn-default" data-toggle="popover" title="{{quest.name}}"
+                         data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
+                    <div ng-click="removeQuest(cotSelected.step_sel,$index)" class="btn btn-danger"><i
+                            class="fa fa-trash"></i></div>
+                </div>
+                <div class="col-xs-5">
+                    <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest($index)"/> Optionnelle
+                </div>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-xs-7">
-            <div class="btn btn-default" data-toggle="popover" title="{{quest.name}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
-            <div ng-click="removeQuest(stepSelected,$index)" class="btn btn-danger"><i class="fa fa-trash"></i></div>
-          </div>
-          <div class="col-xs-5">
-            <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest($index)" /> Optionnelle
-          </div>
-        </div>
-      </div>
     </div>
     <button ng-click="addQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
-  </div>
 </div>
 
-<div ng-show="!isQuest">
-
-  <div ng-show="poiSelected==undefined">
-    <h5>Veuillez sélectionner un point d'interêt sur la carte</h5>
-  </div>
-
-  <!-- Partie sur les quêtes -->
-  <div id="cot-step-questlist">
-    <!-- Liste des quêtes -->
-    <div class="cot-step-quest">
-      <!-- Un exemple d'une quête -->
-      <div class="row">
-        <div class="col-xs-6">
-          <p>{{poiSelected.name}}</p>
-          <!-- <p>Monument : La sculpture de Louis XIV</p> -->
-        </div>
-        <div class="col-xs-6">
-          <!-- <img src="../images/louis_xiv.jpg" class="img-responsive" alt="Cinque Terre"> -->
-          <img src="{{poiSelected.image}}" class="img-rounded img-responsive">
-        </div>
-        <div class="col-xs-12">
-          <p>{{poiSelected.desc}}</p>
-          <!-- <p>Cette statue équestre de Louis XIV est une statue équestre en bronze de Louis XIV située sur la place d'Armes devant le château de Versailles. Jusqu'en 2008-2009, elle se trouvait dans la cour d'Honneur.</p> -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
-  $(document).ready(function() {
-    $('[data-toggle="popover"]').popover();
-  });
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
 </script>

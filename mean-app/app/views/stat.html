@@ -90,7 +90,7 @@
     <div class="row stat-sub2">
         <!--<div class="col-xs-6 min-stat1 center-block" id="min-container-chart"></div>-->
         <div class="col-xs-6 min-stat1 center-block" id="container"></div>
-            <table id="datatable" ng-if="show4">
+            <table id="datatable">
                 <thead>
                 <tr>
                     <th></th>
@@ -107,7 +107,11 @@
                 </tbody>
             </table>
 
-        <div class="col-xs-6 min-stat2 center-block" id="min-container-chart2"></div>
+        <div class="col-xs-6 min-stat2 center-block">
+            <div id="min-container-chart2"></div>
+            <div class="text-center modification" ng-show="pieChart" ng-click="editQuest()">Modifier la quête</div>
+        </div>
+
     </div>
 
 

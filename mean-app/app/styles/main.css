@@ -640,8 +640,26 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
     width: 100vw;
 }
 
-#min-container-chart, #min-container-chart2, #container{
+
+.min-stat2{
+  height: 35vh;
+}
+
+#min-container-chart2{
+  height: 100%;
+}
+
+#min-container-chart, #container{
     height: 35vh;
+}
+
+.modification{
+  position: relative;
+  z-index: 100;
+  top: -2vh;
+  background-color: green;
+  color: white;
+  cursor: hand;
 }
 
 #datatable{
@@ -718,7 +736,7 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
   display: block;
   line-height: 2; }
 
-.autocompletedemoCustomTemplate .autocomplete-custom-template .item-title md-icon {
+.autocompletedemoCustomTemplate .autocomplete-custom-template .item-title .md-icon {
   height: 18px;
   width: 18px; }
 
@@ -753,4 +771,30 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
 .label-default[href]:hover,
 .label-default[href]:focus {
   background-color: #16A085;
+}
+
+/* Info poi */
+.infopoi{
+  width: 15vw;
+  height: auto;
+}
+
+.goat{
+  width: 10vw;
+  height: auto;
+  float: right;
+  margin: 0 0 10px 10px;
+
+}
+.panel-primary > .panel-heading {
+     background-color: #34495E !important;
+     border-color: #ffffff;
+}
+
+.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+     border-top-color: #ffffff;
+}
+
+.panel-primary {
+  border-color: #ffffff;
 }
