@@ -21,7 +21,7 @@ angular.module('eldoragoApp')
       return angular.extend(obj1, obj2);
     }
 
-
+    
     //get set
     function getCurrentCot() {
       return currentCot.cot;
@@ -30,7 +30,7 @@ angular.module('eldoragoApp')
 
     //CRUD Cot
     function createCot() {
-      currentCot.cot = {name: 'nom par default', desc: 'desc par default', stepsO: [], steps: [], pois: []};
+      currentCot.cot = {name: 'nom par default', desc: 'desc par default', stepsO: [], steps: [], pois: [],step_sel: 0};
       console.info('Cot created');
       hasChanged = true;
       return updateCot();
@@ -58,6 +58,9 @@ angular.module('eldoragoApp')
         //$scope.cotSelected = resp.data;
         console.log(resp.data);
         currentCot.cot = resp.data;
+        
+        if(resp.data.steps.length>0)
+          currentCot.cot.step_sel = 0;
 
         //convert date
         if (currentCot.cot.time_est) {
