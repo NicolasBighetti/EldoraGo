@@ -71,13 +71,17 @@ angular
         redirectTo: '/'
       });
   });
+
 angular
-  .module('eldoragoApp').run(function (editableOptions) {
-  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-  // editableOptions.submitButtonTitle = 'Submit';
-editableOptions.submitButtonAriaLabel = 'Submit';
-// editableOptions.cancelButtonTitle = 'Cancel';
-editableOptions.cancelButtonAriaLabel = 'Cancel';
-// editableOptions.clearButtonTitle = 'Clear';
-editableOptions.clearButtonAriaLabel = 'Clear';
+  .module('eldoragoApp').run(function(editableOptions, editableThemes) {
+  // editableThemes.bs3.inputClass = 'input-sm';
+
+  editableOptions.theme = 'bs3';
+  // editableOptions.theme = 'default';
+  // editableThemes['default'].submitTpl = '<button type="submit" class="btn btn-primary" title="Submit" aria-label="Submit"><span class="glyphicon glyphicon-ok"></span></button>';
+  // console.log(editableThemes['bs3'].submitTpl);
+  editableThemes['bs3'].submitTpl = '<button type="submit" class="label label-default"><i class="fa fa-check"></i></button>';
+  // console.log(editableThemes['bs3'].submitTpl);
+  editableThemes['bs3'].cancelTpl = '<button type="button" class="label label-danger" ng-click="$form.$cancel()" title="Cancel" aria-label="Cancel"><i class="fa fa-times"></i></button>';
+  // editableThemes.default.buttonsClass = 'label label-default';
 });
