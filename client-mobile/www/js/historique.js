@@ -48,7 +48,7 @@ angular.module('starter.historique', ['starter.cot-datas'])
 				url: 'https://eldorago.herokuapp.com/api/timelines',
 				data:{
 					action: this.getRandomKeyWord(),
-					date_s: date,
+					date_s: moment(),
 					player: CotData.getState().get("idJoueur")  
 				}
 			}

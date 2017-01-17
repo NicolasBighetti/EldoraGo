@@ -142,7 +142,25 @@
     };
 
 
+    $scope.windowOpt = {
+      show: false
+    };
 
+    function displayWindowPoi(poi) {
+      console.log('display win '+$scope.poiSelected.name);
+      console.log(poi);
+      console.log('display win 2');
+      console.log($scope.poiSelected);
+
+      //  windowOpt.position.lat = $scope.poiSelected.latitude;
+    //  windowOpt.position.lon = $scope.poiSelected.longitude;
+      $scope.windowOpt.show = true;
+    }
+
+
+    $scope.showWindow = function() {
+      $scope.windowOpt.show = true;
+    };
 
     $scope.addStep = function () {
       var num = CotFactory.getCurrentCot().stepsO.length + 1;
@@ -174,9 +192,16 @@
           for (var i = 0; i < $scope.markerList.length; i++) {
             if ($scope.markerList[i].id === marker.key) {
               $scope.poiSelected = $scope.markerList[i];
+              if($scope.windowOpt.show){
+                $scope.windowOpt.show = false;
+              } else {
+                displayWindowPoi();
+              }
             }
           }
           console.log($scope.poiSelected);
+          
+          //windo
         }
       }
     };
@@ -272,7 +297,7 @@
     /** Remove **/
     $scope.unSelectRiddle = function() {
       $scope.riddleSelected = null;
-    }
+    };
 
     /** Call in FaqCtrl when changing theme **/
     $scope.selectQuest = function (quest) {
@@ -312,19 +337,25 @@
 
     };
 
+
     $scope.addQuest = function () {
-      var step = $scope.stepSelected;
+      var step = $scope.cotSelected.step_sel;
       var newQuest = {
         name: "Quête " + randomName(),
-        desc: $scope.stepSelected.desc
+        desc: "Entrez la description de la quete"
       };
       console.log("newQuest");
 
-      CotFactory.createQuest($scope.stepSelected);
+      CotFactory.createQuest($scope.cotSelected.step_sel);
       $scope.cotSelected = CotFactory.getCurrentCot();
 
     };
 
+
+    $scope.clicMarker = function (data) {
+      console.log('clic marker');
+      console.dir(data);
+    };
 
     //on set l'objet local
     $scope.associateQuestPoi = function (quest) {
@@ -333,16 +364,16 @@
         console.error('No poi selected');
         return;
       }
-      $scope.cotSelected.stepsO[$scope.stepSelected].questsO[quest].poi = $scope.poiSelected._id;
-      $scope.cotSelected.stepsO[$scope.stepSelected].questsO[quest].poiO = $scope.poiSelected;
-      console.log('Le poi ' + $scope.poiSelected.name +' associé à'+$scope.cotSelected.stepsO[$scope.stepSelected].questsO[quest].name );
+      $scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].poi = $scope.poiSelected._id;
+      $scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].poiO = $scope.poiSelected;
+      console.log('Le poi ' + $scope.poiSelected.name +' associé à'+$scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].name );
 
     };
 
 
     $scope.associateQuestRiddle = function () {
       var quest = $scope.questSelected;
-      var step = $scope.stepSelected;
+      var step = $scope.cotSelected.step_sel;
       console.log('Associate' +quest + ' '+step);
       CotFactory.getCurrentCot().stepsO[step].questsO[quest].riddle = $scope.riddleSelected._id;
       CotFactory.getCurrentCot().stepsO[step].questsO[quest].riddleO = $scope.riddleSelected;
@@ -354,7 +385,7 @@
     /** LEFT SIDE **/
 
     $scope.setActive = function (step) {
-      $scope.stepSelected = step;
+      $scope.cotSelected.step_sel = step;
     };
 
     $scope.setActivePoi = function (poi) {

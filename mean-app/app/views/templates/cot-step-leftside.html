@@ -1,8 +1,10 @@
 <!-- STEPS -->
 LES ÉTAPES
 
-<div class="panel-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
-  <div ng-class="{'panel-primary' : stepSelected === $index}" ng-click="setActive($index)" class="panel panel-default">
+
+<div class="panel-group" ng-repeat="step in cotSelected.stepsO | orderBy:'pos'">
+
+  <div ng-class="{'panel-primary' : cotSelected.step_sel === $index}" ng-click="setActive($index)" class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-target="#list-{{$index}}">
@@ -33,6 +35,7 @@ LES ÉTAPES
 
 <!-- <ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
     <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item" data-toggle="collapse" data-target="#list-{{$index}}">
+>>>>>>> a0ba3c4312b080fc6aa9a44ca98e41efdb28c211
         <span editable-text="step.name" e-form="stepname">  {{ step.name || "empty" }}</span>
         <span class="label label-default pull-right" ng-click="stepname.$show()" ng-hide="stepname.$visible">
             <i class="fa fa-pencil-square-o"></i>
