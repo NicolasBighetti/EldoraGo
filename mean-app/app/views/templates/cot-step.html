@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="row" id="cot-step-row">
-    <div class="col-xs-3" id="cot-step-steplist-div">
+    <div class="col-sm-3" id="cot-step-steplist-div">
       <div ng-include src="'views/templates/cot-step-leftside.html'"></div>
     </div>
 
-    <div class="col-xs-5" id="cot-step-map-div">
+    <div class="col-sm-5" id="cot-step-map-div">
 
       <div ng-if="isFit">
         <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events"">
@@ -29,7 +29,7 @@
 
     </div>
 
-    <div class="col-xs-4" id="cot-step-quest-div">
+    <div class="col-sm-4" id="cot-step-quest-div">
       <!-- LES QUESTS & détails POI -->
       <div ng-include src="'views/templates/cot-step-rightside.html'"></div>
     </div>

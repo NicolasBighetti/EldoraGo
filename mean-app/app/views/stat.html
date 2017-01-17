@@ -99,35 +99,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th>1</th>
-                    <td>3</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <td>2</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th>3</th>
-                    <td>5</td>
-                    <td>11</td>
-                </tr>
-                <tr>
-                    <th>4</th>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <th>5</th>
-                    <td>2</td>
-                    <td>4</td>
+               <tr ng-repeat="item in questList">
+                    <th>{{item.number}}</th>
+                    <td>{{item.real}}</td>
+                    <td>{{item.expected}}</td>
                 </tr>
                 </tbody>
             </table>
 
-        <div class="col-xs-6 min-stat2 center-block" id="min-container-chart2"></div>
+        <div class="col-xs-6 min-stat2 center-block">
+            <div id="min-container-chart2"></div>
+            <div class="text-center modification" ng-show="pieChart" ng-click="editQuest()">Modifier la quête</div>
+        </div>
+
     </div>
 
 

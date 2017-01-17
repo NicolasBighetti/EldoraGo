@@ -21,6 +21,8 @@
     $scope.init = function () {
       console.log('init');
 
+      $scope.btnSelected = 'tous';
+
       $scope.getRiddleList();
       $scope.getMarkerList();
       console.log('init: object from fact :');
@@ -47,7 +49,7 @@
 
     //test functions
     $scope.showFullCot = function () {
-      
+
       $scope.cotSelected = CotFactory.getCurrentCot();
     };
     $scope.postCot = function () {
@@ -126,7 +128,7 @@
         latitude: $scope.lat,
         longitude: $scope.lon
       },
-      zoom: 10,
+      zoom: 8,
       markers: [],
       events: {
         click: function (map, eventName, originalEventArgs) {
@@ -285,7 +287,7 @@
     $scope.textSwitch = "Voir la fiche descriptive";
     $scope.switchQuest = function () {
       $scope.isQuest = !$scope.isQuest;
-      $scope.textSwitch = $scope.isQuest ? "Voir la fiche descriptive" : "Voir la liste des Quêtes";
+      $scope.textSwitch = $scope.isQuest ? "Voir la fiche descriptive" : "Voir la liste des quêtes";
     };
 
     $scope.select = function (riddle) {
@@ -392,6 +394,13 @@
       console.log('Poi with name ' +  $scope.poiSelected.name+' selected');
     };
 
+    $scope.setBtnActive = function (btn) {
+      $scope.btnSelected = btn;
+    };
+
+    $scope.isActiveBtn = function(btn) {
+      return btn === $scope.btnSelected;
+    };
 
     $scope.EnterPressed = function (keyEvent, lieu) {
 
