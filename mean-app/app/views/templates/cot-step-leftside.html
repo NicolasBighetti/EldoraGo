@@ -1,36 +1,50 @@
 <!-- STEPS -->
 LES ÉTAPES
 <ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
-    <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item">
+    <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item" data-toggle="collapse" data-target="#list-{{$index}}">
    <!-- <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item">-->
         <span editable-text="step.name" e-form="stepname">  {{ step.name || "empty" }}</span>
-        <button class="btn btn-default" ng-click="stepname.$show()" ng-hide="stepname.$visible">
-            Edit
-        </button>
-            <div>
-        <div editable-textarea="step.desc" e-form="stepdesc">
-        {{step.desc}}
-        </div>
-                <button class="btn btn-default" ng-click="stepdesc.$show()" ng-hide="stepdesc.$visible">
-                    Edit
-                </button>
-            </div>
-      <span ng-click="RemoveStep($index)" class="pull-right label label-danger">
-      <i class="fa fa-trash"></i>
-      </span>
+        <span class="label label-default pull-right" ng-click="stepname.$show()" ng-hide="stepname.$visible">
+            <i class="fa fa-pencil-square-o"></i>
+        </span>
     </li>
+    <li id="list-{{$index}}" class="collapse">
+      <div class="row">
+        <div class="col-xs-10">
+          <div editable-textarea="step.desc" e-form="stepdesc">
+            {{step.desc}}
+          </div>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <span ng-click="RemoveStep($index)" class="label label-danger pull-right">
+              <i class="fa fa-trash"></i>
+            </span>
+            <span class="label label-default pull-right" ng-click="stepdesc.$show()" ng-hide="stepdesc.$visible">
+              <i class="fa fa-pencil-square-o"></i>
+            </span>
+          </div>
+        </div>
+
+      </li>
+    </div>
 
 </ul>
 
 <button ng-click="addStep()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 
 
-<button ng-click="showFullCot()"> Show full Cot in console</button>
-<button ng-click="postCot()"> Validate and POST Cot gl hf</button>
+<!-- <button ng-click="showFullCot()"> Show full Cot in console</button> -->
+<!-- <button ng-click="postCot()"> Validate and POST Cot gl hf</button> -->
 
 <!-- POIS -->
 <div>
     <br/> LES POIS
+    <div class="btn-group">
+      <button ng-click="setBtnActive" type="button" class="btn btn-default active">Tous POI</button>
+      <button ng-click="setBtnActive" type="button" class="btn btn-default">Cot POI</button>
+    </div>
 
     <span ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
     <br/>
@@ -41,4 +55,3 @@ LES ÉTAPES
         </li>
     </ul>
 </div>
-
