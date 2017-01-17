@@ -24,7 +24,7 @@ angular.module('eldoragoApp')
       $scope.unSelectRiddle();
     }
 
-    /** Remove ""Override""**/
+    /** Remove **/
     $scope.removeTheme = function() {
       $scope.themeSelected.theme = null;
       $scope.unSelectRiddle();

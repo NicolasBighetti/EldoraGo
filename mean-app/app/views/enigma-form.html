@@ -1,4 +1,4 @@
-<div class="container container-padding">
+<div ng-init="initForm()" class="container container-padding">
     <div class="row">
         <div class="col-xs-12">
 
@@ -6,35 +6,41 @@
                 <div class="row">
                     <div class="col-xs-10 col-xs-offset-1">
 
-                        <h2 class="">Création</h2>
+                      <h2 ng-show="isSelectedRtype('riddle')">Création d'une énigme</h2>
+                      <h2 ng-show="isSelectedRtype('photo')">Création d'un défi photo</h2>
 
                         <!-- Preselection part -->
-                        <div ng-hide="partSelected">
-                            <a href="" ng-click="photo=true ; partSelected = true">Défi Photo</a>
+                        <div ng-hide="riddleToCreate.rtype">
+                          <h2>Création {{riddleToCreate.rtype}}</h2>
+                          <ul class="list-group text-center">
+                            <li ng-click="selectRtype('riddle')" class="list-group-item">Énigme</li>
+                            <li ng-click="selectRtype('photo')" class="list-group-item">Défi photo</li>
+                          </ul>
+                            <!-- <a href="" ng-click="photo=true ; partSelected = true">Défi Photo</a> -->
+                            <!-- <a href="" ng-click="selectRtype('photo')">Défi Photo</a>
                             <br />
-                            <a href="" ng-click="riddle=true ; partSelected = true">Énigme</a>
-                            <br />
+                            <a href="" ng-click="selectRtype('riddle')">Énigme</a>
+                            <br /> -->
                         </div>
                         <!-- Photo form -->
 
-                        <form ng-submit="createPhoto()" ng-show="photo"class="margin-base-vertical">
-                            <h3>Défi photo</h3>
+                        <!-- <form ng-submit="createPhoto()" ng-show="isSelectedRtype('photo')" class="margin-base-vertical">
                             <div class="row">
                                 <div class="col-xs-5">
-                                    <input type="text" class="form-control" ng-model="photoToCreate.name" placeholder="Nom du défi" required />
-                                    <input type="text" class="form-control" ng-model="photoToCreate.target" placeholder="Quoi prendre en photo" required />
-                                    
+                                    <input type="text" class="form-control" ng-model="riddleToCreate.name" placeholder="Nom" required />
+                                    <input type="text" class="form-control" ng-model="riddleToCreate.desc" placeholder="Prendre en photo" required />
+
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
-                                <button ng-click="photo=false; partSelected=false" class="btn btn-danger pull-right"><i class="fa fa-undo"></i></button>
+                                <button ng-click="photo=false; partSelected=false" class="btn btn-default pull-right"><i class="fa fa-undo"></i></button>
 
                             </div>
-                        </form>
-                       
-                        <form ng-submit="createRiddle()" ng-show="riddle" class="margin-base-vertical">
-                            <h3>Énigme</h3>
+                        </form> -->
+
+                        <form ng-submit="createRiddle()" ng-show="riddleToCreate.rtype" class="margin-base-vertical">
+                            <!-- <h3>Énigme</h3> -->
 
                             <div class="row">
                                 <div class="col-xs-5">
@@ -43,6 +49,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-5">
+                                  <select ng-model="riddleToCreate.theme" class="form-control">
+                                    <option>culture</option>
+                                    <option>parc</option>
+                                    <option>plage</option>
+                                    <option>ville</option>
+                                  </select>
+                                </div>
+                                <div class="col-xs-5 col-xs-offset-1">
                                     <input type="text" class="form-control" ng-model="riddleToCreate.keywords" placeholder="Mots clefs" />
                                 </div>
                             </div>
@@ -53,20 +67,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" ng-model="riddleToCreate.hint" placeholder="Indice" />
+                                    <input type="text" class="form-control" ng-model="riddleToCreate.hint" placeholder="Indice"/>
                                 </div>
                                 <div class="col-xs-5">
-                                    <input type="text" class="form-control" ng-model="riddleToCreate.answer" placeholder="Réponse" required />
+                                  <input ng-show="isSelectedRtype('riddle')" type="text" class="form-control" ng-model="riddleToCreate.answer" placeholder="Réponse" ng-required="isSelectedRtype('riddle')"/>
                                 </div>
                             </div>
                             <div class="row">
                                 <button type="submit" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
-                                <button ng-click="riddle=false; partSelected=false" class="btn btn-danger pull-right"><i class="fa fa-undo"></i></button>
+                                <button ng-click="unSelectRtype()" class="btn btn-default pull-right"><i class="fa fa-undo"></i></button>
 
                             </div>
 
                         </form>
-                        
+
                     </div>
 
                 </div>
