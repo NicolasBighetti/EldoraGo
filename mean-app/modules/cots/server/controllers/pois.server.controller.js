@@ -162,7 +162,7 @@ exports.changePoiPicture = function (req, res) {
     upload(req, res, function (uploadError) {
       if (uploadError) {
         return res.status(400).send({
-          message: 'Error occurred while uploading poi picture'
+          message: 'Error occurred while uploading poi picture' + uploadError
         });
       } else {
         poi.image = './images/uploads/' + req.file.filename;

@@ -3,10 +3,18 @@ LES ÉTAPES
 <ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
     <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item">
    <!-- <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item">-->
-        <span editable-text="step.name">  {{ step.name || "empty" }}</span>
-        <div editable-textarea="step.desc">
+        <span editable-text="step.name" e-form="stepname">  {{ step.name || "empty" }}</span>
+        <button class="btn btn-default" ng-click="stepname.$show()" ng-hide="stepname.$visible">
+            Edit
+        </button>
+            <div>
+        <div editable-textarea="step.desc" e-form="stepdesc">
         {{step.desc}}
         </div>
+                <button class="btn btn-default" ng-click="stepdesc.$show()" ng-hide="stepdesc.$visible">
+                    Edit
+                </button>
+            </div>
       <span ng-click="RemoveStep($index)" class="pull-right label label-danger">
       <i class="fa fa-trash"></i>
       </span>
