@@ -567,9 +567,9 @@ h1
 
 .stat-sub2{
   position: relative;
-  top: 2vh;
+  top: 7vh;
   width: 100vw;
-  height: 20vh;
+  height: 22vh;
 }
 
 
@@ -621,6 +621,31 @@ div.stat-main div.angular-google-map div.angular-google-map-container{
 .highcharts-title{
   position: absolute;
   top: 5vh;
+}
+
+.main-chart-title{
+    position: absolute;
+    top: 44vh;
+    width: 100%;
+    background-color: white;
+
+}
+
+.container-chart1{
+    height: 45vh;
+}
+
+#container-chart{
+    height: 100%;
+    width: 100vw;
+}
+
+#min-container-chart, #min-container-chart2, #container{
+    height: 35vh;
+}
+
+#datatable{
+    display: none;
 }
 
 .sub-text{
