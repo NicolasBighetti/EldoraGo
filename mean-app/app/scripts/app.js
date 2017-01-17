@@ -74,4 +74,10 @@ angular
 angular
   .module('eldoragoApp').run(function (editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  // editableOptions.submitButtonTitle = 'Submit';
+editableOptions.submitButtonAriaLabel = 'Submit';
+// editableOptions.cancelButtonTitle = 'Cancel';
+editableOptions.cancelButtonAriaLabel = 'Cancel';
+// editableOptions.clearButtonTitle = 'Clear';
+editableOptions.clearButtonAriaLabel = 'Clear';
 });

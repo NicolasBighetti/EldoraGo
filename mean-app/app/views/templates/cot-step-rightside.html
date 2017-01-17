@@ -12,41 +12,27 @@
 </div>
 <div ng-show="isQuest">
   <div ng-show="stepSelected!=undefined">
-
     <h5>Quêtes de l'étape {{cotSelected.stepsO[stepSelected].name}}</h5>
     <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[stepSelected].questsO | orderBy:'_id'">
-      <!-- <span> -->
       <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
         {{quest.name}}
         <span class="label label-default pull-right" ng-click="questname.$show()" ng-hide="questname.$visible">
-              <i class="fa fa-pencil-square-o"></i>
-            </span>
+          <i class="fa fa-pencil-square-o"></i>
+        </span>
       </div>
-      <!-- </span> -->
-      <!-- <div> -->
-      <!-- <div class="panel-body" editable-textarea="quest.desc" e-form="questdesc">
-          {{quest.desc}}
-          <button class="btn btn-default" ng-click="questdesc.$show()" ng-hide="questdesc.$visible">
-            <i class="fa fa-pencil-square-o"></i>
-          </button>
-        </div> -->
-      <!-- </div> -->
       <div class="panel-body">
         <div class="row">
           <div class="col-xs-10">
-
             <div class="well well-sm" editable-textarea="quest.desc" e-form="questdesc">
               {{quest.desc}}
             </div>
           </div>
           <div class="col-xs-2">
-
             <button class="btn btn-default pull-right" ng-click="questdesc.$show()" ng-hide="questdesc.$visible">
             <i class="fa fa-pencil-square-o"></i>
           </button>
           </div>
         </div>
-
 
         <div class="row">
           <div class="col-xs-10">
@@ -97,7 +83,6 @@
 </div>
 
 <div ng-show="!isQuest">
-
   <div ng-show="poiSelected==undefined">
     <h5>Veuillez sélectionner un point d'interêt sur la carte</h5>
   </div>
