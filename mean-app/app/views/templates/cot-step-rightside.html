@@ -23,23 +23,23 @@
       <div class="row" >
         <div class="col-xs-10">
             <div class="well well-sm">
-              <div ng-show="quest.riddle">
-                {{quest.riddle_name}}
+              <div ng-show="quest.riddleO">
+                {{quest.riddleO.name}}
               </div>
-              <div ng-show="!quest.riddle">
+              <div ng-show="!quest.riddleO">
                 Choisir un jeu
               </div>
             </div>
         </div>
         <div class="col-xs-2">
-          <button ng-click="selectQuest(quest)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
+          <button ng-click="selectQuest($index)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
         </div>
       </div>
       <div class="row" >
         <div class="col-xs-8">
           <div class="well well-sm">
             <div ng-show="quest.poi">
-              {{quest.poi_name}}
+              {{quest.poiO.name}}
             </div>
             <div ng-show="!quest.poi">
               Associer un POI
@@ -48,18 +48,18 @@
         </div>
         <div class="col-xs-4">
           <!-- associe quete / poi -->
-          <button ng-click="associateQuestPoi(quest)" type="button" class="btn btn-info btn-lg">
+          <button ng-click="associateQuestPoi($index)" type="button" class="btn btn-info btn-lg">
             Associer <i class="fa fa-university"></i>
           </button>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-7">
-          <div class="btn btn-default" data-toggle="popover" title="{{quest.riddle_name}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
-          <div ng-click="removeQuest(quest._id)" class="btn btn-danger"><i class="fa fa-trash"></i></div>
+          <div class="btn btn-default" data-toggle="popover" title="{{quest.name}}" data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
+          <div ng-click="removeQuest(stepSelected,$index)" class="btn btn-danger"><i class="fa fa-trash"></i></div>
         </div>
         <div class="col-xs-5">
-          <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest(quest)"/> Optionnelle
+          <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest($index)"/> Optionnelle
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@
 
 <div ng-show="!isQuest">
 
-  <div ng-show="!poiSelected">
+  <div ng-show="poiSelected==undefined">
     <h5>Veuillez sélectionner un point d'interêt sur la carte</h5>
   </div>
 

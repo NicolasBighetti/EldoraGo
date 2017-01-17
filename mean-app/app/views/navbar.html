@@ -7,11 +7,12 @@
             <li ng-class="{ active: isActive('/enigma-form')}"><a href="#!/enigma-form" class="hvr-overline-from-center-orange navbar-icon" id="enigma-icon" data-toggle="tooltip" data-placement="top" title="Ajouter un jeu"><i class="fa fa-lightbulb-o"></i></a></li>
             <li ng-class="{ active: isActive('/poi-list')}"><a href="#!/poi-list" class="hvr-overline-from-center-violet navbar-icon" id="poi-icon" data-toggle="tooltip" data-placement="top" title="Gestion des POI"><i class="fa fa-map-marker"></i></a></li>
             <li ng-class="{ active: isActive('/stats')}"><a href="#!/stat" class="hvr-overline-from-center-pink navbar-icon" id="stats-icon" data-toggle="tooltip" data-placement="top" title="Statistiques"><i class="fa fa-bar-chart"></i></a></li>
+            <li ng-class="{ active: isActive('/simpleCot')}"><a href="#!/stat" class="hvr-overline-from-center-pink navbar-icon" id="cc-icon" data-toggle="tooltip" data-placement="top" title="Create cots"><i class="fa fa-address-book"></i></a></li>
         </ul>
       </div>
 
         <ul ng-show="isActive('/cot')" class="nav navbar-nav">
-          <li><a href="#!/" class="btn btn-default">Retour</a></li>
+          <li><a href="#!/" class="btn btn-default" ng-click="reset()">Retour</a></li>
         </ul>
         <ul ng-show="isActive('/cot')" class="nav navbar-nav navbar-right">
           <li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editStep">Valider</button></li>

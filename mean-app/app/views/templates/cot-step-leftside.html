@@ -1,18 +1,9 @@
-<<<<<<< HEAD
-<ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
-<!-- <ul class="list-group" ng-repeat="step in stepList"> -->
-  <li ng-class="{active : stepSelected === step}" ng-click="setActive($index)" class="list-group-item"> {{step.name}}
-=======
+
 <!-- STEPS -->
 LES ÉTAPES
-<ul class="list-group">
-  <!-- <ul class="list-group" ng-repeat="step in stepList"> -->
-  <li ng-repeat="step in stepList | orderBy:'_id'" ng-class="{active : stepSelected === step}" ng-click="setActiveStep(step)" class="list-group-item"> {{step.name}}
->>>>>>> master
-    <!-- <span ng-click="RemoveStep(step._id)" class="badge">
-      <i class="fa fa-times"></i>
-    </span> -->
-    <span ng-click="RemoveStep($index)" class="pull-right label label-danger">
+    <ul class="list-group" ng-repeat="step in cotSelected.stepsO | orderBy:'_id'">
+      <li ng-class="{active : stepSelected === $index}" ng-click="setActive($index)" class="list-group-item"> {{step.name}}
+      <span ng-click="RemoveStep($index)" class="pull-right label label-danger">
       <i class="fa fa-trash"></i>
     </span>
   </li>
@@ -20,31 +11,21 @@ LES ÉTAPES
 
 <button ng-click="addStep()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 
-<<<<<<< HEAD
+
 <button ng-click="showFullCot()"> Show full Cot in console</button>
 <button ng-click="postCot()"> Validate and POST Cot gl hf</button>
-=======
+
 <!-- POIS -->
-<div ng-show="stepSelected">
+<div>
   <br/> LES POIS
-  <br/>
-  <span ng-show="poiSelected" ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
+
+  <span ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
   <br/>
   <ul class="list-group">
     <!-- <ul class="list-group" ng-repeat="poi in poiList"> -->
-    <li ng-repeat="poi in poiList | orderBy:'_id'" ng-click="setActivePoi(poi)" class="list-group-item"> {{poi.name}}
-      <!-- <span ng-click="RemoveStep(step._id)" class="badge">
-      <i class="fa fa-times"></i>
-    </span> -->
-      <!-- <span ng-click="RemoveStep(step._id)" class="pull-right label label-danger">
-      <i class="fa fa-trash"></i>
-    </span> -->
+    <li ng-repeat="poi in cotSelected.pois | orderBy:'_id'" ng-click="setActivePoi($index)" class="list-group-item">
+      {{poi.name}}
     </li>
   </ul>
 </div>
 
->>>>>>> master
-<!-- <div class="list-group" ng-repeat="step in stepList">
-  <a href="" class="list-group-item">Step numero {{step._id}}</a>
-  <button ng-click="RemoveStep(step._id)" class="btn btn-danger"> Supprimer</button>
-</div> -->

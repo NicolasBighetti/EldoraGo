@@ -24,10 +24,6 @@ var QuestSchema = new Schema({
     //required: 'Please fill quest desc',
     trim: true
   },
-  qtype: {
-    type: String,
-    default: 'Riddle'
-  },
   optional:{
     type: Boolean,
     default: false
@@ -42,6 +38,10 @@ var QuestSchema = new Schema({
     ref: 'Poi'
   },
   avg_time: {
+    type: Number,
+    default: 0
+  },
+  est_time: {
     type: Number,
     default: 0
   }

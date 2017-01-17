@@ -29,8 +29,15 @@ var RiddleSchema = new Schema({
     default: [],
     trim: true
   },
+  rtype:{
+    type: String,
+    default: 'riddle' //ou photo
+  },
+
   theme: {
-    type: [String]
+    type: String,
+    default: 'culture'
+    // value in culture ville plage montagne
   },
   hint: {
     type: String,

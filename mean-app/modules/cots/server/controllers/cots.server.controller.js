@@ -48,7 +48,7 @@ exports.update = function (req, res) {
   var cot = req.cot;
 
   cot = _.extend(cot, req.body);
-
+  cot.steps = req.body.steps;
   cot.save(function (err) {
     if (err) {
       return res.status(400).send({

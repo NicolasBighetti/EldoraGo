@@ -46,9 +46,9 @@ exports.read = function (req, res) {
  */
 exports.update = function (req, res) {
   var step = req.step;
-
+  console.log(req.body);
   step = _.extend(step, req.body);
-
+  step.quests = req.body.quests;
   step.save(function (err) {
     if (err) {
       return res.status(400).send({
