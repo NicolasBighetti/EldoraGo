@@ -78,6 +78,24 @@ angular.module('starter.cot-datas', [])
       return data;
     })
   },
+  checkIn: function($http, id, latitude, longitude){
+    var playerPromise = this.getPlayerNameByID($http, id);
+    return playerPromise.then(function(data){
+      console.log("Data pre update" + data)
+      data.data.coords.latitude = latitude;
+      data.data.coords.longitude = longitude; 
+      console.log("Data post update" + data)
+      var req = {
+        method: 'PUT',
+        url: 'https://eldorago.herokuapp.com/api/players/'+id,
+        data: data.data
+      }
+      return $http(req).then(function(data){
+        return data;
+      })
+    })
+    
+  },
   joinTeam: function($http, name){
     if(!state.get("idJoueur"))
       return;
