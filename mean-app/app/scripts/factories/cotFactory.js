@@ -57,11 +57,19 @@ angular.module('eldoragoApp')
         //$scope.cotSelected = resp.data;
         console.log(resp.data);
         currentCot.cot = resp.data;
+
+        //convert date
+        if (currentCot.cot.time_est) {
+          currentCot.cot.time_estO = minuteToS(currentCot.cot.time_est);
+        }
+        if (currentCot.cot.limited_time) {
+          currentCot.cot.limited_timeO = minuteToS(currentCot.cot.limited_time);
+        }
+
         currentCot.cot.stepsO = [];// currentCot.cot.steps;
         currentCot.cot.pois = [];// currentCot.cot.steps;
         for (var s in currentCot.cot.steps) {
           if (currentCot.cot.steps.hasOwnProperty(s) && s) {
-
             stepP.push(readStep(s));
           }
         }
@@ -133,11 +141,10 @@ angular.module('eldoragoApp')
 
 
           if (currentCot.cot.time_estO) {
-            var dateS = "1/1/1970 " + currentCot.cot.time_estO + "";
-            var hey = new Date(dateS);
-            currentCot.cot.time_est = hey.getMinutes() + hey.getHours() * 60;
-            console.log('set TIME Done');
-            console.log(currentCot.cot.time_est);
+            currentCot.cot.time_est = toMinute(currentCot.cot.time_estO);
+          }
+          if (currentCot.cot.limited_timeO) {
+            currentCot.cot.limited_time = toMinute(currentCot.cot.limited_timeO);
           }
 
           //clean remove and set steps Ids
@@ -287,6 +294,18 @@ angular.module('eldoragoApp')
         });
       }
       return deferred.promise;
+    }
+
+    function toMinute(time){
+      var dateS = "1/1/1970 " + time + "";
+      var hey = new Date(dateS);
+      return hey.getMinutes() + hey.getHours() * 60;
+    }
+    function minuteToS(time){
+      var h = Math.floor(time/60);
+      var m = Math.floor(time%60);
+      return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m);
+
     }
 
     function deleteCot() {
