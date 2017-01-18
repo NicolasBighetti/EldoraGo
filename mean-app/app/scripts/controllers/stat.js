@@ -28,6 +28,7 @@ angular.module('eldoragoApp')
     $scope.questListID = [];
 
     $scope.pieChart = false;
+    $scope.showMarker = false;
 
     $scope.left = 0;
 
@@ -114,6 +115,9 @@ angular.module('eldoragoApp')
             value: $scope.markerList[i].name,
             display: $scope.markerList[i].name,
             left: $scope.markerList[i].labelcolor,
+            latitude: $scope.markerList[i].latitude,
+            longitude: $scope.markerList[i].longitude,
+            color: $scope.markerList[i].labelcolor,
             type: 'POI'
           };
 
@@ -200,32 +204,52 @@ angular.module('eldoragoApp')
         $scope.showGraph = false;
         $scope.PoiDetails = false;
         $scope.CotDetails = false;
+        $scope.showMarker = false;
         putMarkers();
         return;
       }
 
       //Clear the markers currently present on the map execpt the one we selected
-      for (j = 0; j < $scope.markerList.length - 1; j++) {
+      /*for (j = 0; j < $scope.markerList.length - 1; j++) {
         if ($scope.markerList[j].id != item.id) {
           arrPos = j;
           delete $scope.markerList[j];
         }
-      }
+      }*/
 
       $scope.markerList.slice(0, 1);
 
       if (item.type == 'POI') {
         $scope.PoiDetails = true;
         //console.log($scope.markerList[arrPos + 1].labelcolor);
-        $scope.left = $scope.markerList[arrPos + 1].labelcolor;
-        $scope.map.center.latitude = $scope.markerList[arrPos + 1].latitude;
-        $scope.map.center.longitude = $scope.markerList[arrPos + 1].longitude;
+        $scope.changeMarkerPos(item.color);
+        console.log($scope.left);
+        $scope.map.center.latitude = item.latitude;
+        $scope.map.center.longitude = item.longitude;
       } else if (item.type == 'COT') {
         $scope.CotDetails = true;
         $scope.selectedCot = item.id;
       }
 
     }
+
+    $scope.changeMarkerPos = function(pos){
+      $scope.left = pos;
+    };
+
+    $scope.getMarkerPos = function () {
+
+
+      var p1 = new Promise(function (resolve, reject) {
+        $scope.showMarker = true;
+
+        angular.element('#mark').css('left', $scope.left + 'px');
+
+        }).then(function () {
+          return $scope.left;
+      })
+
+    };
 
     /**
      * Create filter function for a query string
