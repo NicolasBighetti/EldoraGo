@@ -201,10 +201,10 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
     .controller('HomeCtrl', function($scope) {
         $scope.showTabBar = false;
 
-        $scope.greaterThan = function(est, filter) {
-          console.log(est);
-          console.log(filter);
-          return est < filter;
+        $scope.greaterThan = function() {
+          console.log($scope.searchTime.time_est);
+          console.log($scope.searchCot.time_est);
+          return $scope.searchTime.time_est > $scope.searchCot.time_est;
         }
 
     })
@@ -257,7 +257,9 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
         var markers = [];
         var map;
 
-
+        $scope.checkIn = function(){
+            CotData.checkIn($http, CotData.getState().get("idJoueur"), getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3));
+        }
 
         function retrieveMarkers() {
 
@@ -344,7 +346,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
                     title: 'Position'
                 });
 
-                retrieveMarkers();
+                $scope.refreshMarker();
                 $scope.hide($ionicLoading);
             })
 
@@ -415,7 +417,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
 
         }
 
-        $scope.show = function($ionicLoading) {
+       $scope.show = function($ionicLoading) {
             $ionicLoading.show({
                 content: 'Getting current location...',
                 showBackdrop: false
