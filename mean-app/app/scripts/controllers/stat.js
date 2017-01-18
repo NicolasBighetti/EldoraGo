@@ -5,6 +5,14 @@
 angular.module('eldoragoApp')
   .controller('StatCtrl', function ($scope, $location, $timeout, $http, $q, $log, CotFactory) {
 
+    //var Rainbow = require('rainbowvis.js');
+    var rainbow = new Rainbow();
+    rainbow.setSpectrum('#FFFF00', '#FF0000');
+    rainbow.setNumberRange(1, 99);
+
+
+
+
     $scope.map = {};
     $scope.showGraph = false;
     $scope.PoiDetails = false;
@@ -83,6 +91,8 @@ angular.module('eldoragoApp')
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
 
+          console.log(rainbow.colourAt(12));
+          $scope.markerList[i].icon = "http://www.googlemapsmarkers.com/v1/" + rainbow.colourAt($scope.markerList[i].labelcolor) + "/";
 
           /*if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef'){
            $scope.markerList[i].icone = "http://www.googlemapsmarkers.com/v1/ecea24/";

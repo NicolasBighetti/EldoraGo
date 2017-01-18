@@ -26,15 +26,19 @@
             </div> -->
             <div class="col-xs-3">
               <img ng-click="selectTheme('plage')" src="images/plage.svg" class="img-responsive img-circle"/>
+              <div class="text-center">Plage</div>
             </div>
             <div class="col-xs-3">
               <img ng-click="selectTheme('ville')" src="images/ville.svg" class="img-responsive img-circle"/>
+              <div class="text-center">Ville</div>
             </div>
             <div class="col-xs-3">
               <img ng-click="selectTheme('culture')" src="images/culture.svg" class="img-responsive img-circle"/>
+              <div class="text-center">Culture</div>
             </div>
             <div class="col-xs-3">
               <img ng-click="selectTheme('parc')" src="images/parc.svg" class="img-responsive img-circle"/>
+              <div class="text-center">Parc</div>
             </div>
           </div>
         </div>
@@ -75,6 +79,7 @@
 
       </div>
       <div class="modal-footer">
+        <button ng-show="themeSelected.theme" ng-click="removeTheme()" type="button" class="btn btn-default">Changer de thème</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <!-- <button ng-click="associateQuest(questSelected, riddleSelected)" type="button" data-dismiss="modal" class="btn btn-success pull-right"><i class="fa fa-check"></i></button> -->
         <button ng-click="associateQuestRiddle()" type="button" class="btn btn-success pull-right"><i class="fa fa-check"></i></button>
