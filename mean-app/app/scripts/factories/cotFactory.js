@@ -27,6 +27,9 @@ angular.module('eldoragoApp')
       return currentCot.cot;
     }
 
+    function setCurrentCot(cot) {
+      currentCot.cot = cot;
+    }
 
     //CRUD Cot
     function createCot() {
@@ -36,9 +39,6 @@ angular.module('eldoragoApp')
       return updateCot();
     }
 
-    function setCurrentCot(cot) {
-      currentCot.cot = cot;
-    }
 
     function readCot() {
 
@@ -58,6 +58,7 @@ angular.module('eldoragoApp')
         //$scope.cotSelected = resp.data;
         console.log(resp.data);
         currentCot.cot = resp.data;
+        currentCot.cot.pois = [];
         
         if(!currentCot.cot.step_sel && resp.data.steps.length>0)
           currentCot.cot.step_sel = 0;
@@ -72,6 +73,8 @@ angular.module('eldoragoApp')
 
         currentCot.cot.stepsO = [];// currentCot.cot.steps;
         currentCot.cot.pois = [];// currentCot.cot.steps;
+        currentCot.cot.poisID = [];// currentCot.cot.steps;
+
         for (var s in currentCot.cot.steps) {
           if (currentCot.cot.steps.hasOwnProperty(s) && s) {
             stepP.push(readStep(s));
@@ -305,6 +308,7 @@ angular.module('eldoragoApp')
       var hey = new Date(dateS);
       return hey.getMinutes() + hey.getHours() * 60;
     }
+
     function minuteToS(time){
       var h = Math.floor(time/60);
       var m = Math.floor(time%60);
@@ -532,19 +536,44 @@ angular.module('eldoragoApp')
     function deleteRiddle() {
     }
 
+    function pinSymbol(color) {
+      return {
+        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+        fillColor: color,
+        fillOpacity: 1,
+        strokeColor: '#000',
+        strokeWeight: 2,
+        scale: 1,
+      };
+    }
+
+    function transformPoi(poi,color) {
+      poi.id = poi._id;
+      // rename latitude / longitude
+      poi.latitude = poi.coords.latitude;
+      poi.longitude = poi.coords.longitude;
+
+      poi.icon = pinSymbol(color);
+
+      return poi;
+    }
+
     function readPoi(keyS, keyQ) {
 
       var defer = $q.defer();
 
       var quest = currentCot.cot.stepsO[keyS].questsO[keyQ];
-      if (!quest.poi)
-        return;
 
       $http.get(DB_PATH + "pois/" + quest.poi).then(function (resp) {
-        quest.poiO = resp.data;
-        if (currentCot.cot.pois.indexOf(resp.data._id) != -1) {
-          currentCot.cot.pois.push(poiO);
+
+        var poi = transformPoi(resp.data,'#009900');
+
+        if (currentCot.cot.pois.indexOf(poi) == -1) {
+          currentCot.cot.pois.push(poi);
+          currentCot.cot.poisID.push(poi);
         }
+
+        quest.poiO = poi;
         defer.resolve(resp.data);
 
       }, function (error) {
@@ -591,6 +620,7 @@ angular.module('eldoragoApp')
       updateRiddle: updateRiddle,
       deleteRiddle: deleteRiddle,
 
+      transformPoi: transformPoi,
       setStep: setStep
     }
   }]);
