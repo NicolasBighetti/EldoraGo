@@ -305,7 +305,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
             retrieveMarkers();
             clearMarkers();
             showMarkers();
-            setInterval(this.refreshMarker, 1000);
+            setInterval(this.refreshMarker, 10000);
         }
 
         function randomizePosition() {
