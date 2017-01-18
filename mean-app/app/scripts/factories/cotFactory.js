@@ -59,7 +59,7 @@ angular.module('eldoragoApp')
         console.log(resp.data);
         currentCot.cot = resp.data;
         
-        if(resp.data.steps.length>0)
+        if(!currentCot.cot.step_sel && resp.data.steps.length>0)
           currentCot.cot.step_sel = 0;
 
         //convert date
@@ -555,6 +555,13 @@ angular.module('eldoragoApp')
       return defer.promise;
     }
 
+    function setStep(id) {
+      var index = currentCot.cot.steps.indexOf(id);
+
+      console.log('Step selected '+index);
+      if(index>=0)
+      currentCot.cot.step_sel = index;
+    }
     return {
       getCurrentCot: getCurrentCot,
 
@@ -582,6 +589,8 @@ angular.module('eldoragoApp')
       createRiddle: createRiddle,
       readRiddle: readRiddle,
       updateRiddle: updateRiddle,
-      deleteRiddle: deleteRiddle
+      deleteRiddle: deleteRiddle,
+
+      setStep: setStep
     }
   }]);

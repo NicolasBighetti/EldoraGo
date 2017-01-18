@@ -206,7 +206,7 @@ angular.module('eldoragoApp')
 
       if (item.type == 'POI') {
         $scope.PoiDetails = true;
-        console.log($scope.markerList[arrPos + 1].labelcolor);
+        //console.log($scope.markerList[arrPos + 1].labelcolor);
         $scope.left = $scope.markerList[arrPos + 1].labelcolor;
         $scope.map.center.latitude = $scope.markerList[arrPos + 1].latitude;
         $scope.map.center.longitude = $scope.markerList[arrPos + 1].longitude;
@@ -443,7 +443,7 @@ function startMinGraph(stepId) {
             events: {
               click: function () {
                 $scope.startMinGraph2($scope.questListID[this.category]);
-                console.log($scope.questListID[this.category]);
+                //console.log($scope.questListID[this.category]);
                 $scope.selectedStepID = $scope.questListID[this.category]._id;
               }
             }
@@ -470,9 +470,6 @@ $scope.startMinGraph2 = function (questId) {
 
   $scope.pieChart = true;
   $scope.$apply();
-  console.log($scope.pieChart);
-
-  console.log(questId.questsO[0].success);
 
   Highcharts.chart('min-container-chart2', {
     chart: {
@@ -524,7 +521,7 @@ $scope.startMinGraph2 = function (questId) {
 
  $scope.editQuest = function(){
 
-   console.log($scope.selectedStepID);
+   //console.log($scope.selectedStepID);
 
 
    var cot = {
@@ -537,7 +534,10 @@ $scope.startMinGraph2 = function (questId) {
 
 
    CotFactory.setCurrentCot(cot);
-   $location.path('/cot');
+   CotFactory.readCot().then(function () {
+     CotFactory.setStep($scope.selectedStepID);
+     $location.path('/cot');
+   });
 
  }
 
