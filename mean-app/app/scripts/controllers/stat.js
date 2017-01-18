@@ -295,6 +295,7 @@ angular.module('eldoragoApp')
     $scope.startGraph = function () {
 
       var data = [];
+      var names = [];
 
       var chart1 = Highcharts.chart('container-chart', {
         chart: {
@@ -314,7 +315,9 @@ angular.module('eldoragoApp')
             point: {
               events: {
                 click: function (e) {
-                  startMinGraph($scope.stepIdList[this.category]);
+                  //startMinGraph($scope.stepIdList[this.category]);
+                  startMinGraph(e.point.category);
+                  console.log(e.point.category);
                 }
               }
             }
@@ -328,7 +331,6 @@ angular.module('eldoragoApp')
         xAxis: {
           type: 'étapes',
           labels: {
-            rotation: -45,
             style: {
               fontSize: '13px',
               fontFamily: 'Verdana, sans-serif'
@@ -389,18 +391,22 @@ angular.module('eldoragoApp')
               $http.get(DB_PATH + "steps/" + resp.data.steps[i]).then(function (resp1) {
                 //console.log(resp1);
                 data.push(resp1.data.avg_time);
+                names.push(resp1.data.name);
                 //data.push(resp1.data.avg_time);
                 resolve(resp1);
               });
             }));
           }
 
+          console.log(data);
+
           Promise.all(promises).then(function(result){
             chart1.series[0].setData(data, true);
+            chart1.xAxis[0].setCategories(names);
           });
 
         });
-    }
+    };
 
 
 
@@ -427,12 +433,12 @@ function startMinGraph(stepId) {
 
       //We pick the right step
       for(var i = 0;  i < questRes.length; i++){
-        if (questRes[i]._id == stepId){
+        if (questRes[i].name == stepId){
           questRes = questRes[i].questsO;
         }
       }
 
-
+      $scope.questList = [];
       //We create the object corresponding to the quests
       for(var i = 0;  i < questRes.length; i++){
 
