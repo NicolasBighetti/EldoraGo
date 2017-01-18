@@ -188,15 +188,16 @@
 
           //$scope.associateStepPoi(step, poi);
           console.log("$scope.markerList.length" + $scope.markerList.length);
+          console.dir(marker);
 
           for (var i = 0; i < $scope.markerList.length; i++) {
             if ($scope.markerList[i].id === marker.key) {
               $scope.poiSelected = $scope.markerList[i];
-              if($scope.windowOpt.show){
-                $scope.windowOpt.show = false;
-              } else {
+              //if($scope.windowOpt.show){
+                //$scope.windowOpt.show = false;
+              //} else {
                 displayWindowPoi();
-              }
+              //}
             }
           }
           console.log($scope.poiSelected);
