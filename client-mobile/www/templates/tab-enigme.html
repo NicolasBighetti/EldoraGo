@@ -12,7 +12,7 @@
       </div>
         <!-- <h4><small>{{cotData.desc}}</small></h4> -->
 
-        <div class="list" name="step" ng-repeat="st in cotData.stepsO">
+        <div class="list" name="step" ng-repeat="st in cotData.stepsO | orderBy:'pos'">
             <a href="" data-toggle="collapse" data-target="#{{st._id}}" class="item">
                 <h3>{{st.name}}</h3>
                 <p>{{st.desc}}</p>

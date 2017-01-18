@@ -197,10 +197,10 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
     .controller('HomeCtrl', function($scope) {
         $scope.showTabBar = false;
 
-        $scope.greaterThan = function(est, filter) {
-          console.log(est);
-          console.log(filter);
-          return est < filter;
+        $scope.greaterThan = function() {
+          console.log($scope.searchTime.time_est);
+          console.log($scope.searchCot.time_est);
+          return $scope.searchTime.time_est > $scope.searchCot.time_est;
         }
 
     })
