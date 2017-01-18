@@ -391,7 +391,7 @@
     $scope.setActivePoi = function (poi) {
       $scope.poiSelected = $scope.cotSelected.pois[poi];
 
-      console.log('Poi with name ' +  $scope.poiSelected.name+' selected');
+      console.log('POI with name ' +  $scope.poiSelected.name+' selected');
     };
 
     $scope.setBtnActive = function (btn) {

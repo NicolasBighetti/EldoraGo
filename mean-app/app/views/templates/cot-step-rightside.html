@@ -7,13 +7,15 @@
   <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[cotSelected.step_sel].questsO | orderBy:'_id'">
     <!-- <span> -->
 
-    <div data-toggle="collapse" data-target="#{{quest._id}}" class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
+    <!-- <div data-toggle="collapse" data-target="#{{quest._id}}" class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname"> -->
+    <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
       {{quest.name}}
       <span class="label label-default pull-right" ng-click="questname.$show()" ng-hide="questname.$visible">
           <i class="fa fa-pencil-square-o"></i>
         </span>
     </div>
-    <div id="{{quest._id}}" class="panel-body collapse">
+    <!-- <div id="{{quest._id}}" class="panel-body collapse"> -->
+    <div class="panel-body">
       <div class="row">
         <div class="col-xs-10">
           <div class="well well-sm" editable-textarea="quest.desc" e-form="questdesc">
