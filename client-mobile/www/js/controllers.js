@@ -21,11 +21,15 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
 
     .controller('TeamviewCtrl', function($scope, $http, CotData) {
 
+        CotData.setStartTime();
         if ($scope.choice === undefined)
             $scope.activeQuest = "Default Quest";
         else
             $scope.activeQuest = $scope.choice.name;
 
+        $scope.$on('$ionicView.enter', function(e) {
+            $scope.elapsedTime = CotData.getElapsedTime();
+        });        
 
         $scope.playSolo = function(name) {
             $scope.playerName = name;
