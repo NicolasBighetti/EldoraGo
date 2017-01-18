@@ -31,7 +31,7 @@ angular
     'material.svgAssetsCache',
     'uiGmapgoogle-maps',
     'angularFileUpload',
-    'xeditable'
+    'xeditable',
     // 'ui.router'
   ])
   .config(
