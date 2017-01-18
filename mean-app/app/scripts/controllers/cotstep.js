@@ -402,6 +402,10 @@
       return btn === $scope.btnSelected;
     };
 
+    $scope.isActivePoi = function(poi) {
+      return $scope.cotSelected.pois[poi]._id === $scope.poiSelected._id;
+    };
+
     $scope.EnterPressed = function (keyEvent, lieu) {
 
       if (keyEvent.which === 13) {
@@ -414,7 +418,9 @@
     $scope.submitCot = function () {
       CotFactory.setCurrentCot($scope.cotSelected);
       CotFactory.updateCot();
+
       $('#editStep').modal('hide');
+
 
       $timeout(function() {
         $location.path("/cot-list");
