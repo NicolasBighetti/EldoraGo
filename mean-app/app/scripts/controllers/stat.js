@@ -380,79 +380,83 @@ function startMinGraph(stepId) {
   };
 
   CotFactory.setCurrentCot(cot);
-  CotFactory.readCot().then(function (test) {
-    //console.log(CotFactory.getCurrentCot());
 
-    //We get all the steps
-    var questRes = CotFactory.getCurrentCot().stepsO;
+  var p2 = new Promise(function (resolve, reject) {
 
-    $scope.questListID = questRes;
+    CotFactory.readCot().then(function (test) {
+      //console.log(CotFactory.getCurrentCot());
 
-    //We pick the right step
-    for(var i = 0;  i < questRes.length; i++){
-      if (questRes[i]._id == stepId){
-        questRes = questRes[i].questsO;
+      //We get all the steps
+      var questRes = CotFactory.getCurrentCot().stepsO;
+
+      $scope.questListID = questRes;
+
+      //We pick the right step
+      for(var i = 0;  i < questRes.length; i++){
+        if (questRes[i]._id == stepId){
+          questRes = questRes[i].questsO;
+        }
       }
-    }
 
 
-    //We create the object corresponding to the quests
-    for(var i = 0;  i < questRes.length; i++){
+      //We create the object corresponding to the quests
+      for(var i = 0;  i < questRes.length; i++){
 
-      var o = {
-        id: questRes[i]._id,
-        real: questRes[i].avg_time,
-        expected: questRes[i].est_time,
-        number: i
-        
-      };
+        var o = {
+          id: questRes[i]._id,
+          real: questRes[i].avg_time,
+          expected: questRes[i].est_time,
+          number: i
 
-      $scope.questList.push(o);
-    }
+        };
 
-  }).then(function () {
+        $scope.questList.push(o);
+      }
+
+      resolve(test);
+
+    })});
 
 
+  p2.then(function () {
 
-
-
-  var charts2 = Highcharts.chart('container', {
-    data: {
-      table: 'datatable'
-    },
-    chart: {
-      type: 'column'
-    },
-    title: {
-      text: 'Temps moyen par quête'
-    },
-    yAxis: {
-      allowDecimals: false,
+    var charts2 = Highcharts.chart('container', {
+      data: {
+        table: 'datatable'
+      },
+      chart: {
+        type: 'column'
+      },
       title: {
-        text: 'Units'
-      }
-    },
-    plotOptions: {
-      series: {
-        cursor: 'pointer',
-        point: {
-          events: {
-            click: function () {
-              $scope.startMinGraph2($scope.questListID[this.category]);
-              console.log($scope.questListID[this.category]);
-              $scope.selectedStepID = $scope.questListID[this.category]._id;
+        text: 'Temps moyen par quête'
+      },
+      yAxis: {
+        allowDecimals: false,
+        title: {
+          text: 'Units'
+        }
+      },
+      plotOptions: {
+        series: {
+          cursor: 'pointer',
+          point: {
+            events: {
+              click: function () {
+                $scope.startMinGraph2($scope.questListID[this.category]);
+                console.log($scope.questListID[this.category]);
+                $scope.selectedStepID = $scope.questListID[this.category]._id;
+              }
             }
           }
         }
-      }
-    },
-    /*tooltip: {
-      formatter: function () {
-        return '<b>' + this.series.name + '</b><br/>' +
-          this.point.y + ' ' + this.point.name.toLowerCase();
-      }
-    }*/
-  });
+      },
+      /*tooltip: {
+        formatter: function () {
+          return '<b>' + this.series.name + '</b><br/>' +
+            this.point.y + ' ' + this.point.name.toLowerCase();
+        }
+      }*/
+    });
 
   });
 
