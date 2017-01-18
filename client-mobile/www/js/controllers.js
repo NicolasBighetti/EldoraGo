@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['starter.cot-datas', 'starter.notifications'])
+angular.module('starter.controllers', ['starter.cot-datas', 'starter.notifications', 'starter.go-socket'])
 
     .controller('DashCtrl', function($scope) {})
 
@@ -37,6 +37,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
             playerAnswer.then(function(result) {
                 $scope.playerData = result.data;
                 CotData.setIdJoueur($scope.playerData._id);
+                CotData.setNomJoueur($scope.playerData.name);
             })
         }
 
@@ -63,6 +64,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
                 teamAnswer.then(function(result) {
                     $scope.teamData = result.data;
                     CotData.setIdTeam($scope.teamData._id);
+                    CotData.setNomJoueur($scope.playerData.name);
                 })
 
             })
@@ -71,7 +73,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
 
     })
 
-    .controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $ionicPopup, $timeout, CotData) {
+    .controller('EnigmeCtrl', function($scope, $http, $q, $ionicActionSheet, $ionicPopup, $timeout, CotData, Socket) {
         $scope.stepsid = [];
         $scope.questsid = [];
         $scope.riddlesid = [];
@@ -130,6 +132,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
             console.log("quest.answer = "+quest.riddleO.answer);
             console.log("quest.tryAnswer = "+quest.tryAnswer);
             quest.isFinish = true;
+            Socket.emit(" a finit une quête!")
           }
 
         }
@@ -163,6 +166,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
                         quest.isHelp = true;
                     } else if (index == 2) {
                         quest.assigned = false;
+                        Socket.emit(" c'est assigné une quête")
                     }
 
                     return true;
@@ -188,6 +192,8 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
                 title: myTitle,
                 template: myTemplate
             });
+
+            Socket.emit(" a demandé de l'aide");
 
             alertPopup.then(function(res) {
                 // quest.isHelp = true;
@@ -299,7 +305,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
             retrieveMarkers();
             clearMarkers();
             showMarkers();
-            setInterval(this.refreshMarker, 1000);
+            setInterval(this.refreshMarker, 10000);
         }
 
         function randomizePosition() {
