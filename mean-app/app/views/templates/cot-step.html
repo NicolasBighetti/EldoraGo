@@ -8,8 +8,16 @@
 
       <div ng-if="isFit">
         <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
-          <ui-gmap-markers models="markerList" coords="'self'" fit="'true'" icon="'icon'" events="marker.events"></ui-gmap-markers>
+
+          <ui-gmap-window templateUrl="'views/templates/poi-view.html'" options="windowOpt"
+                          show="windowOpt.show"
+                          closeClick="closeWindow"
+                          templateParameter="poiSelected" coords="poiSelected">
+          </ui-gmap-window>
+
+          <ui-gmap-markers models="markerList" coords="'self'" icon="'icon'" events="marker.events" click="clickMarker()" fit="'true'"></ui-gmap-markers>
         </ui-gmap-google-map>
+
       </div>
 
       <div ng-if="!isFit">

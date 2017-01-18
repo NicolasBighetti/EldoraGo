@@ -16,34 +16,44 @@
 
     $scope.removeQuest = CotFactory.deleteQuest;
 
-
+    $scope.markerList = [];
+    
     /**  Loading **/
     $scope.init = function () {
       console.log('init');
+      $scope.markerList = [];
 
       $scope.btnSelected = 'tous';
-
-      $scope.getRiddleList();
-      $scope.getMarkerList();
-      console.log('init: object from fact :');
-      console.log(CotFactory.getCurrentCot());
+      if(CotFactory.getCurrentCot()) {
+        $scope.getRiddleList();
 
 
-      // si on vient de la page cot-list
-      if (CotFactory.getCurrentCot()) {
+        console.log('init: object from fact :');
+        console.log(CotFactory.getCurrentCot());
 
+
+        // si on vient de la page cot-list
 
         //charger la cot
         CotFactory.readCot().then(function (res) {
+
           console.log('Cot with objects and ids');
+          console.dir(CotFactory.getCurrentCot().pois);
+
+          //a verifier
+          $scope.cotSelected = CotFactory.getCurrentCot();
+
+          $scope.getMarkerList();
+
           console.dir($scope.cotSelected);
           //$scope.selected = CotFactory.getCurrentCot();
-        },function (error) {
+        }, function (error) {
           console.error(error);
         });
+      }
 
         //$scope.getStepList();
-      }
+
     };
 
 
@@ -74,6 +84,7 @@
       console.log("Le LIEN : " + lien);
       var geocoder = new google.maps.Geocoder();
       console.log('geoCode');
+
       geocoder.geocode({
         "address": lien
       }, function (results, status) {
@@ -93,14 +104,11 @@
         }
       });
 
-      CotFactory.createCot().then(function () {
-
+     /* CotFactory.createCot().then(function () {
         $scope.cotSelected = CotFactory.getCurrentCot();
-
-
       },function (code) {
           console.error(code);
-      });
+      });*/
 
 
 
@@ -181,26 +189,19 @@
       events: {
         click: function (marker, eventName, args) {
 
-          //$('#interestMarker').modal('show');
-          //$scope.open();
-          //console.log(marker.position.lat() +" -- "+ marker.position.lng());
           console.log("Marker clicked ! ");
 
           //$scope.associateStepPoi(step, poi);
+
           console.log("$scope.markerList.length" + $scope.markerList.length);
           console.dir(marker);
 
           for (var i = 0; i < $scope.markerList.length; i++) {
             if ($scope.markerList[i].id === marker.key) {
               $scope.poiSelected = $scope.markerList[i];
-              //if($scope.windowOpt.show){
-                //$scope.windowOpt.show = false;
-              //} else {
                 displayWindowPoi();
-              //}
             }
           }
-          console.log($scope.poiSelected);
 
           //windo
         }
@@ -210,64 +211,31 @@
 
     /** Get Marker de la BDD **/
     $scope.poiListId = [];
+    $scope.poiList = [];
+
+
 
     $scope.getMarkerList = function () {
-
       $http.get(DB_PATH + "pois").then(function (resp) {
 
 
         $scope.markerList = resp.data;
 
+        var poisID = $scope.cotSelected.pois.map(function (a) {return a._id;});
         // foreach marker on markerList BDD
         for (var i = 0; i < $scope.markerList.length; i++) {
-          //rename _id en id
-          $scope.markerList[i].id = $scope.markerList[i]._id;
-          // rename latitude / longitude
-          $scope.markerList[i].latitude = $scope.markerList[i].coords.latitude;
-          $scope.markerList[i].longitude = $scope.markerList[i].coords.longitude;
-
-          if ($scope.poiListId.indexOf($scope.markerList[i]._id) >= 0) {
-            $scope.markerList[i].icon = 'http://www.googlemapsmarkers.com/v1/009900/';
+          var color = '#F00';
+          if (poisID.indexOf($scope.markerList[i]._id) >= 0) {
+            color = '#0F0';
           }
-          // adding marker on the map
+
+          //set id and lat/long
+          $scope.markerList[i] = CotFactory.transformPoi($scope.markerList[i],color);
+
           $scope.map.markers.push($scope.markerList[i]);
         }
         // $scope.$apply();
-
-
       });
-    };
-
-
-    $scope.getPoiList = function (step) {
-      $scope.poiList = [];
-      $scope.poiListId = [];
-      for (var i = 0; i < step.quests.length; i++) {
-        $http.get(DB_PATH + "quests/" + step.quests[i]).then(function (resp) {
-          var poi_id = resp.data.poi;
-          if (poi_id != undefined) {
-            $http.get(DB_PATH + "pois/" + poi_id).then(function (resp) {
-              $scope.poiList.push(resp.data);
-              $scope.poiListId.push(resp.data._id);
-
-            }, function (error) {
-              alert(error);
-            });
-          }
-        }, function (error) {
-          alert(error);
-        }).then(function (resp) {
-          // si on a des quetes, apres avoir recup les pois on appelle getMarkerList
-          $scope.getMarkerList();
-        });
-      }
-
-      // si pas de quete on appelle getMarkerList
-      if (step.quests.length == 0) {
-        $scope.getMarkerList();
-        console.log('end getPoiList sans quetes');
-
-      }
     };
 
     $scope.getRiddleList = function () {
@@ -279,7 +247,6 @@
 
     };
 
-    //TODO Fact Removes a step
     $scope.RemoveStep = CotFactory.deleteStep;
 
 
@@ -306,34 +273,33 @@
     };
 
 
-// Ajoute dans la liste temporaire le POI à mettre en valeur
+    // Ajoute dans la liste temporaire le POI à mettre en valeur
     $scope.addPoiList = function () {
 
       var poi = $scope.poiSelected;
 
+      if(!poi){
+        console.error('No poi Sel to add');
+        return;
+      }
+
       // Si pas déjà dans la liste
       if ($scope.cotSelected.pois.indexOf(poi) < 0) {
 
-        if(!poi){
-          console.error('No poi Sel to add');
-          return;
-        }
-        poi.id = poi._id;
-        // rename latitude / longitude
-        poi.latitude = poi.coords.latitude;
-        poi.longitude = poi.coords.longitude;
-
-        poi.icon = 'http://www.googlemapsmarkers.com/v1/009900/';
+        poi = CotFactory.transformPoi(poi,'#0F0');
 
         $scope.cotSelected.pois.push(poi);
 
         // adding marker on the map
-        $scope.map.markers.push(poi);
+        var mIndex = $scope.map.markers.indexOf(poi);
+        if(mIndex == -1){
+          $scope.map.markers.push(poi);
+        }
+        else {
+          $scope.map.markers[mIndex] = poi;
+        }
       } else {
         console.log("POI déjà dans la liste");
-        poi.icon = 'http://www.googlemapsmarkers.com/v1/009900/';
-        poi.latitude = poi.coords.latitude;
-        poi.longitude = poi.coords.longitude;
       }
 
     };
@@ -365,9 +331,18 @@
         console.error('No poi selected');
         return;
       }
-      $scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].poi = $scope.poiSelected._id;
-      $scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].poiO = $scope.poiSelected;
-      console.log('Le poi ' + $scope.poiSelected.name +' associé à'+$scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].name );
+
+      var questO =  $scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest];
+      if(questO.poi == $scope.poiSelected._id ){
+        console.log('same poi');
+        return;
+      }
+
+      questO.poi = $scope.poiSelected._id;
+      questO.poiO = $scope.poiSelected;
+
+      $scope.addPoiList();
+      console.log('Le poi ' + $scope.poiSelected.name +' associé à '+$scope.cotSelected.stepsO[$scope.cotSelected.step_sel].questsO[quest].name );
 
     };
 
@@ -404,6 +379,8 @@
     };
 
     $scope.isActivePoi = function(poi) {
+      if(!$scope.poiSelected)
+        return false;
       return $scope.cotSelected.pois[poi]._id === $scope.poiSelected._id;
     };
 
