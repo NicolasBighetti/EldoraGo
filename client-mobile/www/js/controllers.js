@@ -21,11 +21,15 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
 
     .controller('TeamviewCtrl', function($scope, $http, CotData) {
 
+        CotData.setStartTime();
         if ($scope.choice === undefined)
             $scope.activeQuest = "Default Quest";
         else
             $scope.activeQuest = $scope.choice.name;
 
+        $scope.$on('$ionicView.enter', function(e) {
+            $scope.elapsedTime = CotData.getElapsedTime();
+        });        
 
         $scope.playSolo = function(name) {
             $scope.playerName = name;
@@ -253,7 +257,9 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
         var markers = [];
         var map;
 
-
+        $scope.checkIn = function(){
+            CotData.checkIn($http, CotData.getState().get("idJoueur"), getRandomInRange(-180, 180, 3), getRandomInRange(-180, 180, 3));
+        }
 
         function retrieveMarkers() {
 
@@ -340,7 +346,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
                     title: 'Position'
                 });
 
-                retrieveMarkers();
+                $scope.refreshMarker();
                 $scope.hide($ionicLoading);
             })
 
@@ -411,7 +417,7 @@ angular.module('starter.controllers', ['starter.cot-datas', 'starter.notificatio
 
         }
 
-        $scope.show = function($ionicLoading) {
+       $scope.show = function($ionicLoading) {
             $ionicLoading.show({
                 content: 'Getting current location...',
                 showBackdrop: false
