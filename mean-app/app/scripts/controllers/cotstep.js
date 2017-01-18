@@ -200,7 +200,7 @@
             }
           }
           console.log($scope.poiSelected);
-          
+
           //windo
         }
       }
@@ -415,6 +415,10 @@
       CotFactory.setCurrentCot($scope.cotSelected);
       CotFactory.updateCot();
       $('#editStep').modal('hide');
+
+      $timeout(function() {
+        $location.path("/cot-list");
+      }, 750);
     };
 
 
