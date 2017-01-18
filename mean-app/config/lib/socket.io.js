@@ -68,8 +68,11 @@ module.exports = function (app, db) {
 
   // Intercept Socket.io's handshake request
   io.use(function (socket, next) {
+    console.log('Socket io connection');
+    console.dir(socket);
+    
     // Use the 'cookie-parser' module to parse the request cookies
-    cookieParser(config.sessionSecret)(socket.request, {}, function (err) {
+   /* cookieParser(config.sessionSecret)(socket.request, {}, function (err) {
       // Get the session id from the request cookies
       var sessionId = socket.request.signedCookies ? socket.request.signedCookies[config.sessionKey] : undefined;
 
@@ -94,11 +97,15 @@ module.exports = function (app, db) {
           });
         });
       });
-    });
+    });*/
+    next(null, true);
   });
 
   // Add an event listener to the 'connection' event
   io.on('connection', function (socket) {
+    console.log('Socket io connection');
+    console.dir(socket);
+
     config.files.server.sockets.forEach(function (socketConfiguration) {
       require(path.resolve(socketConfiguration))(io, socket);
     });
