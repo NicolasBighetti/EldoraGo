@@ -6,13 +6,15 @@ LES ÉTAPES
 
   <div ng-class="{'panel-primary' : cotSelected.step_sel === $index}" ng-click="setActive($index)" class="panel panel-default">
     <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-target="#list-{{$index}}">
+      <h4 class="panel-title" data-toggle="collapse" data-target="#list-{{$index}}">
           <span editable-text="step.name" e-form="stepname">  {{ step.name || "empty" }}</span>
-          <span class="label label-default pull-right" ng-click="stepname.$show()" ng-hide="stepname.$visible">
-              <i class="fa fa-pencil-square-o"></i>
+        <!-- <a> -->
+        <!-- <a data-toggle="collapse" data-target="#list-{{$index}}"> -->
+          <!-- <span editable-text="step.name" e-form="stepname">  {{ step.name || "empty" }}</span> -->
+        <!-- </a> -->
+          <span style="float:right" class="label label-default" ng-click="stepname.$show()" ng-hide="stepname.$visible">
+            <i class="fa fa-pencil-square-o"></i>
           </span>
-        </a>
       </h4>
     </div>
     <div id="list-{{$index}}" class="panel-collapse collapse">
@@ -73,17 +75,18 @@ LES ÉTAPES
 
 <!-- POIS -->
 <div>
-    <br/> LES POIS
+    <br/>
+    <!-- LES POIS -->
     <div class="btn-group">
       <button ng-click="setBtnActive('tous')" ng-class="{ active: isActiveBtn('tous')}" type="button" class="btn btn-default">Tous POI</button>
       <button ng-click="setBtnActive('cot')" ng-class="{ active: isActiveBtn('cot')}" type="button" class="btn btn-default">Cot POI</button>
     </div>
-
-    <span ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI {{poiSelected.name}}</span>
+    <br/>
+    <p> Poi selectionné : {{poiSelected.name}} <span ng-click="addPoiList()" class="label label-primary pull-right"><i class="fa fa-plus"></i> Ajouter le POI </span></p>
     <br/>
     <ul class="list-group">
         <!-- <ul class="list-group" ng-repeat="poi in poiList"> -->
-        <li ng-repeat="poi in cotSelected.pois | orderBy:'_id'" ng-click="setActivePoi($index)" class="list-group-item">
+        <li ng-repeat="poi in cotSelected.pois | orderBy:'_id'" ng-click="setActivePoi($index)" ng-class="{ active: isActivePoi($index)}" class="list-group-item">
             {{poi.name}}
         </li>
     </ul>

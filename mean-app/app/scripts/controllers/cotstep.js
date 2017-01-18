@@ -188,19 +188,20 @@
 
           //$scope.associateStepPoi(step, poi);
           console.log("$scope.markerList.length" + $scope.markerList.length);
+          console.dir(marker);
 
           for (var i = 0; i < $scope.markerList.length; i++) {
             if ($scope.markerList[i].id === marker.key) {
               $scope.poiSelected = $scope.markerList[i];
-              if($scope.windowOpt.show){
-                $scope.windowOpt.show = false;
-              } else {
+              //if($scope.windowOpt.show){
+                //$scope.windowOpt.show = false;
+              //} else {
                 displayWindowPoi();
-              }
+              //}
             }
           }
           console.log($scope.poiSelected);
-          
+
           //windo
         }
       }
@@ -391,7 +392,7 @@
     $scope.setActivePoi = function (poi) {
       $scope.poiSelected = $scope.cotSelected.pois[poi];
 
-      console.log('Poi with name ' +  $scope.poiSelected.name+' selected');
+      console.log('POI with name ' +  $scope.poiSelected.name+' selected');
     };
 
     $scope.setBtnActive = function (btn) {
@@ -400,6 +401,10 @@
 
     $scope.isActiveBtn = function(btn) {
       return btn === $scope.btnSelected;
+    };
+
+    $scope.isActivePoi = function(poi) {
+      return $scope.cotSelected.pois[poi]._id === $scope.poiSelected._id;
     };
 
     $scope.EnterPressed = function (keyEvent, lieu) {
@@ -414,7 +419,13 @@
     $scope.submitCot = function () {
       CotFactory.setCurrentCot($scope.cotSelected);
       CotFactory.updateCot();
+
       $('#editStep').modal('hide');
+
+
+      $timeout(function() {
+        $location.path("/cot-list");
+      }, 750);
     };
 
 

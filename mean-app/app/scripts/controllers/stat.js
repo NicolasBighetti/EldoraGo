@@ -5,6 +5,14 @@
 angular.module('eldoragoApp')
   .controller('StatCtrl', function ($scope, $location, $timeout, $http, $q, $log, CotFactory) {
 
+    //var Rainbow = require('rainbowvis.js');
+    var rainbow = new Rainbow();
+    rainbow.setSpectrum('#FFFF00', '#FF0000');
+    rainbow.setNumberRange(1, 99);
+
+
+
+
     $scope.map = {};
     $scope.showGraph = false;
     $scope.PoiDetails = false;
@@ -20,6 +28,7 @@ angular.module('eldoragoApp')
     $scope.questListID = [];
 
     $scope.pieChart = false;
+    $scope.showMarker = false;
 
     $scope.left = 0;
 
@@ -83,6 +92,8 @@ angular.module('eldoragoApp')
           // adding marker on the map
           $scope.map.markers.push($scope.markerList[i]);
 
+          console.log(rainbow.colourAt(12));
+          $scope.markerList[i].icon = "http://www.googlemapsmarkers.com/v1/" + rainbow.colourAt($scope.markerList[i].labelcolor) + "/";
 
           /*if($scope.markerList[i].id == '5873cae3fd5f5f10002bf7ef'){
            $scope.markerList[i].icone = "http://www.googlemapsmarkers.com/v1/ecea24/";
@@ -104,6 +115,9 @@ angular.module('eldoragoApp')
             value: $scope.markerList[i].name,
             display: $scope.markerList[i].name,
             left: $scope.markerList[i].labelcolor,
+            latitude: $scope.markerList[i].latitude,
+            longitude: $scope.markerList[i].longitude,
+            color: $scope.markerList[i].labelcolor,
             type: 'POI'
           };
 
@@ -190,32 +204,52 @@ angular.module('eldoragoApp')
         $scope.showGraph = false;
         $scope.PoiDetails = false;
         $scope.CotDetails = false;
+        $scope.showMarker = false;
         putMarkers();
         return;
       }
 
       //Clear the markers currently present on the map execpt the one we selected
-      for (j = 0; j < $scope.markerList.length - 1; j++) {
+      /*for (j = 0; j < $scope.markerList.length - 1; j++) {
         if ($scope.markerList[j].id != item.id) {
           arrPos = j;
           delete $scope.markerList[j];
         }
-      }
+      }*/
 
       $scope.markerList.slice(0, 1);
 
       if (item.type == 'POI') {
         $scope.PoiDetails = true;
         //console.log($scope.markerList[arrPos + 1].labelcolor);
-        $scope.left = $scope.markerList[arrPos + 1].labelcolor;
-        $scope.map.center.latitude = $scope.markerList[arrPos + 1].latitude;
-        $scope.map.center.longitude = $scope.markerList[arrPos + 1].longitude;
+        $scope.changeMarkerPos(item.color);
+        console.log($scope.left);
+        $scope.map.center.latitude = item.latitude;
+        $scope.map.center.longitude = item.longitude;
       } else if (item.type == 'COT') {
         $scope.CotDetails = true;
         $scope.selectedCot = item.id;
       }
 
     }
+
+    $scope.changeMarkerPos = function(pos){
+      $scope.left = pos;
+    };
+
+    $scope.getMarkerPos = function () {
+
+
+      var p1 = new Promise(function (resolve, reject) {
+        $scope.showMarker = true;
+
+        angular.element('#mark').css('left', $scope.left + 'px');
+
+        }).then(function () {
+          return $scope.left;
+      })
+
+    };
 
     /**
      * Create filter function for a query string

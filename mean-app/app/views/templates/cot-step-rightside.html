@@ -3,85 +3,109 @@
 
 <div ng-show="cotSelected.step_sel!=undefined">
 
-    <h5>Quêtes de l'étape {{cotSelected.stepsO[cotSelected.step_sel].name}}</h5>
-    <div class="panel panel-default"
-         ng-repeat="quest in cotSelected.stepsO[cotSelected.step_sel].questsO | orderBy:'_id'">
-        <!-- <span> -->
+  <h5>Quêtes de l'étape {{cotSelected.stepsO[cotSelected.step_sel].name}}</h5>
+  <div class="panel panel-default" ng-repeat="quest in cotSelected.stepsO[cotSelected.step_sel].questsO | orderBy:'_id'">
+    <!-- <span> -->
 
-        <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
-            {{quest.name}}
-        <span class="label label-default pull-right" ng-click="questname.$show()" ng-hide="questname.$visible">
+    <!-- <div data-toggle="collapse" data-target="#{{quest._id}}" class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname"> -->
+    <div class="panel-heading primary-flat" editable-textarea="quest.name" e-form="questname">
+      {{quest.name}}
+      <span class="label label-default pull-right" ng-click="questname.$show()" ng-hide="questname.$visible">
           <i class="fa fa-pencil-square-o"></i>
         </span>
+    </div>
+    <!-- <div id="{{quest._id}}" class="panel-body collapse"> -->
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-10">
+          <div class="well well-sm" editable-textarea="quest.desc" e-form="questdesc">
+            {{quest.desc}}
+          </div>
         </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-10">
-                    <div class="well well-sm" editable-textarea="quest.desc" e-form="questdesc">
-                        {{quest.desc}}
-                    </div>
-                </div>
-                <div class="col-xs-2">
-                    <button class="btn btn-default pull-right" ng-click="questdesc.$show()"
-                            ng-hide="questdesc.$visible">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </button>
-                </div>
-            </div>
+        <div class="col-xs-2">
+          <button class="btn btn-default pull-right" ng-click="questdesc.$show()" ng-hide="questdesc.$visible">
+                    <i class="fa fa-pencil-square-o"></i>
+                  </button>
+        </div>
+      </div>
 
-            <div class="row">
-                <div class="col-xs-10">
-                    <div class="well well-sm">
-                        <div ng-show="quest.riddleO">
-                            {{quest.riddleO.name}}
-                        </div>
-                        <div ng-show="!quest.riddleO">
-                            Choisir un jeu
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-2">
-                    <button ng-click="selectQuest($index)" type="button" class="btn btn-primary btn-lg"
-                            data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
-                </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="well well-sm">
+            <div ng-show="quest.riddleO">
+              {{quest.riddleO.name}}
             </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <div class="well well-sm">
-                        <div ng-show="quest.poi">
-                            {{quest.poiO.name}}
-                        </div>
-                        <div ng-show="!quest.poi">
-                            Associer un POI
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <!-- associe quete / poi -->
-                    <button ng-click="associateQuestPoi($index)" type="button" class="btn btn-info btn-lg">
+            <div ng-show="!quest.riddleO">
+              Choisir un jeu
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="btn btn-default" data-toggle="popover" data-placement="top" data-content="{{quest.riddleO.desc}}"><i class="fa fa-question"></i></div>
+          <!-- Il faut laisser le script juste en dessous sinon ca ne fonctionne pas -->
+
+          <script>
+            $(document).ready(function() {
+              $('[data-toggle="popover"]').popover();
+            });
+          </script>
+        </div>
+        <div class="col-xs-2">
+          <button ng-click="selectQuest($index)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#faq"><i class="fa fa-lightbulb-o"></i></button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="well well-sm">
+            <div ng-show="quest.poi">
+              {{quest.poiO.name}}
+            </div>
+            <div ng-show="!quest.poi">
+              Associer un POI
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <!-- associe quete / poi -->
+          <button ng-click="associateQuestPoi($index)" type="button" class="btn btn-info btn-lg" ng-disabled="!poiSelected">
                         Associer <i class="fa fa-university"></i>
                     </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-7">
-                    <div class="btn btn-default" data-toggle="popover" title="{{quest.name}}"
-                         data-content="{{quest.desc}}"><i class="fa fa-question"></i></div>
-                    <div ng-click="removeQuest(cotSelected.step_sel,$index)" class="btn btn-danger"><i
-                            class="fa fa-trash"></i></div>
-                </div>
-                <div class="col-xs-5">
-                    <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest($index)"/> Optionnelle
-                </div>
-            </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-xs-8">
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+              <input type="text" class="form-control" ng-model="quest.time_est" placeholder="Temps estimé">
+              <span class="input-group-addon">
+                          <i class="fa fa-clock-o"></i>
+                    </span>
+            </div>
+            <!-- Il faut laisser le script juste en dessous sinon ca ne fonctionne pas -->
+            <script type="text/javascript">
+              $('.clockpicker').clockpicker();
+            </script>
+            <!-- <input class="form-control" placeholder="Durée estimée" type="text"> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-7">
+          <!-- <div class="btn btn-default" data-toggle="popover" title="{{quest.riddleO.name}}" data-content="{{quest.riddleO.desc}}"><i class="fa fa-question"></i></div> -->
+          <span ng-click="removeQuest(cotSelected.step_sel,$index)" class="label label-danger"><i class="fa fa-trash"></i></span>
+
+          <!-- Il faut laisser le script juste en dessous sinon ca ne fonctionne pas -->
+          <!-- <script>
+            $(document).ready(function() {
+              $('[data-toggle="popover"]').popover();
+            });
+          </script> -->
+        </div>
+        <div class="col-xs-5">
+          <input type="checkbox" ng-model="quest.optional" ng-click="updateQuest($index)" /> Optionnelle
+        </div>
+      </div>
     </div>
-    <button ng-click="addQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+  </div>
+  <button ng-click="addQuest()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
 </div>
-
-
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="popover"]').popover();
-    });
-</script>
