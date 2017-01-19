@@ -15,7 +15,7 @@
                           templateParameter="poiSelected" coords="poiSelected">
           </ui-gmap-window>
 
-          <ui-gmap-markers models="markerList" coords="'self'" icon="'icon'" events="marker.events" click="clickMarker()" fit="'true'"></ui-gmap-markers>
+          <ui-gmap-markers options="'markerOptions'" models="markerList" coords="'self'" icon="'icon'" events="marker.events" click="clickMarker()" fit="'true'"></ui-gmap-markers>
         </ui-gmap-google-map>
 
       </div>
@@ -29,7 +29,10 @@
                           templateParameter="poiSelected" coords="poiSelected">
           </ui-gmap-window>
 
-          <ui-gmap-markers models="markerList" coords="'self'" icon="'icon'" events="marker.events" click="clickMarker()">
+          <ui-gmap-markers models="markerList" coords="'coords'"
+                           icon="'icon'" events="marker.events"
+                           click="clickMarker()" options="'opt'"
+                           idkey="'_id'" dore>
           </ui-gmap-markers>
         </ui-gmap-google-map>
       </div>

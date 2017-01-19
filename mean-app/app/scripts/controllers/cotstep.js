@@ -17,7 +17,70 @@
     $scope.removeQuest = CotFactory.deleteQuest;
 
     $scope.markerList = [];
-    
+
+    $scope.poiSH = true;
+
+    $scope.setMapOnAll = function () {
+      console.dir($scope.markerList);
+      console.dir($scope.map.markers);
+
+   //   if( !$scope.poiSH){
+     //   $scope.setMapOffAll();
+      //}else {
+        var list = $scope.markerList;
+        for (var i = 0; i < list.length; i++) {
+          $scope.markerList[i].visible = true;
+          $scope.markerList[i].icon.opacity = 1;
+
+
+        }
+     // }
+      $scope.poiSH = !$scope.poiSH;
+    };
+    $scope.setMapOffAll = function () {
+      var list = $scope.markerList;
+      for (var i = 0; i < list.length; i++) {
+        $scope.markerList[i].visible = false;
+        $scope.markerList[i].icon.opacity = 0;
+
+      }
+    };
+
+    $scope.setMapOnCot = function () {
+      var list = $scope.markerList;
+
+      console.log('setMapOnCot');
+      console.log('All pois '+list.length);
+      console.dir(list);
+      console.log('Cot pois '+$scope.cotSelected.pois.length);
+      console.dir($scope.cotSelected.pois);
+
+      for (var i = 0; i < list.length; i++) {
+        if(CotFactory.containsId($scope.cotSelected.pois,list[i]._id) == -1){
+         // $scope.map.markers[i].markerOptions.visible = true;
+          //list[i].visible = false;
+          $scope.markerList[i].visible = false;
+          $scope.markerList[i].icon.opacity = 0;
+          //list[i].icon.opacity = 0;
+          //$scope.map.markers[i].options.opacity = 0;
+          //$scope.map.markers[i].icon.opacity = 1;
+          //$scope.map.markers[i].icon.fillO = 1;
+
+        } else {
+          //$scope.map.markers[i].icon.opacity = 0;
+          //$scope.map.markers[i].icon.fillOpacity = 0;
+          //$scope.map.markers[i].markerOptions.visible = false;
+          //list[i].visible = true;
+          //list[i].icon.opacity = 1;
+          $scope.markerList[i].visible = true;
+          $scope.markerList[i].icon.opacity = 1;
+
+          console.log('Print' + i);
+          //console.dir($scope.map.markers[i]);
+        }
+      }
+    };
+
     /**  Loading **/
     $scope.init = function () {
       console.log('init');
@@ -137,7 +200,7 @@
         longitude: $scope.lon
       },
       zoom: 8,
-      markers: [],
+      markers: $scope.markerList,
       events: {
         click: function (map, eventName, originalEventArgs) {
           var e = originalEventArgs[0];
@@ -204,6 +267,16 @@
           }
 
           //windo
+        },
+        visible_changed :function(marker,eventname,args){
+          if(marker.visible!=args.visible){
+            marker.setVisible(args.visible);
+            console.log('changed');
+          }else{
+            console.log('ok');
+            console.dir(marker);
+          }
+
         }
       }
     };
@@ -217,8 +290,6 @@
 
     $scope.getMarkerList = function () {
       $http.get(DB_PATH + "pois").then(function (resp) {
-
-
         $scope.markerList = resp.data;
 
         var poisID = $scope.cotSelected.pois.map(function (a) {return a._id;});
@@ -228,12 +299,14 @@
           if (poisID.indexOf($scope.markerList[i]._id) >= 0) {
             color = '#0F0';
           }
-
           //set id and lat/long
           $scope.markerList[i] = CotFactory.transformPoi($scope.markerList[i],color);
+         // var markerG = $scope.markerList[i];
+          //$scope.markerList[i] = markerG;
 
-          $scope.map.markers.push($scope.markerList[i]);
+          //$scope.mar.push($scope.markerList[i]);
         }
+
         // $scope.$apply();
       });
     };
@@ -281,25 +354,31 @@
       if(!poi){
         console.error('No poi Sel to add');
         return;
+      } else{
+        console.log('add poi to list');
       }
 
       // Si pas déjà dans la liste
-      if ($scope.cotSelected.pois.indexOf(poi) < 0) {
+      var indexPoi = CotFactory.containsId($scope.cotSelected.pois,poi._id);
+      if (indexPoi < 0) {
 
+        //marqueur vert
         poi = CotFactory.transformPoi(poi,'#0F0');
-
         $scope.cotSelected.pois.push(poi);
 
         // adding marker on the map
-        var mIndex = $scope.map.markers.indexOf(poi);
+        var mIndex = CotFactory.containsId($scope.map.markers,poi._id);
         if(mIndex == -1){
+          console.log('adding marker :(');
           $scope.map.markers.push(poi);
         }
         else {
+          console.log('Setting marker :)');
           $scope.map.markers[mIndex] = poi;
         }
       } else {
         console.log("POI déjà dans la liste");
+        console.log($scope.cotSelected.pois[indexPoi]);
       }
 
     };
@@ -371,6 +450,11 @@
     };
 
     $scope.setBtnActive = function (btn) {
+      if(btn == 'tous'){
+        $scope.setMapOnAll();
+      } else if (btn == 'cot'){
+        $scope.setMapOnCot();
+      }
       $scope.btnSelected = btn;
     };
 
@@ -412,7 +496,10 @@
       var i = Math.floor(Math.random() * nouns.length);
       return nouns[i];
     };
-
+    
+    $scope.allPoi = function () {
+      
+    }
 
   })
 ;

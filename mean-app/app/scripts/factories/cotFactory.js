@@ -3,6 +3,12 @@ angular.module('eldoragoApp')
     var currentCot = {};
     var hasChanged = false;
 
+    function containsId(array,id){
+      var ids = array.map(function (a) {
+        return a._id;
+      });
+      return ids.indexOf(id);
+    }
     //utilitaires
     function removeNullIn(prop, obj) {
       var pr = obj[prop];
@@ -542,8 +548,8 @@ angular.module('eldoragoApp')
         fillColor: color,
         fillOpacity: 1,
         strokeColor: '#000',
-        strokeWeight: 2,
-        scale: 1,
+        strokeWeight: 1,
+        scale: 1
       };
     }
 
@@ -554,6 +560,8 @@ angular.module('eldoragoApp')
       poi.longitude = poi.coords.longitude;
 
       poi.icon = pinSymbol(color);
+      poi.opt = {visible: true};
+      poi.show = true;
 
       return poi;
     }
@@ -568,7 +576,8 @@ angular.module('eldoragoApp')
 
         var poi = transformPoi(resp.data,'#009900');
 
-        if (currentCot.cot.pois.indexOf(poi) == -1) {
+        if (containsId(currentCot.cot.pois,poi._id) == -1) {
+          console.log('adding a poi '+poi);
           currentCot.cot.pois.push(poi);
           currentCot.cot.poisID.push(poi);
         }
@@ -621,6 +630,7 @@ angular.module('eldoragoApp')
       deleteRiddle: deleteRiddle,
 
       transformPoi: transformPoi,
-      setStep: setStep
+      setStep: setStep,
+      containsId: containsId,
     }
   }]);
